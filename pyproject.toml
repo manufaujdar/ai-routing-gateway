@@ -1,0 +1,60 @@
+[build-system]
+requires = ["hatchling==1.31.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ai-routing-gateway"
+dynamic = ["version"]
+description = "A small, extensible prompt-to-tool and LLM routing framework"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = ["ai", "agents", "gateway", "llm", "model-routing", "openrouter"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = []
+
+[project.optional-dependencies]
+api = ["fastapi>=0.115", "uvicorn>=0.30"]
+openai = ["openai>=1.50"]
+dev = ["build>=1.2", "httpx>=0.27", "pytest>=8.0", "ruff>=0.6", "twine>=5.1"]
+
+[project.scripts]
+ai-gateway = "ai_gateway.cli:main"
+ai-gateway-team = "ai_gateway.team_cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ai_gateway"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "/CHANGELOG.md",
+  "/LICENSE",
+  "/README.md",
+  "/THIRD_PARTY_NOTICES.md",
+  "/pyproject.toml",
+  "/src",
+]
+
+[tool.hatch.version]
+path = "src/ai_gateway/_version.py"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

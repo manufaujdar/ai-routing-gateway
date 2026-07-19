@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Safety and Evaluation"
+  short_description: "Evaluate routing quality, budgets, safety, and privacy"
+  default_prompt: "Use $evaluate-ai-gateway-safety to test routing policy, council behavior, safety, and evaluation quality."

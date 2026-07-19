@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Gateway Documentation"
+  short_description: "Reconcile technical documentation with verified behavior"
+  default_prompt: "Use $document-ai-gateway to update project documentation after the behavior is verified."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Gateway Planner"
+  short_description: "Define product scope, outcomes, and acceptance gates"
+  default_prompt: "Use $plan-ai-gateway-work to turn this request into an approved product brief and acceptance criteria."

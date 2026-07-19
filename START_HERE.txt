@@ -1,0 +1,38 @@
+AI GATEWAY — HUMAN START PAGE
+=============================
+
+Purpose: inspect a request, choose an appropriate model or tool route, and return
+an explainable routing decision.
+
+READ FIRST
+----------
+
+1. README.md                 Overview, architecture, and quick start
+2. pyproject.toml            Package requirements and supported commands
+3. .ai/TEAM.md               Specialist agent roles, gates, and handoffs
+4. CONTRIBUTING.md           Development and pull-request requirements
+5. docs/RELEASING.md         GitHub and Python package release procedure
+
+HUMAN WORK
+----------
+
+Use README.md for the readable design. Source code is under src/ and automated
+checks are under tests/. Routing outcomes should remain explainable, safe, and
+testable without requiring a cloud model.
+
+Do not place provider keys, private prompts, or production traces in this folder.
+
+PUBLICATION
+-----------
+
+GitHub CI and guarded PyPI trusted publishing live under .github/workflows/. Creating a remote,
+committing, pushing, publishing a GitHub Release, and enabling the PyPI publisher require explicit
+human authorization and repository ownership settings.
+
+AI-agent instructions and memory are in AGENTS.md and .ai/.
+
+STARTUP TEAM
+------------
+
+For idea-to-release work, ask the agent to use the roster and explicit gears in
+.ai/TEAM.md. Routing semantics, safety, validation, and approval gates still apply.

@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Gateway Team Lead"
+  short_description: "Route work through accountable specialist roles"
+  default_prompt: "Use $coordinate-ai-gateway-team to coordinate this project task through the appropriate specialist roles."

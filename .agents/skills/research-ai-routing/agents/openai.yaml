@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Routing R&D"
+  short_description: "Research routing approaches and run bounded experiments"
+  default_prompt: "Use $research-ai-routing to investigate this routing question and produce an evidence-backed recommendation."

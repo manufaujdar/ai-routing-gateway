@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Gateway Designer"
+  short_description: "Design API, CLI, and user interaction experiences"
+  default_prompt: "Use $design-ai-gateway-experience to audit and specify the user and developer experience for this change."

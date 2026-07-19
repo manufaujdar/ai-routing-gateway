@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Gateway Engineer"
+  short_description: "Design reliable routing and agent system boundaries"
+  default_prompt: "Use $engineer-ai-gateway-systems to create a buildable technical design for this gateway change."

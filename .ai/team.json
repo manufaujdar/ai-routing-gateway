@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "roles": [
+    {"id": "team-lead", "skill": "coordinate-ai-gateway-team", "team": "leadership", "authority": "coordinate", "next": ["planner", "research", "designer", "engineer"]},
+    {"id": "planner", "skill": "plan-ai-gateway-work", "team": "product", "authority": "report-only", "next": ["engineer", "designer"]},
+    {"id": "research", "skill": "research-ai-routing", "team": "innovation", "authority": "experiment-only", "next": ["planner", "engineer"]},
+    {"id": "designer", "skill": "design-ai-gateway-experience", "team": "product", "authority": "report-only", "next": ["engineer", "builder"]},
+    {"id": "engineer", "skill": "engineer-ai-gateway-systems", "team": "engineering", "authority": "report-only", "next": ["builder"]},
+    {"id": "builder", "skill": "build-ai-gateway-feature", "team": "engineering", "authority": "repository-write", "next": ["reviewer", "qa", "safety-evaluation"]},
+    {"id": "reviewer", "skill": "review-ai-gateway-changes", "team": "quality", "authority": "report-only", "next": ["builder", "documentation"]},
+    {"id": "qa", "skill": "test-ai-gateway-quality", "team": "quality", "authority": "report-only", "next": ["builder", "documentation"]},
+    {"id": "safety-evaluation", "skill": "evaluate-ai-gateway-safety", "team": "quality", "authority": "report-only", "next": ["builder", "documentation"]},
+    {"id": "documentation", "skill": "document-ai-gateway", "team": "delivery", "authority": "docs-write", "next": ["release", "marketer"]},
+    {"id": "marketer", "skill": "market-ai-gateway", "team": "growth", "authority": "draft-only", "next": ["release"]},
+    {"id": "release", "skill": "release-ai-gateway", "team": "delivery", "authority": "authorized-external", "next": []}
+  ]
+}

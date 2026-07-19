@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Gateway Builder"
+  short_description: "Implement approved gateway features and focused tests"
+  default_prompt: "Use $build-ai-gateway-feature to implement this approved feature and verify the focused behavior."

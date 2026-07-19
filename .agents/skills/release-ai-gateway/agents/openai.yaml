@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Gateway Release"
+  short_description: "Run release gates and prepare authorized delivery"
+  default_prompt: "Use $release-ai-gateway to validate and prepare this ready change for an authorized release."

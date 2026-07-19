@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Gateway QA"
+  short_description: "Verify API, CLI, routing, and regression behavior"
+  default_prompt: "Use $test-ai-gateway-quality to run independent QA against the acceptance criteria and report evidence."

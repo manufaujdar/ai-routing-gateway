@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Gateway Marketer"
+  short_description: "Create evidence-grounded positioning and launch assets"
+  default_prompt: "Use $market-ai-gateway to prepare accurate positioning and launch material for the verified feature."
