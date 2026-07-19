@@ -26,6 +26,13 @@ classifiers = [
 ]
 dependencies = []
 
+[project.urls]
+Homepage = "https://github.com/manufaujdar/ai-routing-gateway"
+Repository = "https://github.com/manufaujdar/ai-routing-gateway.git"
+Issues = "https://github.com/manufaujdar/ai-routing-gateway/issues"
+Documentation = "https://github.com/manufaujdar/ai-routing-gateway#readme"
+Changelog = "https://github.com/manufaujdar/ai-routing-gateway/blob/main/CHANGELOG.md"
+
 [project.optional-dependencies]
 api = ["fastapi>=0.115", "uvicorn>=0.30"]
 openai = ["openai>=1.50"]
