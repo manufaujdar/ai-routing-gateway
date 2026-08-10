@@ -90,7 +90,9 @@ adapter only exposes text completion—never unrestricted tools.
 
 Core tests use a deterministic `MockModelCaller`. `OpenAICompatibleModelCaller` is an optional
 adapter for OpenRouter, Vercel AI Gateway, LiteLLM, or another compatible endpoint. Provider access
-is never required for evaluation, selection, planning, or core tests.
+is never required for evaluation, selection, planning, or core tests. Adapter endpoints require
+HTTPS by default and reject userinfo or malformed URLs. An explicit option permits insecure HTTP
+only for loopback development endpoints; external HTTP remains rejected.
 
 ## Recommended next production work
 

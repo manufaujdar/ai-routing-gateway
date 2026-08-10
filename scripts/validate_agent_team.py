@@ -5,7 +5,6 @@ import re
 import sys
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS_DIR = ROOT / ".agents" / "skills"
 REGISTRY = ROOT / ".ai" / "team.json"
@@ -35,7 +34,7 @@ UNSAFE_PATTERNS = ("rm -rf", "git reset --hard", "git checkout --", "OPENROUTER_
 
 def parse_frontmatter(path: Path) -> tuple[dict[str, str], str]:
     text = path.read_text(encoding="utf-8")
-    match = re.match(r"\A---\n(.*?)\n---\n(.*)\Z", text, re.S)
+    match = re.match(r"\A---\n(.*?)\n---\n(.*)\Z", text, re.DOTALL)
     if not match:
         raise ValueError("missing anchored YAML frontmatter")
     metadata: dict[str, str] = {}
@@ -54,12 +53,12 @@ def validate_openai_yaml(skill_dir: Path, skill_name: str) -> list[str]:
     text = path.read_text(encoding="utf-8")
     errors: list[str] = []
     for field in ("display_name", "short_description", "default_prompt"):
-        if not re.search(rf"^\s*{field}:\s*\"[^\"]+\"\s*$", text, re.M):
+        if not re.search(rf"^\s*{field}:\s*\"[^\"]+\"\s*$", text, re.MULTILINE):
             errors.append(f"agents/openai.yaml lacks quoted {field}")
-    short = re.search(r'^\s*short_description:\s*"([^"]+)"', text, re.M)
+    short = re.search(r'^\s*short_description:\s*"([^"]+)"', text, re.MULTILINE)
     if short and not 25 <= len(short.group(1)) <= 64:
         errors.append("short_description must contain 25-64 characters")
-    prompt = re.search(r'^\s*default_prompt:\s*"([^"]+)"', text, re.M)
+    prompt = re.search(r'^\s*default_prompt:\s*"([^"]+)"', text, re.MULTILINE)
     if prompt and f"${skill_name}" not in prompt.group(1):
         errors.append("default_prompt must explicitly invoke the skill")
     return errors
@@ -115,7 +114,7 @@ def validate() -> list[str]:
             errors.append(f"{skill_name}: unresolved template placeholder")
         if len(body.splitlines()) > 500:
             errors.append(f"{skill_name}: SKILL.md exceeds 500 body lines")
-        missing = sorted(REQUIRED_HEADINGS - set(re.findall(r"^## .+$", body, re.M)))
+        missing = sorted(REQUIRED_HEADINGS - set(re.findall(r"^## .+$", body, re.MULTILINE)))
         if missing:
             errors.append(f"{skill_name}: missing headings {', '.join(missing)}")
         for pattern in UNSAFE_PATTERNS:

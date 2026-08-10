@@ -21,19 +21,19 @@ class RoutingConfig:
 class RuleBasedEvaluator:
     """Transparent baseline evaluator; replace or compose with an LLM classifier later."""
 
-    CURRENT = re.compile(r"\b(latest|today|current|news|weather|price|score|recent)\b", re.I)
-    VISION = re.compile(r"\b(image|photo|picture|screenshot|diagram|visual)\b", re.I)
+    CURRENT = re.compile(r"\b(latest|today|current|news|weather|price|score|recent)\b", re.IGNORECASE)
+    VISION = re.compile(r"\b(image|photo|picture|screenshot|diagram|visual)\b", re.IGNORECASE)
     CODE = re.compile(
         r"\b(code|bug|debug|function|class|api|sql|python|javascript|typescript|repository)\b",
-        re.I,
+        re.IGNORECASE,
     )
     REASONING = re.compile(
         r"\b(analy[sz]e|compare|plan|strategy|evaluate|recommend|trade-?offs?|step by step)\b",
-        re.I,
+        re.IGNORECASE,
     )
     HIGH_RISK = re.compile(
         r"\b(steal (?:a )?password|deploy ransomware|make a bomb|bypass authentication)\b",
-        re.I,
+        re.IGNORECASE,
     )
 
     def __init__(self, config: RoutingConfig | None = None) -> None:

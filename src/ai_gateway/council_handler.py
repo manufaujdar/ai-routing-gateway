@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import re
+from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import asdict
-from collections.abc import Callable
 from typing import Protocol
 
 from .models import GatewayRequest, GatewayResponse, RouteDecision
@@ -71,7 +71,7 @@ class CouncilHandler:
             output = self.caller.complete(plan.chairman_model, synthesis_prompt)
             if not output.strip():
                 raise ValueError("chairman returned an empty response")
-        except Exception:
+        except Exception:  # noqa: BLE001 - provider failure uses a deterministic fallback
             winner = aggregate[0]["model"] if aggregate else next(iter(stage1))
             output = stage1[str(winner)]
             fallback_used = "chairman_failed_used_highest_ranked_answer"
@@ -111,7 +111,7 @@ class CouncilHandler:
                     response = future.result()
                     if response.strip():
                         completed[model] = response
-                except Exception:
+                except Exception:  # noqa: BLE001,S112 - one failed provider must not cancel peers
                     continue
         for model in models:
             if model in completed:

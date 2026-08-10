@@ -1,6 +1,5 @@
 from ai_gateway import GatewayRequest, build_container
 
-
 gateway = build_container().router
 response = gateway.route(
     GatewayRequest(

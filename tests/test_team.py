@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 from threading import Barrier
-from typing import Any, Mapping
+from typing import Any
 
 import pytest
 
@@ -105,6 +106,36 @@ def test_invalid_task_is_rejected() -> None:
         ProjectTask("   ")
     with pytest.raises(ValueError, match="external actions"):
         ProjectTask("test", external_actions_authorized=True)
+
+
+@pytest.mark.parametrize("invalid_flag", ["true", "false", 1, 0, None])
+def test_non_boolean_project_task_flags_are_rejected_before_handlers(
+    invalid_flag: object,
+) -> None:
+    boolean_fields = (
+        "requires_research",
+        "user_facing",
+        "affects_ai_policy",
+        "high_stakes",
+        "ambiguous",
+        "hard_to_reverse",
+        "multiple_viable_approaches",
+        "independent_views_useful",
+        "council_resources_fit",
+        "documentation_requested",
+        "marketing_requested",
+        "release_requested",
+        "external_actions_authorized",
+    )
+    calls: list[TeamRole] = []
+
+    for field_name in boolean_fields:
+        with pytest.raises(ValueError, match=rf"^{field_name} must be a boolean$"):
+            task = ProjectTask("Build feature", **{field_name: invalid_flag})
+            plan = TeamPlanner().plan(task)
+            TeamExecutor(_registry_for(plan, calls)).execute(plan)
+
+    assert calls == []
 
 
 @dataclass
@@ -234,6 +265,29 @@ def test_explicitly_authorized_release_handler_can_run() -> None:
 
     assert run.succeeded is True
     assert TeamRole.RELEASE in calls
+
+
+@pytest.mark.parametrize("invalid_authorization", ["true", "false", 1, 0, None])
+def test_release_boundary_requires_authorization_exactly_true(
+    invalid_authorization: object,
+) -> None:
+    task = ProjectTask(
+        "Perform release",
+        kind=ProjectTaskKind.RELEASE,
+        release_requested=True,
+        external_actions_authorized=True,
+        documentation_requested=False,
+    )
+    plan = TeamPlanner().plan(task)
+    object.__setattr__(task, "external_actions_authorized", invalid_authorization)
+    calls: list[TeamRole] = []
+
+    run = TeamExecutor(_registry_for(plan, calls)).execute(plan)
+
+    assert run.succeeded is False
+    assert run.stopped_at == "release"
+    assert run.results[-1].status is RoleStatus.BLOCKED
+    assert TeamRole.RELEASE not in calls
 
 
 def test_registry_rejects_accidental_replacement() -> None:

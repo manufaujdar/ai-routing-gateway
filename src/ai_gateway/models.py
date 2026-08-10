@@ -52,6 +52,8 @@ class GatewayRequest:
     council_size: int = 3
 
     def __post_init__(self) -> None:
+        if type(self.execute) is not bool:
+            raise ValueError("execute must be a boolean")
         if self.max_cost_usd is not None and self.max_cost_usd < 0:
             raise ValueError("max_cost_usd must not be negative")
         if self.max_latency_ms is not None and self.max_latency_ms < 0:
@@ -59,9 +61,9 @@ class GatewayRequest:
         if self.min_quality is not None and not 0 <= self.min_quality <= 1:
             raise ValueError("min_quality must be between 0 and 1")
         if not isinstance(self.optimization, OptimizationGoal):
-            raise ValueError("optimization must be a valid OptimizationGoal")
+            raise TypeError("optimization must be a valid OptimizationGoal")
         if not isinstance(self.council_mode, CouncilMode):
-            raise ValueError("council_mode must be a valid CouncilMode")
+            raise TypeError("council_mode must be a valid CouncilMode")
         if not 2 <= self.council_size <= 8:
             raise ValueError("council_size must be between 2 and 8")
         if self.council_mode is CouncilMode.ALWAYS and self.max_cost_usd is not None:

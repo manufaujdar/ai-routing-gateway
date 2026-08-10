@@ -1,7 +1,6 @@
 import importlib.util
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 VALIDATOR_PATH = ROOT / "scripts" / "validate_agent_team.py"
 SPEC = importlib.util.spec_from_file_location("validate_agent_team", VALIDATOR_PATH)

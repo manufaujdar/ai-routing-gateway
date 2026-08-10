@@ -1,9 +1,10 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass, field
 from enum import Enum
-from typing import Any, Mapping, Protocol
+from typing import Any, Protocol
 
 
 class TeamRole(str, Enum):
@@ -98,11 +99,29 @@ class ProjectTask:
     metadata: Mapping[str, Any] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
+        boolean_fields = (
+            "requires_research",
+            "user_facing",
+            "affects_ai_policy",
+            "high_stakes",
+            "ambiguous",
+            "hard_to_reverse",
+            "multiple_viable_approaches",
+            "independent_views_useful",
+            "council_resources_fit",
+            "documentation_requested",
+            "marketing_requested",
+            "release_requested",
+            "external_actions_authorized",
+        )
+        for field_name in boolean_fields:
+            if type(getattr(self, field_name)) is not bool:
+                raise ValueError(f"{field_name} must be a boolean")
         if not self.objective.strip():
             raise ValueError("objective must not be empty")
         if not isinstance(self.kind, ProjectTaskKind):
-            raise ValueError("kind must be a valid ProjectTaskKind")
-        if self.external_actions_authorized and not self.release_requested:
+            raise TypeError("kind must be a valid ProjectTaskKind")
+        if self.external_actions_authorized is True and self.release_requested is not True:
             raise ValueError("external actions may be authorized only for a requested release")
 
 
@@ -224,9 +243,9 @@ class RoleResult:
 
     def __post_init__(self) -> None:
         if not isinstance(self.role, TeamRole):
-            raise ValueError("role must be a valid TeamRole")
+            raise TypeError("role must be a valid TeamRole")
         if not isinstance(self.status, RoleStatus):
-            raise ValueError("status must be a valid RoleStatus")
+            raise TypeError("status must be a valid RoleStatus")
         if not self.summary.strip():
             raise ValueError("summary must not be empty")
 
@@ -243,7 +262,7 @@ class TeamRoleRegistry:
         self, role: TeamRole, handler: TeamRoleHandler, *, replace: bool = False
     ) -> None:
         if not isinstance(role, TeamRole):
-            raise ValueError("role must be a valid TeamRole")
+            raise TypeError("role must be a valid TeamRole")
         if role in self._handlers and not replace:
             raise ValueError(f"handler already registered for role '{role.value}'")
         self._handlers[role] = handler
@@ -287,7 +306,8 @@ class TeamExecutor:
         required_handlers = {
             role
             for role in plan.roles
-            if role is not TeamRole.RELEASE or plan.task.external_actions_authorized
+            if role is not TeamRole.RELEASE
+            or plan.task.external_actions_authorized is True
         }
         missing = sorted({role.value for role in required_handlers if role not in self.registry})
         if missing:
@@ -328,7 +348,10 @@ class TeamExecutor:
         return tuple(self._run_role(role, task, step, dict(context)) for role in step.roles)
 
     def _run_role(self, role: TeamRole, task: ProjectTask, step: TeamStep, context: Mapping[str, Any]) -> RoleResult:
-        if role is TeamRole.RELEASE and not context["external_actions_authorized"]:
+        if (
+            role is TeamRole.RELEASE
+            and context["external_actions_authorized"] is not True
+        ):
             return RoleResult(
                 role,
                 RoleStatus.BLOCKED,
@@ -337,7 +360,7 @@ class TeamExecutor:
             )
         try:
             result = self.registry.get(role).run(task, step, context)
-        except Exception as error:  # role runtimes are integration boundaries
+        except Exception as error:  # noqa: BLE001 - role runtimes are integration boundaries
             return RoleResult(
                 role,
                 RoleStatus.FAILED,

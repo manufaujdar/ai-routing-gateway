@@ -76,6 +76,10 @@ print(response.decision.reasons)
 `execute=False` returns the decision without dispatching a handler. The default composition root
 uses mock handlers so examples and tests remain offline.
 
+Control flags are strict booleans. For example, `execute` accepts only Python `True`/`False` (and the
+API accepts only JSON `true`/`false`); strings, integers, and `None` are rejected before handler
+dispatch.
+
 The routing pipeline is:
 
 ```text
@@ -141,7 +145,9 @@ print(run.succeeded)
 Execution preflights all required handlers. Failed or blocked roles stop downstream work.
 Certification roles may run concurrently while results retain stable plan order. The same handler
 object cannot implement Builder and independently certify that work. Release handlers are never
-invoked without explicit external-action authorization.
+invoked unless `external_actions_authorized` is exactly `True`. All `ProjectTask` control flags,
+including `release_requested` and `external_actions_authorized`, reject truthy strings, integers,
+and `None` rather than coercing them.
 
 Team council advice is conservative: every eligibility condition must be established—product or
 research scope, high stakes, ambiguity, hard-to-reverse impact, materially competing approaches,
@@ -185,6 +191,18 @@ caller = OpenAICompatibleModelCaller(
 container = build_container(model_caller=caller)
 ```
 
+Adapter base URLs must be well-formed HTTPS URLs without userinfo, query strings, or fragments.
+Plain HTTP is rejected by default. Local development may opt into HTTP only for a literal loopback
+host (`localhost`, `127.0.0.0/8`, or `::1`):
+
+```python
+caller = OpenAICompatibleModelCaller(
+    api_key="local-development-key",
+    base_url="http://127.0.0.1:8000/v1",
+    allow_insecure_loopback=True,
+)
+```
+
 Configure the model catalog for the selected endpoint. Keep provider credentials in environment or
 secret-management systems; never commit them or include private prompts in traces.
 
@@ -197,8 +215,31 @@ python -m pip install '.[api]'
 uvicorn ai_gateway.api:app --reload
 ```
 
+Open `http://127.0.0.1:8000/` for a small local routing console. It sends
+decision-only requests by default and needs no model key.
+
+For optional no-key local generation, Ollama exposes an OpenAI-compatible API on
+loopback. Install `.[openai]`, pull a model with Ollama, and construct
+`OpenAICompatibleModelCaller` with `base_url="http://127.0.0.1:11434/v1"`, a
+non-secret placeholder key such as `"ollama"`, and
+`allow_insecure_loopback=True`. Keep the deterministic mock caller as the default;
+never expose an unauthenticated local model server beyond loopback.
+
+With Ollama already running, the included smoke test needs no secret:
+
+```bash
+python -m pip install -e '.[openai]'
+python examples/ollama_local.py
+```
+
+Set `OLLAMA_MODEL` only when choosing a different locally downloaded model.
+
 Send `POST /v1/route` with the same prompt, execution, optimization, budget, latency, quality, and
 council fields represented by `GatewayRequest`.
+
+Client discovery is available at `GET /v1/capabilities`. It returns configured
+routes and non-secret model metadata, including task types, quality estimates,
+latency estimates, and capabilities.
 
 ## Repository map
 

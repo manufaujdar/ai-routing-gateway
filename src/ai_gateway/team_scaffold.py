@@ -2,12 +2,11 @@ from __future__ import annotations
 
 import json
 import os
-from pathlib import Path
 import re
 import tempfile
+from pathlib import Path
 
 from .team import ROLE_DEFINITIONS, ROLE_REGISTRY_METADATA, RoleDefinition
-
 
 REQUIRED_SKILL_HEADINGS = {
     "## Contract",
@@ -219,7 +218,7 @@ def validate_scaffold(target: str | Path) -> tuple[str, ...]:
         except OSError as error:
             errors.append(f"{definition.skill_name}/SKILL.md: {error}")
             continue
-        match = re.fullmatch(r"---\n(.*?)\n---\n(.*)", text, re.S)
+        match = re.fullmatch(r"---\n(.*?)\n---\n(.*)", text, re.DOTALL)
         if not match:
             errors.append(f"{definition.skill_name}: missing anchored YAML frontmatter")
             continue
@@ -243,7 +242,7 @@ def validate_scaffold(target: str | Path) -> tuple[str, ...]:
             errors.append(f"{definition.skill_name}: unresolved template placeholder")
         if len(body.splitlines()) > 500:
             errors.append(f"{definition.skill_name}: SKILL.md exceeds 500 body lines")
-        headings = set(re.findall(r"^## .+$", body, re.M))
+        headings = set(re.findall(r"^## .+$", body, re.MULTILINE))
         missing = sorted(REQUIRED_SKILL_HEADINGS - headings)
         if missing:
             errors.append(f"{definition.skill_name}: missing headings {', '.join(missing)}")
@@ -257,9 +256,9 @@ def validate_scaffold(target: str | Path) -> tuple[str, ...]:
             errors.append(f"{definition.skill_name}/agents/openai.yaml: {error}")
             continue
         for field in ("display_name", "short_description", "default_prompt"):
-            if not re.search(rf'^\s*{field}:\s*"[^"]+"\s*$', yaml, re.M):
+            if not re.search(rf'^\s*{field}:\s*"[^"]+"\s*$', yaml, re.MULTILINE):
                 errors.append(f"{definition.skill_name}: openai.yaml lacks quoted {field}")
-        short = re.search(r'^\s*short_description:\s*"([^"]+)"', yaml, re.M)
+        short = re.search(r'^\s*short_description:\s*"([^"]+)"', yaml, re.MULTILINE)
         if short and not 25 <= len(short.group(1)) <= 64:
             errors.append(
                 f"{definition.skill_name}: short_description must contain 25-64 characters"

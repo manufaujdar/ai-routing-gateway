@@ -6,6 +6,23 @@ All notable changes are documented here. This project follows
 
 ## [Unreleased]
 
+### Added
+
+- Added a dependency-free decision-only browser console to the optional FastAPI
+  transport and documented the loopback-only Ollama adapter path.
+- Added an authenticated `/v1/capabilities` endpoint with non-secret routes and model metadata.
+
+### Changed
+
+- `GatewayRequest` and `ProjectTask` now reject non-boolean control flags instead of accepting
+  truthy strings, integers, or `None`.
+
+### Security
+
+- Release handlers now require external-action authorization to be exactly `True` at dispatch.
+- OpenAI-compatible adapter URLs now require HTTPS by default, reject malformed URLs and userinfo,
+  and permit insecure HTTP only through an explicit loopback-development option.
+
 ### Planned
 
 - Provider telemetry, runtime usage metering, and production policy adapters.

@@ -3,19 +3,39 @@ from __future__ import annotations
 import os
 from dataclasses import dataclass
 
-from .evaluator import RoutingConfig, RuleBasedEvaluator
 from .council import CouncilPlanner
 from .council_handler import CouncilHandler, MockModelCaller, ModelCaller
+from .evaluator import RoutingConfig, RuleBasedEvaluator
 from .handlers import BlockedHandler, MockHandler
 from .registry import HandlerRegistry
 from .router import Router
-from .selector import ModelSelector, default_model_catalog
+from .selector import ModelCatalog, ModelSelector, default_model_catalog
 
 
 @dataclass(slots=True)
 class GatewayContainer:
     router: Router
     registry: HandlerRegistry
+    catalog: ModelCatalog
+
+    def capabilities(self) -> dict[str, object]:
+        """Describe configured routes and model metadata without provider secrets."""
+
+        return {
+            "routes": list(self.registry.routes),
+            "models": [
+                {
+                    "model": profile.model,
+                    "provider": profile.provider,
+                    "task_types": [task.value for task in profile.task_types],
+                    "quality": profile.quality,
+                    "latency_ms": profile.latency_ms,
+                    "capabilities": list(profile.capabilities),
+                    "available": profile.available,
+                }
+                for profile in self.catalog.profiles
+            ],
+        }
 
 
 def build_container(model_caller: ModelCaller | None = None) -> GatewayContainer:
@@ -42,4 +62,5 @@ def build_container(model_caller: ModelCaller | None = None) -> GatewayContainer
             CouncilHandler(model_caller or MockModelCaller()),
         ),
         registry=registry,
+        catalog=selector.catalog,
     )

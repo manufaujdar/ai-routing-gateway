@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from .evaluator import Evaluator
 from .council import CouncilPlanner
+from .evaluator import Evaluator
 from .handlers import Handler
 from .models import GatewayRequest, GatewayResponse
 from .registry import HandlerRegistry

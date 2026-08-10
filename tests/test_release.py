@@ -1,11 +1,10 @@
 from __future__ import annotations
 
 import importlib.util
-from pathlib import Path
 import subprocess
+from pathlib import Path
 
 from ai_gateway import __version__
-
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "check_release.py"

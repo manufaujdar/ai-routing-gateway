@@ -1,12 +1,11 @@
 from __future__ import annotations
 
 import argparse
-from pathlib import Path
 import re
 import runpy
 import subprocess
 import sys
-
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -18,7 +17,7 @@ def validate_release(tag: str, root: Path = ROOT) -> list[str]:
     if tag != expected_tag:
         errors.append(f"release tag must be {expected_tag}, received {tag}")
     changelog = (root / "CHANGELOG.md").read_text(encoding="utf-8")
-    if not re.search(rf"^## \[{re.escape(version)}\] - \d{{4}}-\d{{2}}-\d{{2}}$", changelog, re.M):
+    if not re.search(rf"^## \[{re.escape(version)}\] - \d{{4}}-\d{{2}}-\d{{2}}$", changelog, re.MULTILINE):
         errors.append(f"CHANGELOG.md lacks a dated [{version}] release section")
     return errors
 

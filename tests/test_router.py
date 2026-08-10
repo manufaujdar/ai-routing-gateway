@@ -26,6 +26,32 @@ def test_execute_uses_registered_handler() -> None:
     assert response.metadata["mock"] is True
 
 
+@pytest.mark.parametrize("invalid_execute", ["true", "false", 1, 0, None])
+def test_non_boolean_execute_is_rejected_before_handler_dispatch(
+    invalid_execute: object,
+) -> None:
+    calls: list[str] = []
+
+    class RecordingHandler:
+        def handle(self, request, decision):
+            calls.append(decision.route)
+
+    gateway = build_container().router
+    gateway.registry.register("llm.fast", RecordingHandler())
+
+    with pytest.raises(ValueError, match="execute must be a boolean"):
+        gateway.route(GatewayRequest(prompt="Hello", execute=invalid_execute))
+
+    assert calls == []
+
+
+def test_container_capabilities_are_safe_and_observable() -> None:
+    capabilities = build_container().capabilities()
+    assert "llm.fast" in capabilities["routes"]
+    assert capabilities["models"]
+    assert all("api_key" not in model for model in capabilities["models"])
+
+
 def test_allowed_route_policy() -> None:
     with pytest.raises(PermissionError):
         build_container().router.route(

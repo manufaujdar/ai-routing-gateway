@@ -29,7 +29,7 @@ class CouncilPlanner:
     DELIBERATION = re.compile(
         r"\b(council|debate|multiple perspectives|second opinion|controversial|uncertain|"
         r"high[- ]stakes|critical decision|irreversible|independent opinions)\b",
-        re.I,
+        re.IGNORECASE,
     )
 
     def __init__(self, policy: CouncilPolicy | None = None) -> None:

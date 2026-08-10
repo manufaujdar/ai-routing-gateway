@@ -4,11 +4,13 @@ from dataclasses import asdict
 from typing import Any
 
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, Field
+from fastapi.responses import HTMLResponse
+from pydantic import BaseModel, Field, StrictBool
 
 from ._version import __version__
 from .container import build_container
 from .models import CouncilMode, GatewayRequest, OptimizationGoal
+from .web_ui import CONSOLE_HTML
 
 app = FastAPI(title="AI Routing Gateway", version=__version__)
 container = build_container()
@@ -16,7 +18,7 @@ container = build_container()
 
 class RouteRequest(BaseModel):
     prompt: str = Field(min_length=1)
-    execute: bool = True
+    execute: StrictBool = True
     context: dict[str, Any] = Field(default_factory=dict)
     allowed_routes: list[str] | None = None
     allowed_models: list[str] | None = None
@@ -28,9 +30,21 @@ class RouteRequest(BaseModel):
     council_size: int = Field(default=3, ge=2, le=8)
 
 
+@app.get("/", response_class=HTMLResponse, include_in_schema=False)
+def local_console() -> str:
+    return CONSOLE_HTML
+
+
 @app.get("/health")
 def health() -> dict[str, Any]:
     return {"status": "ok", "routes": container.registry.routes}
+
+
+@app.get("/v1/capabilities")
+def capabilities() -> dict[str, object]:
+    """Expose safe route/model metadata for client discovery and diagnostics."""
+
+    return container.capabilities()
 
 
 @app.post("/v1/route")

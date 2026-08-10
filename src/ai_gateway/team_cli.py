@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import argparse
 import json
-from pathlib import Path
 import sys
-from typing import Sequence
+from collections.abc import Sequence
+from pathlib import Path
 
 from .team import ROLE_DEFINITIONS, ProjectTask, ProjectTaskKind, TeamPlanner
 from .team_scaffold import scaffold_team, validate_scaffold

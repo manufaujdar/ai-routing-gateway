@@ -27,6 +27,10 @@ inside a role handler, but project-team planning does not change prompt routing 
 - `RoleResult` and `TeamRun` provide structured, serializable evidence.
 - `scaffold_team()` installs `.ai/TEAM.md`, `.ai/team.json`, and 12 starter role skills.
 
+Every `ProjectTask` control flag is type-strict: callers must pass `True` or `False`, not strings,
+integers, or `None`. Release dispatch applies a second boundary check and invokes the Release handler
+only when `external_actions_authorized is True`; truthiness is not authorization.
+
 ## Role selection
 
 The default feature path is Team Lead, Planner, Engineer, Builder, Reviewer and QA, then

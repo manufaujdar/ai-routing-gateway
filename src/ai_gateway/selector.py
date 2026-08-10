@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, replace
+from typing import ClassVar
 
 from .models import (
     Complexity,
@@ -47,6 +48,12 @@ class ModelCatalog:
             raise ValueError("model names must be unique")
         self._profiles = profiles
 
+    @property
+    def profiles(self) -> tuple[ModelProfile, ...]:
+        """Return immutable metadata for diagnostics and operator interfaces."""
+
+        return self._profiles
+
     def candidates(self, task_type: TaskType) -> tuple[ModelProfile, ...]:
         return tuple(
             profile
@@ -58,13 +65,13 @@ class ModelCatalog:
 class ModelSelector:
     """Filters hard constraints, then ranks the feasible Pareto-style candidate set."""
 
-    WEIGHTS = {
+    WEIGHTS: ClassVar[dict[OptimizationGoal, tuple[float, float, float]]] = {
         OptimizationGoal.BALANCED: (0.55, 0.25, 0.20),
         OptimizationGoal.COST: (0.20, 0.70, 0.10),
         OptimizationGoal.QUALITY: (0.80, 0.10, 0.10),
         OptimizationGoal.LATENCY: (0.25, 0.10, 0.65),
     }
-    OUTPUT_TOKENS = {
+    OUTPUT_TOKENS: ClassVar[dict[Complexity, int]] = {
         Complexity.LOW: 250,
         Complexity.MEDIUM: 750,
         Complexity.HIGH: 1_500,
