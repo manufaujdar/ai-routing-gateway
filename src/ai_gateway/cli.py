@@ -2,13 +2,16 @@ from __future__ import annotations
 
 import argparse
 import json
+from collections.abc import Sequence
 
+from ._version import __version__
 from .container import build_container
 from .models import CouncilMode, GatewayRequest, OptimizationGoal
 
 
-def main() -> None:
+def main(argv: Sequence[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description="Evaluate and route an AI prompt")
+    parser.add_argument("--version", action="version", version=__version__)
     parser.add_argument("prompt")
     parser.add_argument("--decision-only", action="store_true")
     parser.add_argument(
@@ -26,7 +29,7 @@ def main() -> None:
         help="Use council automatically, always, or never",
     )
     parser.add_argument("--council-size", type=int, default=3)
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     response = build_container().router.route(
         GatewayRequest(
             prompt=args.prompt,

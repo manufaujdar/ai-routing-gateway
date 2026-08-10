@@ -6,12 +6,14 @@ import sys
 from collections.abc import Sequence
 from pathlib import Path
 
+from ._version import __version__
 from .team import ROLE_DEFINITIONS, ProjectTask, ProjectTaskKind, TeamPlanner
 from .team_scaffold import scaffold_team, validate_scaffold
 
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Plan and scaffold a reusable specialist AI team")
+    parser.add_argument("--version", action="version", version=__version__)
     commands = parser.add_subparsers(dest="command", required=True)
 
     roles = commands.add_parser("roles", help="List built-in specialist roles")

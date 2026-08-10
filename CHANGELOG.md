@@ -11,11 +11,15 @@ All notable changes are documented here. This project follows
 - Added a dependency-free decision-only browser console to the optional FastAPI
   transport and documented the loopback-only Ollama adapter path.
 - Added an authenticated `/v1/capabilities` endpoint with non-secret routes and model metadata.
+- Added `--version` to both command-line tools and a PEP 561 `py.typed` marker for type-aware
+  consumers.
 
 ### Changed
 
 - `GatewayRequest` and `ProjectTask` now reject non-boolean control flags instead of accepting
   truthy strings, integers, or `None`.
+- CI and release verification now install the optional API extra because the API contract tests
+  exercise the optional FastAPI transport.
 
 ### Security
 

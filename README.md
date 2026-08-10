@@ -1,5 +1,10 @@
 # AI Routing Gateway
 
+[![CI](https://github.com/manufaujdar/ai-routing-gateway/actions/workflows/ci.yml/badge.svg)](https://github.com/manufaujdar/ai-routing-gateway/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+An offline-first Python tool for explainable AI model and tool routing.
+
 AI Routing Gateway is an embeddable Python library for explainable model/tool routing and gated
 specialist-agent workflows. It is designed to integrate into another application; no website or
 hosted service is required.
@@ -22,6 +27,24 @@ and agent frameworks are optional adapters owned by the integrating project.
   action authorization.
 - Python APIs plus `ai-gateway` and `ai-gateway-team` command-line tools.
 
+## Quickstart
+
+Create a clean environment, install the package, and make a decision without a
+provider key or network call:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate       # Windows: .venv\Scripts\activate
+python -m pip install -e .
+ai-gateway --version
+ai-gateway --decision-only "Summarize the trade-offs between two deployment plans"
+```
+
+The command prints JSON containing the selected route, model, confidence,
+candidate models, and the reasons behind the decision. The default core package
+is dependency-free; optional transports and provider adapters are installed only
+when you need them.
+
 ## Installation
 
 Python 3.11 or newer is required.
@@ -40,7 +63,7 @@ For development:
 python -m pip install -e '.[dev]'
 ```
 
-After the first PyPI release, the base package will be installable with:
+After a PyPI release, the base package will be installable with:
 
 ```bash
 python -m pip install ai-routing-gateway
