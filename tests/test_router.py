@@ -26,6 +26,35 @@ def test_execute_uses_registered_handler() -> None:
     assert response.metadata["mock"] is True
 
 
+def test_configured_model_caller_executes_direct_llm_routes() -> None:
+    class RecordingCaller:
+        def __init__(self) -> None:
+            self.calls = []
+
+        def complete(self, model, prompt):
+            self.calls.append((model, prompt))
+            return "Provider response"
+
+    caller = RecordingCaller()
+    response = build_container(caller).router.route(GatewayRequest(prompt="Hello"))
+
+    assert response.output == "Provider response"
+    assert response.provider == "configured-provider"
+    assert response.metadata["mock"] is False
+    assert caller.calls == [(response.decision.model, "Hello")]
+
+
+def test_configured_provider_fails_closed_for_missing_specialized_tool() -> None:
+    class Caller:
+        def complete(self, model, prompt):
+            return "Provider response"
+
+    with pytest.raises(LookupError, match="configured web search handler"):
+        build_container(Caller(), require_configured_tools=True).router.route(
+            GatewayRequest(prompt="Latest news today")
+        )
+
+
 @pytest.mark.parametrize("invalid_execute", ["true", "false", 1, 0, None])
 def test_non_boolean_execute_is_rejected_before_handler_dispatch(
     invalid_execute: object,

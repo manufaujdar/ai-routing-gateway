@@ -239,7 +239,49 @@ uvicorn ai_gateway.api:app --reload
 ```
 
 Open `http://127.0.0.1:8000/` for a small local routing console. It sends
-decision-only requests by default and needs no model key.
+decision-only requests by default and needs no model key. The console exposes routing budgets,
+model allow-lists, optimization, council policy, optional execution, ranked candidates, route
+reasons, local decision history, copy, and JSON download. Browser history never stores provider
+keys.
+
+### Run with a real OpenAI-compatible provider
+
+The preferred path keeps credentials in the server environment:
+
+```bash
+python -m pip install -e '.[api,openai]'
+cp .env.example .env
+# Edit .env and set AI_GATEWAY_API_KEY, endpoint, and model identifiers.
+set -a && source .env && set +a
+uvicorn ai_gateway.api:app --host 127.0.0.1 --port 8000
+```
+
+The server accepts `AI_GATEWAY_API_KEY` (or `OPENAI_API_KEY` as a fallback),
+`AI_GATEWAY_BASE_URL`, `DEFAULT_LLM_MODEL`, `REASONING_LLM_MODEL`, `CODE_LLM_MODEL`, and
+`AI_GATEWAY_TIMEOUT_SECONDS`. The key is never returned by `/v1/config` or
+`/v1/capabilities`.
+
+For a trusted single-user local session, set `AI_GATEWAY_ALLOW_RUNTIME_CREDENTIALS=true` to expose
+the frontend's ephemeral provider form. That form sends a key for one request, keeps it only in page
+memory, and excludes it from local history. Never enable this mode on a shared or public server.
+
+Direct `llm.*` routes execute through the configured provider. Specialized `tool.web_search` and
+`tool.vision` routes deliberately fail closed until the host application registers reviewed tool
+handlers. Inject them with `build_container(route_handlers={...})`, then pass the container to
+`create_app(container)`.
+
+### Container run
+
+The included Compose configuration binds only to local loopback:
+
+```bash
+cp .env.example .env
+# Add a provider key to .env only if real execution is required.
+docker compose up --build
+```
+
+Do not use the example container as an internet-facing production deployment without the controls
+listed in `DEPLOYMENT_BOUNDARIES.md`.
 
 For optional no-key local generation, Ollama exposes an OpenAI-compatible API on
 loopback. Install `.[openai]`, pull a model with Ollama, and construct
@@ -258,7 +300,9 @@ python examples/ollama_local.py
 Set `OLLAMA_MODEL` only when choosing a different locally downloaded model.
 
 Send `POST /v1/route` with the same prompt, execution, optimization, budget, latency, quality, and
-council fields represented by `GatewayRequest`.
+council fields represented by `GatewayRequest`. Operational endpoints are `GET /health`,
+`GET /ready`, `GET /v1/config`, and `GET /v1/capabilities`; interactive OpenAPI documentation is
+available at `/docs`.
 
 Client discovery is available at `GET /v1/capabilities`. It returns configured
 routes and non-secret model metadata, including task types, quality estimates,
@@ -274,6 +318,11 @@ latency estimates, and capabilities.
 - `docs/TEAM_SDK.md`: complete portable-team integration contract.
 - `docs/RELEASING.md`: GitHub and PyPI release procedure.
 - `.ai/TEAM.md` and `.agents/skills/`: repository-local project team contracts.
+- `VALIDATION_PROTOCOL.md`: evaluation plan for routing, budgets, providers, tools, and councils.
+- `DEPLOYMENT_BOUNDARIES.md`: controls present today and responsibilities before production use.
+- `MODEL_CARD_TEMPLATE.md`, `PROVIDER_CARD_TEMPLATE.md`, and `DATASET_CARD_TEMPLATE.md`: provenance
+  records for future integrations and evaluation assets.
+- `tools/readiness_agent.py`: deterministic, local-only public-readiness audit.
 
 ## Development
 
@@ -281,6 +330,7 @@ latency estimates, and capabilities.
 pytest
 ruff check .
 python scripts/validate_agent_team.py
+python tools/readiness_agent.py audit
 python scripts/check_release.py --tag v0.1.0
 python -m build
 python -m twine check dist/*
@@ -298,4 +348,7 @@ schemas, execution sandboxing, and a defined data-retention policy.
 
 ## License and provenance
 
-Released under the MIT License. See `LICENSE` and `THIRD_PARTY_NOTICES.md`.
+Released under the MIT License. See `LICENSE`, `NOTICE`, `CITATION.cff`, and
+`THIRD_PARTY_NOTICES.md`. Project decision authority and contribution boundaries are documented in
+`GOVERNANCE.md`; optional integration categories are reviewed in
+`docs/OPEN_SOURCE_EXTENSIONS.md`.

@@ -34,6 +34,8 @@ jobs:
         run: ruff check .
       - name: Validate project agent team
         run: python scripts/validate_agent_team.py
+      - name: Audit repository readiness
+        run: python tools/readiness_agent.py audit --json
 
   package:
     name: Build distribution

@@ -21,3 +21,9 @@ timelines depend on severity and reproducibility.
 The deterministic core performs no provider calls. Provider credentials belong in environment or
 secret-management systems. Integrators are responsible for authentication, tenant isolation,
 tool sandboxing, rate limits, and production data-retention policy.
+
+Prompt content, attachments, tool results, model outputs, and routing traces may contain personal,
+confidential, regulated, or adversarial data. Do not assume that removing obvious identifiers makes
+a trace safe to publish. A production deployment must document provider retention and training-use
+terms, processing regions, log redaction, access controls, deletion, incident response, and tool
+authorization. See [DEPLOYMENT_BOUNDARIES.md](DEPLOYMENT_BOUNDARIES.md).

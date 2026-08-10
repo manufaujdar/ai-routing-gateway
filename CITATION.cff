@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use AI Routing Gateway in research or engineering work, please cite this repository."
+title: "AI Routing Gateway"
+type: software
+authors:
+  - family-names: Faujdar
+    given-names: Manu
+    affiliation: Independent open-source software project
+repository-code: "https://github.com/manufaujdar/ai-routing-gateway"
+license: MIT
+version: 0.1.0
+date-released: 2026-08-10
+abstract: >-
+  Offline-first Python framework for explainable model and tool routing,
+  constraint-aware model selection, conservative council activation, and
+  gated specialist-agent workflows.
