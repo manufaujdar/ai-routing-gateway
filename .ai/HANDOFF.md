@@ -60,9 +60,12 @@ regression coverage. Independent verification passed: 135 tests, Ruff, 12-skill
 validation, wheel build, Twine metadata, wheel marker inspection, and a fresh
 non-editable install with CLI and decision-only smoke tests.
 
-No external action has been taken. The GitHub remote still needs an authorized
-commit/push before its failing CI run can be re-run against the fix.
+Release completed on branch `agent/open-source-tool-readiness` at commit
+`179a2f4`, with draft PR #8 opened at
+https://github.com/manufaujdar/ai-routing-gateway/pull/8. Remote CI run
+31374280062 passed for the distribution build and Python 3.11, 3.12, 3.13, and
+3.14. The PR remains intentionally draft and has not been merged.
 
-NEXT OWNER: Manu / release lead.
-NEXT ACTION: Explicitly authorize commit and push to `manufaujdar/ai-routing-gateway`,
-then monitor the matrix CI run and address any environment-only failures.
+NEXT OWNER: Manu / maintainer.
+NEXT ACTION: Review and merge draft PR #8 when satisfied with the public release
+scope; no further implementation or CI repair is currently required.
