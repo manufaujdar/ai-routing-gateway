@@ -4,10 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
+  <meta name="description" content="AI Routing Gateway console for explainable model, tool, and multi-model strategy selection.">
   <title>AI Routing Gateway</title>
   <link rel="stylesheet" href="/assets/styles.css">
 </head>
-<body>
+<body data-default-request="execute:false">
   <a class="skip-link" href="#workspace">Skip to routing workspace</a>
   <header class="site-header">
     <a class="brand" href="/" aria-label="AI Routing Gateway home">
@@ -44,8 +45,11 @@
         </div>
 
         <details>
-          <summary>Routing controls <span>Budgets, models, and council policy</span></summary>
+          <summary>Routing controls <span>Strategy, budgets, models, and council policy</span></summary>
           <div class="details-body form-grid">
+            <label for="executionStrategy">Execution strategy
+              <select id="executionStrategy"><option value="auto">Auto</option><option value="single">Single model</option><option value="cascade">Verified cascade</option><option value="self_consistency">Self-consistency</option><option value="council">LLM council</option></select>
+            </label>
             <label for="optimization">Optimization
               <select id="optimization"><option value="balanced">Balanced</option><option value="cost">Lowest cost</option><option value="latency">Lowest latency</option><option value="quality">Highest quality</option></select>
             </label>
@@ -63,6 +67,15 @@
             </label>
             <label for="councilSize">Council size
               <input id="councilSize" type="number" min="2" max="8" value="3">
+            </label>
+            <label for="strategyModelLimit">Cascade model limit
+              <input id="strategyModelLimit" type="number" min="1" max="8" value="3">
+            </label>
+            <label for="selfConsistencySamples">Self-consistency samples
+              <input id="selfConsistencySamples" type="number" min="2" max="8" value="3">
+            </label>
+            <label for="verifierThreshold">Verifier threshold (0–1)
+              <input id="verifierThreshold" type="number" min="0" max="1" step="0.05" value="0.65">
             </label>
             <label class="wide" for="allowedRoutes">Allowed routes
               <input id="allowedRoutes" placeholder="Comma-separated; blank allows configured routes">
@@ -109,6 +122,7 @@
         <section id="riskSection" class="result-section hidden"><h3>Risk flags</h3><div id="riskFlags" class="tag-list"></div></section>
         <section id="candidateSection" class="result-section hidden"><h3>Ranked model candidates</h3><div id="candidates" class="candidate-list"></div></section>
         <section id="councilSection" class="result-section hidden"><h3>Council plan</h3><pre id="councilPlan"></pre></section>
+        <section id="strategySection" class="result-section hidden"><h3>Execution plan</h3><pre id="strategyPlan"></pre></section>
         <section id="outputSection" class="result-section hidden"><h3>Execution output</h3><pre id="output"></pre></section>
         <div class="result-actions"><button id="copyResult" type="button">Copy JSON</button><button id="downloadResult" type="button">Download</button></div>
         <p id="requestMeta" class="request-meta"></p>
@@ -116,6 +130,12 @@
       <div id="errorPanel" class="error-panel hidden" role="alert"></div>
     </aside>
   </main>
+
+  <section class="history-section" aria-labelledby="telemetryTitle">
+    <div class="history-heading"><div><p class="eyebrow">Adaptive control plane</p><h2 id="telemetryTitle">Prompt-free gateway telemetry</h2></div><button id="refreshTelemetry" class="text-button" type="button">Refresh telemetry</button></div>
+    <p class="muted">Runtime outcomes tune ranking only after sufficient evidence. Policy changes remain proposals until replay, approval, and canary validation.</p>
+    <pre id="telemetrySummary">Loading telemetry…</pre>
+  </section>
 
   <section class="history-section" aria-labelledby="historyTitle">
     <div class="history-heading"><div><p class="eyebrow">Local history</p><h2 id="historyTitle">Recent decisions</h2></div><button id="clearHistory" class="text-button" type="button">Clear history</button></div>

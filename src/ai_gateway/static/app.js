@@ -1,5 +1,5 @@
 const byId = id => document.getElementById(id);
-const state = { config: null, capabilities: null, result: null, history: loadHistory() };
+const state = { config: null, capabilities: null, telemetry: null, result: null, history: loadHistory() };
 
 function loadHistory() {
   try { return JSON.parse(localStorage.getItem("ai-gateway-history") || "[]"); }
@@ -39,7 +39,11 @@ function routePayload() {
     execute: byId("execute").checked,
     optimization: byId("optimization").value,
     council_mode: byId("councilMode").value,
-    council_size: Number(byId("councilSize").value)
+    council_size: Number(byId("councilSize").value),
+    execution_strategy: byId("executionStrategy").value,
+    strategy_model_limit: Number(byId("strategyModelLimit").value),
+    self_consistency_samples: Number(byId("selfConsistencySamples").value),
+    verifier_threshold: Number(byId("verifierThreshold").value)
   };
   const optional = {
     max_cost_usd: optionalNumber("maxCost"),
@@ -65,9 +69,10 @@ async function fetchJson(url, options) {
 
 async function initialize() {
   try {
-    [state.config, state.capabilities] = await Promise.all([
-      fetchJson("/v1/config"), fetchJson("/v1/capabilities")
+    [state.config, state.capabilities, state.telemetry] = await Promise.all([
+      fetchJson("/v1/config"), fetchJson("/v1/capabilities"), fetchJson("/v1/telemetry")
     ]);
+    renderTelemetry(state.telemetry);
     const mode = state.config.execution_mode === "mock" ? "Offline mock" : "Provider configured";
     byId("modeBadge").textContent = mode;
     byId("providerSummary").textContent = state.config.runtime_credentials_allowed ? "Optional per request" : mode;
@@ -129,6 +134,7 @@ function renderResult(result) {
     return card;
   });
   setJsonSection("councilSection", "councilPlan", decision.council_plan);
+  setJsonSection("strategySection", "strategyPlan", decision.execution_plan);
   byId("outputSection").classList.toggle("hidden", result.output == null);
   byId("output").textContent = result.output || "";
   byId("requestMeta").textContent = result.request ? `Request ${result.request.id} · ${result.request.elapsed_ms} ms` : "Saved result";
@@ -144,6 +150,15 @@ function setJsonSection(sectionId, contentId, value) {
   byId(contentId).textContent = value == null ? "" : JSON.stringify(value, null, 2);
 }
 function element(tag, text, className) { const node = document.createElement(tag); node.textContent = text; if (className) node.className = className; return node; }
+
+function renderTelemetry(summary) {
+  byId("telemetrySummary").textContent = JSON.stringify(summary, null, 2);
+}
+
+async function refreshTelemetry() {
+  try { state.telemetry = await fetchJson("/v1/telemetry"); renderTelemetry(state.telemetry); }
+  catch (error) { showError(error.message); }
+}
 
 function renderHistory() {
   const list = byId("historyList");
@@ -170,4 +185,5 @@ byId("useRuntimeProvider").addEventListener("change", event => byId("providerFie
 byId("copyResult").addEventListener("click", copyResult);
 byId("downloadResult").addEventListener("click", downloadResult);
 byId("clearHistory").addEventListener("click", () => { state.history = []; storeHistory(); renderHistory(); });
+byId("refreshTelemetry").addEventListener("click", refreshTelemetry);
 initialize();

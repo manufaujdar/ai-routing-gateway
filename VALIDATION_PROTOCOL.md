@@ -25,6 +25,10 @@ the public test suite.
 3. Test exact-boundary, zero-budget, unavailable-model, timeout, rate-limit, and
    partial-response cases. Hard constraints must not silently become preferences.
 4. Revalidate after any provider, tokenizer, pricing, or selection-weight change.
+5. Validate each execution strategy independently: cascade escalation precision, verifier false
+   acceptance/rejection, self-consistency agreement, total call count, and end-to-end budgets.
+6. Replay every adaptive policy proposal on a frozen evaluation set. Require statistically useful
+   sample sizes, explicit approval, canary limits, and automatic rollback thresholds before use.
 
 ## Tools, adapters, and councils
 

@@ -8,6 +8,7 @@ from .models import (
     CouncilMode,
     CouncilPlan,
     CouncilRequirementError,
+    ExecutionStrategy,
     GatewayRequest,
     ModelCandidate,
     OptimizationGoal,
@@ -36,6 +37,16 @@ class CouncilPlanner:
         self.policy = policy or CouncilPolicy()
 
     def plan(self, request: GatewayRequest, decision: RouteDecision) -> RouteDecision:
+        if request.execution_strategy not in (
+            ExecutionStrategy.AUTO,
+            ExecutionStrategy.COUNCIL,
+        ):
+            return self._attach(
+                decision,
+                request,
+                False,
+                f"Council was bypassed for explicit {request.execution_strategy.value} strategy.",
+            )
         if request.council_mode is CouncilMode.NEVER:
             return self._attach(decision, request, False, "Council was disabled by request policy.")
         if decision.route == "blocked":
@@ -77,11 +88,12 @@ class CouncilPlanner:
             )
 
         activation_score, signals = self._activation_score(request, decision)
-        enabled = request.council_mode is CouncilMode.ALWAYS or (
+        required = self._required(request)
+        enabled = required or (
             decision.task_type is TaskType.REASONING
             and activation_score >= self.policy.activation_threshold
         )
-        if request.council_mode is CouncilMode.ALWAYS:
+        if required:
             reason = "Council was explicitly required and its estimated budget and latency fit."
         elif enabled:
             reason = "Council activated because " + ", ".join(signals) + "."
@@ -122,7 +134,7 @@ class CouncilPlanner:
         estimated_cost: float = 0.0,
         estimated_latency: int = 0,
     ) -> RouteDecision:
-        if request.council_mode is CouncilMode.ALWAYS:
+        if cls._required(request):
             raise CouncilRequirementError(reason)
         return cls._attach(
             decision,
@@ -212,3 +224,10 @@ class CouncilPlanner:
             else (),
         )
         return replace(decision, reasons=(*decision.reasons, reason), council_plan=plan)
+
+    @staticmethod
+    def _required(request: GatewayRequest) -> bool:
+        return (
+            request.council_mode is CouncilMode.ALWAYS
+            or request.execution_strategy is ExecutionStrategy.COUNCIL
+        )

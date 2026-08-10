@@ -1,8 +1,11 @@
 from __future__ import annotations
 
 import re
+import time
 from ipaddress import ip_address
 from urllib.parse import urlsplit
+
+from .telemetry import ModelCallResult
 
 _HOST_LABEL = re.compile(r"[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?")
 _PERCENT_ESCAPE = re.compile(r"%[0-9A-Fa-f]{2}")
@@ -102,11 +105,31 @@ class OpenAICompatibleModelCaller:
         self._client = OpenAI(api_key=api_key, base_url=base_url, timeout=timeout)
 
     def complete(self, model: str, prompt: str) -> str:
+        return self.complete_with_metrics(model, prompt).text
+
+    def complete_with_metrics(self, model: str, prompt: str) -> ModelCallResult:
+        started = time.perf_counter()
         response = self._client.chat.completions.create(
             model=model,
             messages=[{"role": "user", "content": prompt}],
         )
+        latency_ms = round((time.perf_counter() - started) * 1_000, 3)
         content = response.choices[0].message.content
         if not content:
             raise ValueError(f"model '{model}' returned an empty response")
-        return content
+        usage = getattr(response, "usage", None)
+        prompt_tokens = getattr(usage, "prompt_tokens", None)
+        completion_tokens = getattr(usage, "completion_tokens", None)
+        prompt_details = getattr(usage, "prompt_tokens_details", None)
+        cached_tokens = getattr(prompt_details, "cached_tokens", None)
+        finish_reason = getattr(response.choices[0], "finish_reason", None)
+        return ModelCallResult(
+            text=content,
+            provider="openai-compatible",
+            deployment_id=model,
+            input_tokens=prompt_tokens,
+            output_tokens=completion_tokens,
+            cached_tokens=cached_tokens,
+            latency_ms=latency_ms,
+            finish_reason=finish_reason,
+        )

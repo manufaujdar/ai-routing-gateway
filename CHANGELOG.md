@@ -22,6 +22,11 @@ All notable changes are documented here. This project follows
 - Added an authenticated `/v1/capabilities` endpoint with non-secret routes and model metadata.
 - Added `--version` to both command-line tools and a PEP 561 `py.typed` marker for type-aware
   consumers.
+- Added bounded single-model, verified-cascade, self-consistency, and council execution planning.
+- Added prompt-free deployment telemetry, user feedback capture, observed-performance model-ranking
+  adjustments, and versioned policy proposals that require explicit evaluation and promotion.
+- Added execution-strategy controls, execution-plan inspection, and a telemetry panel to the local
+  routing workspace.
 
 ### Changed
 
@@ -38,7 +43,8 @@ All notable changes are documented here. This project follows
 
 ### Planned
 
-- Provider telemetry, runtime usage metering, and production policy adapters.
+- Durable tenant-aware telemetry storage, atomic runtime budget enforcement, streaming TTFT
+  measurement, and production policy promotion adapters.
 
 ## [0.1.0] - 2026-07-19
 

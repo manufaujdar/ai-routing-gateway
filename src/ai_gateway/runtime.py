@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from .adapters import OpenAICompatibleModelCaller
 from .container import GatewayContainer, build_container
 from .evaluator import RoutingConfig
+from .telemetry import InMemoryTelemetryStore
 
 
 @dataclass(frozen=True, slots=True)
@@ -28,7 +29,9 @@ class ProviderSettings:
         if not 0 < self.timeout_seconds <= 300:
             raise ValueError("timeout_seconds must be greater than 0 and at most 300")
 
-    def build_container(self) -> GatewayContainer:
+    def build_container(
+        self, telemetry: InMemoryTelemetryStore | None = None
+    ) -> GatewayContainer:
         caller = OpenAICompatibleModelCaller(
             api_key=self.api_key,
             base_url=self.base_url,
@@ -43,6 +46,7 @@ class ProviderSettings:
                 code_model=self.code_model,
             ),
             require_configured_tools=True,
+            telemetry=telemetry,
         )
 
 

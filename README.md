@@ -20,6 +20,10 @@ and agent frameworks are optional adapters owned by the integrating project.
 
 - Explainable prompt classification and routing to LLM or tool capabilities.
 - Model ranking across cost, quality, and latency constraints.
+- Bounded `single`, verified `cascade`, parallel `self_consistency`, and multi-model `council`
+  execution strategies, with an `auto` policy that chooses among them.
+- Prompt-free deployment telemetry and a deterministic adaptive routing advisor that proposes
+  versioned policy changes without applying them automatically.
 - Conservative LLM council activation with `auto`, `always`, and `never` modes.
 - A reusable 12-role project team: Lead, Planner, R&D, Designer, Engineer, Builder, Reviewer, QA,
   Safety, Documentation, Marketer, and Release.
@@ -110,14 +114,28 @@ GatewayRequest
   -> Evaluator
   -> ModelSelector
   -> CouncilPlanner
+  -> ExecutionPlanner
   -> Router
-  -> registered Handler or CouncilHandler
+  -> registered Handler, AdaptiveLLMHandler, or CouncilHandler
   -> GatewayResponse
 ```
 
 Included capability routes are `llm.fast`, `llm.reasoning`, `llm.code`, `tool.web_search`,
-`tool.vision`, and `blocked`. Route, model, tools, confidence, candidates, council plan, and reasons
-remain observable in the response.
+`tool.vision`, and `blocked`. Route, model, tools, confidence, candidates, council plan, execution
+plan, and reasons remain observable in the response.
+
+### Adaptive execution and routing advisor
+
+Set `execution_strategy` to `auto`, `single`, `cascade`, `self_consistency`, or `council`.
+Cascade starts with the lowest-cost feasible model and escalates when the configured verifier
+rejects the response. Self-consistency runs bounded independent samples and uses majority agreement
+or one aggregation call. Estimates are planning controls, not atomic provider spend guarantees.
+
+Configured direct-model calls record prompt-free outcome data such as deployment, task, strategy,
+success, latency, token counts, estimated or provider-reported cost, and verifier score. Prompts and
+responses are not stored in this telemetry. `AdaptiveRoutingAgent` waits for a minimum sample count
+before influencing ranking and only emits policy proposals; promotion still requires replay,
+explicit approval, and a canary rollout.
 
 ### Council behavior
 
@@ -240,9 +258,9 @@ uvicorn ai_gateway.api:app --reload
 
 Open `http://127.0.0.1:8000/` for a small local routing console. It sends
 decision-only requests by default and needs no model key. The console exposes routing budgets,
-model allow-lists, optimization, council policy, optional execution, ranked candidates, route
-reasons, local decision history, copy, and JSON download. Browser history never stores provider
-keys.
+model allow-lists, optimization, execution strategy, verifier controls, council policy, optional
+execution, ranked candidates, execution plans, prompt-free telemetry, route reasons, local decision
+history, copy, and JSON download. Browser history never stores provider keys.
 
 ### Run with a real OpenAI-compatible provider
 
@@ -299,10 +317,11 @@ python examples/ollama_local.py
 
 Set `OLLAMA_MODEL` only when choosing a different locally downloaded model.
 
-Send `POST /v1/route` with the same prompt, execution, optimization, budget, latency, quality, and
-council fields represented by `GatewayRequest`. Operational endpoints are `GET /health`,
-`GET /ready`, `GET /v1/config`, and `GET /v1/capabilities`; interactive OpenAPI documentation is
-available at `/docs`.
+Send `POST /v1/route` with the same prompt, execution, strategy, optimization, budget, latency,
+quality, verifier, and council fields represented by `GatewayRequest`. Operational endpoints are
+`GET /health`, `GET /ready`, `GET /v1/config`, `GET /v1/capabilities`, `GET /v1/telemetry`,
+`GET /v1/policy/proposal`, and `POST /v1/feedback`; interactive OpenAPI documentation is available
+at `/docs`.
 
 Client discovery is available at `GET /v1/capabilities`. It returns configured
 routes and non-secret model metadata, including task types, quality estimates,
@@ -310,7 +329,8 @@ latency estimates, and capabilities.
 
 ## Repository map
 
-- `src/ai_gateway/`: routing, model selection, council, team SDK, CLI, and optional adapters.
+- `src/ai_gateway/`: routing, model selection, adaptive execution, telemetry, council, team SDK,
+  CLI, and optional adapters.
 - `tests/`: offline unit, integration, packaging, scaffold, and example verification.
 - `examples/`: runnable routing and specialist-team examples.
 - `docs/ROUTING_STRATEGY.md`: gateway comparison, product strategy, and roadmap.

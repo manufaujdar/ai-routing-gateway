@@ -13,7 +13,7 @@ from pydantic import BaseModel, Field, SecretStr, StrictBool, field_validator
 
 from ._version import __version__
 from .container import GatewayContainer, build_container
-from .models import CouncilMode, GatewayRequest, OptimizationGoal
+from .models import CouncilMode, ExecutionStrategy, GatewayRequest, OptimizationGoal
 from .runtime import ProviderSettings, runtime_credentials_allowed, settings_from_environment
 
 STATIC_DIR = Path(__file__).with_name("static")
@@ -59,7 +59,16 @@ class RouteRequest(BaseModel):
     optimization: OptimizationGoal = OptimizationGoal.BALANCED
     council_mode: CouncilMode = CouncilMode.AUTO
     council_size: int = Field(default=3, ge=2, le=8)
+    execution_strategy: ExecutionStrategy = ExecutionStrategy.AUTO
+    strategy_model_limit: int = Field(default=3, ge=1, le=8)
+    self_consistency_samples: int = Field(default=3, ge=2, le=8)
+    verifier_threshold: float = Field(default=0.65, ge=0, le=1)
     provider: RuntimeProviderRequest | None = None
+
+
+class FeedbackRequest(BaseModel):
+    request_id: str = Field(min_length=1, max_length=128)
+    score: float = Field(ge=0, le=1)
 
 
 def create_app(container: GatewayContainer | None = None) -> FastAPI:
@@ -103,12 +112,30 @@ def create_app(container: GatewayContainer | None = None) -> FastAPI:
             "credentials_stored": False,
             "supported_provider_protocol": "OpenAI-compatible chat completions",
             "specialized_tools": "application-supplied handlers required",
+            "execution_strategies": [strategy.value for strategy in ExecutionStrategy],
+            "adaptive_policy": "observe, propose, evaluate, approve, canary",
         }
 
     @application.get("/v1/capabilities")
     def capabilities() -> dict[str, object]:
         current: GatewayContainer = application.state.container
         return current.capabilities()
+
+    @application.get("/v1/telemetry")
+    def telemetry() -> dict[str, Any]:
+        current: GatewayContainer = application.state.container
+        return current.telemetry.summary()
+
+    @application.get("/v1/policy/proposal")
+    def policy_proposal() -> dict[str, Any]:
+        current: GatewayContainer = application.state.container
+        return current.optimizer.report()
+
+    @application.post("/v1/feedback")
+    def feedback(payload: FeedbackRequest) -> dict[str, object]:
+        current: GatewayContainer = application.state.container
+        current.telemetry.record_feedback(payload.request_id, payload.score)
+        return {"accepted": True, "request_id": payload.request_id}
 
     @application.post("/v1/route")
     def route(payload: RouteRequest) -> dict[str, Any]:
@@ -120,7 +147,7 @@ def create_app(container: GatewayContainer | None = None) -> FastAPI:
                 GatewayRequest(
                     prompt=payload.prompt,
                     execute=payload.execute,
-                    context=payload.context,
+                    context={**payload.context, "request_id": request_id},
                     allowed_routes=(
                         tuple(payload.allowed_routes) if payload.allowed_routes is not None else None
                     ),
@@ -133,6 +160,10 @@ def create_app(container: GatewayContainer | None = None) -> FastAPI:
                     optimization=payload.optimization,
                     council_mode=payload.council_mode,
                     council_size=payload.council_size,
+                    execution_strategy=payload.execution_strategy,
+                    strategy_model_limit=payload.strategy_model_limit,
+                    self_consistency_samples=payload.self_consistency_samples,
+                    verifier_threshold=payload.verifier_threshold,
                 )
             )
             result = asdict(response)
@@ -161,7 +192,7 @@ def _container_for_request(
             "runtime provider credentials are disabled; configure server environment variables "
             "or set AI_GATEWAY_ALLOW_RUNTIME_CREDENTIALS=true for a trusted local deployment"
         )
-    return payload.provider.to_settings().build_container()
+    return payload.provider.to_settings().build_container(default_container.telemetry)
 
 
 app = create_app()

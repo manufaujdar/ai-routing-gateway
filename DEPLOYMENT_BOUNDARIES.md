@@ -10,8 +10,10 @@ network egress controls, or safe tool execution.
 - Deterministic evaluation and model selection can run without network access.
 - Provider calls are optional and isolated behind adapters.
 - Decision-only mode avoids handler execution.
-- Routes, selected models, tools, confidence, candidates, council plans, and
+- Routes, selected models, tools, confidence, candidates, council plans, execution strategies, and
   reasons remain observable.
+- Direct adaptive model execution records bounded in-memory deployment outcomes without prompt or
+  response content; policy recommendations are never promoted automatically.
 - High-risk keyword matches route to a blocked handler in the baseline policy.
 - External release actions in team workflows require an exact boolean approval.
 - Non-HTTPS provider endpoints are rejected except for explicitly enabled
@@ -35,9 +37,11 @@ do not prove that a production tool is safe.
 5. Replace fixture catalog values with versioned provider metadata and measured
    telemetry. Fail closed when price, capability, context limit, or availability
    cannot be established for a hard constraint.
-6. Add timeouts, bounded retries, circuit breakers, idempotency, concurrency
+6. Persist telemetry in a tenant-isolated store only after defining retention and deletion; audit
+   feedback integrity and require replay, approval, canary, rollback, and drift gates for changes.
+7. Add timeouts, bounded retries, circuit breakers, idempotency, concurrency
    limits, abuse monitoring, and tested rollback behavior.
-7. Evaluate prompt injection, data exfiltration, unsafe tool use, cross-tenant
+8. Evaluate prompt injection, data exfiltration, unsafe tool use, cross-tenant
    leakage, model fallback, and partial provider failure before launch.
 
 Regulatory and contractual compliance depends on the deploying organization,
