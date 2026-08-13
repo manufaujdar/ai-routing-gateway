@@ -1,8 +1,9 @@
 # AI Routing Gateway
 
-AI Routing Gateway is an embeddable Python library for explainable model/tool routing and gated
-specialist-agent workflows. It is designed to integrate into another application; no website or
-hosted service is required.
+AI Routing Gateway is an embeddable multimodal AI routing framework for balancing
+cost, latency, and accuracy through explainable model/tool routing and gated
+specialist-agent workflows. It is designed to integrate into another application;
+no website or hosted service is required.
 
 The core is dependency-free, deterministic, and offline-testable. Provider calls, web tools, APIs,
 and agent frameworks are optional adapters owned by the integrating project.
