@@ -8,6 +8,7 @@ All notable changes are documented here. This project follows
 
 ### Added
 
+- Added `PRIVACY_AND_DATA_BOUNDARY.md` and included it in source distributions to distinguish the MIT source license from deployment-specific privacy and service terms.
 - Added a responsive local routing workspace with execution controls, provider setup, ranked
   candidates, route explanations, local history, copy, and JSON export.
 - Added environment-managed and explicitly gated ephemeral OpenAI-compatible provider execution,

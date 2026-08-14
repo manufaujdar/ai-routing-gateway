@@ -59,6 +59,7 @@ include = [
   "/LICENSE",
   "/MODEL_CARD_TEMPLATE.md",
   "/NOTICE",
+  "/PRIVACY_AND_DATA_BOUNDARY.md",
   "/PROVIDER_CARD_TEMPLATE.md",
   "/README.md",
   "/SECURITY.md",

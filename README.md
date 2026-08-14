@@ -372,3 +372,5 @@ Released under the MIT License. See `LICENSE`, `NOTICE`, `CITATION.cff`, and
 `THIRD_PARTY_NOTICES.md`. Project decision authority and contribution boundaries are documented in
 `GOVERNANCE.md`; optional integration categories are reviewed in
 `docs/OPEN_SOURCE_EXTENSIONS.md`.
+The source-only privacy and self-hosting boundary is in
+[`PRIVACY_AND_DATA_BOUNDARY.md`](PRIVACY_AND_DATA_BOUNDARY.md).
