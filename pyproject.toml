@@ -47,12 +47,30 @@ packages = ["src/ai_gateway"]
 
 [tool.hatch.build.targets.sdist]
 include = [
+  "/.env.example",
+  "/CITATION.cff",
   "/CHANGELOG.md",
+  "/CODE_OF_CONDUCT.md",
+  "/CONTRIBUTING.md",
+  "/DATASET_CARD_TEMPLATE.md",
+  "/DEPLOYMENT_BOUNDARIES.md",
+  "/Dockerfile",
+  "/GOVERNANCE.md",
   "/LICENSE",
+  "/MODEL_CARD_TEMPLATE.md",
+  "/NOTICE",
+  "/PROVIDER_CARD_TEMPLATE.md",
   "/README.md",
+  "/SECURITY.md",
   "/THIRD_PARTY_NOTICES.md",
+  "/VALIDATION_PROTOCOL.md",
+  "/docs",
+  "/compose.yaml",
   "/pyproject.toml",
+  "/scripts",
   "/src",
+  "/tests",
+  "/tools",
 ]
 
 [tool.hatch.version]

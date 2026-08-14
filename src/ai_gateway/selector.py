@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, replace
-from typing import ClassVar
+from typing import ClassVar, Protocol
 
 from .models import (
     Complexity,
@@ -30,6 +30,11 @@ class ModelProfile:
     latency_ms: int
     capabilities: tuple[str, ...] = ()
     available: bool = True
+    deployment_id: str = ""
+    ttft_ms: int = 0
+    p95_latency_ms: int = 0
+    success_probability: float = 1.0
+    quality_by_task: tuple[tuple[TaskType, float], ...] = ()
 
     def __post_init__(self) -> None:
         if not 0 <= self.quality <= 1:
@@ -38,14 +43,35 @@ class ModelProfile:
             raise ValueError("model prices must not be negative")
         if self.latency_ms < 0:
             raise ValueError("model latency must not be negative")
+        if self.ttft_ms < 0 or self.p95_latency_ms < 0:
+            raise ValueError("model latency percentiles must not be negative")
+        if not 0 <= self.success_probability <= 1:
+            raise ValueError("model success_probability must be between 0 and 1")
+        if any(not 0 <= quality <= 1 for _, quality in self.quality_by_task):
+            raise ValueError("task-specific quality must be between 0 and 1")
+
+    @property
+    def identity(self) -> str:
+        return self.deployment_id or f"{self.provider}:{self.model}"
+
+    def quality_for(self, task_type: TaskType) -> float:
+        return dict(self.quality_by_task).get(task_type, self.quality)
+
+
+class SelectionOptimizer(Protocol):
+    def adjustment(self, profile: ModelProfile, task_type: TaskType) -> float: ...
 
 
 class ModelCatalog:
     def __init__(self, profiles: tuple[ModelProfile, ...]) -> None:
         if not profiles:
             raise ValueError("model catalog must contain at least one profile")
+        if len({profile.identity for profile in profiles}) != len(profiles):
+            raise ValueError("model deployment identities must be unique")
         if len({profile.model for profile in profiles}) != len(profiles):
-            raise ValueError("model names must be unique")
+            raise ValueError(
+                "model identifiers must be unique because the caller dispatch contract uses them"
+            )
         self._profiles = profiles
 
     @property
@@ -77,8 +103,13 @@ class ModelSelector:
         Complexity.HIGH: 1_500,
     }
 
-    def __init__(self, catalog: ModelCatalog) -> None:
+    def __init__(
+        self,
+        catalog: ModelCatalog,
+        optimizer: SelectionOptimizer | None = None,
+    ) -> None:
         self.catalog = catalog
+        self.optimizer = optimizer
 
     def select(self, request: GatewayRequest, decision: RouteDecision) -> RouteDecision:
         if decision.route == "blocked":
@@ -90,7 +121,12 @@ class ModelSelector:
 
         for profile in self.catalog.candidates(decision.task_type):
             estimated_cost = self._estimated_cost(profile, input_tokens, output_tokens)
-            rejection = self._rejection_reason(profile, estimated_cost, request)
+            rejection = self._rejection_reason(
+                profile,
+                profile.quality_for(decision.task_type),
+                estimated_cost,
+                request,
+            )
             if rejection:
                 rejected.append(f"{profile.model}: {rejection}")
             else:
@@ -100,26 +136,32 @@ class ModelSelector:
             detail = "; ".join(rejected) or "no model supports the evaluated task type"
             raise LookupError(f"no feasible model for route '{decision.route}': {detail}")
 
-        qualities = [profile.quality for profile, _ in feasible]
+        qualities = [profile.quality_for(decision.task_type) for profile, _ in feasible]
         costs = [cost for _, cost in feasible]
         latencies = [profile.latency_ms for profile, _ in feasible]
         quality_weight, cost_weight, latency_weight = self.WEIGHTS[request.optimization]
 
         ranked: list[ModelCandidate] = []
         for profile, cost in feasible:
+            quality = profile.quality_for(decision.task_type)
             score = (
-                quality_weight * self._normalize(profile.quality, qualities)
+                quality_weight * self._normalize(quality, qualities)
                 + cost_weight * self._normalize_inverse(cost, costs)
                 + latency_weight * self._normalize_inverse(profile.latency_ms, latencies)
             )
+            if self.optimizer is not None:
+                score += self.optimizer.adjustment(profile, decision.task_type)
             ranked.append(
                 ModelCandidate(
                     model=profile.model,
                     provider=profile.provider,
                     score=round(score, 6),
-                    quality=profile.quality,
+                    quality=quality,
                     estimated_cost_usd=round(cost, 8),
                     estimated_latency_ms=profile.latency_ms,
+                    deployment_id=profile.identity,
+                    estimated_ttft_ms=profile.ttft_ms,
+                    success_probability=profile.success_probability,
                 )
             )
 
@@ -159,7 +201,10 @@ class ModelSelector:
 
     @staticmethod
     def _rejection_reason(
-        profile: ModelProfile, estimated_cost: float, request: GatewayRequest
+        profile: ModelProfile,
+        quality: float,
+        estimated_cost: float,
+        request: GatewayRequest,
     ) -> str | None:
         if request.allowed_models is not None and profile.model not in request.allowed_models:
             return "not in allowed_models"
@@ -167,8 +212,8 @@ class ModelSelector:
             return f"estimated cost ${estimated_cost:.6f} exceeds budget"
         if request.max_latency_ms is not None and profile.latency_ms > request.max_latency_ms:
             return f"estimated latency {profile.latency_ms} ms exceeds limit"
-        if request.min_quality is not None and profile.quality < request.min_quality:
-            return f"quality {profile.quality:.2f} is below minimum"
+        if request.min_quality is not None and quality < request.min_quality:
+            return f"quality {quality:.2f} is below minimum"
         return None
 
     @staticmethod
@@ -198,6 +243,10 @@ def default_model_catalog(
                 input_cost_per_million=0.40,
                 output_cost_per_million=1.60,
                 latency_ms=450,
+                deployment_id="configured-fast",
+                ttft_ms=180,
+                p95_latency_ms=900,
+                success_probability=0.98,
             ),
             ModelProfile(
                 model=reasoning_model,
@@ -208,6 +257,10 @@ def default_model_catalog(
                 input_cost_per_million=1.10,
                 output_cost_per_million=4.40,
                 latency_ms=1_400,
+                deployment_id="configured-reasoning",
+                ttft_ms=500,
+                p95_latency_ms=2_800,
+                success_probability=0.97,
             ),
             ModelProfile(
                 model=code_model,
@@ -218,6 +271,10 @@ def default_model_catalog(
                 input_cost_per_million=1.00,
                 output_cost_per_million=4.00,
                 latency_ms=850,
+                deployment_id="configured-code",
+                ttft_ms=320,
+                p95_latency_ms=1_700,
+                success_probability=0.97,
             ),
         )
     )

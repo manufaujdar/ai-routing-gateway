@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="AI Routing Gateway console for explainable model, tool, and multi-model strategy selection.">
+  <title>AI Routing Gateway</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body data-default-request="execute:false">
+  <a class="skip-link" href="#workspace">Skip to routing workspace</a>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="AI Routing Gateway home">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <path d="M7 10h10l6 10-6 10H7l6-10-6-10Zm16 0h10l-6 10 6 10H23l6-10-6-10Z"/>
+      </svg>
+      <span><strong>AI Routing Gateway</strong><small>Explainable model and tool routing</small></span>
+    </a>
+    <div class="header-actions">
+      <span id="modeBadge" class="badge">Checking runtime…</span>
+      <a href="/docs" target="_blank" rel="noreferrer">API docs</a>
+      <a href="https://github.com/manufaujdar/ai-routing-gateway" target="_blank" rel="noreferrer">GitHub</a>
+    </div>
+  </header>
+
+  <main id="workspace" class="layout">
+    <section class="panel compose" aria-labelledby="composeTitle">
+      <div class="section-heading">
+        <div><p class="eyebrow">Route a request</p><h1 id="composeTitle">Choose the right capability before execution</h1></div>
+        <p>Evaluate locally, inspect the decision, then opt into execution when a provider or tool handler is configured.</p>
+      </div>
+
+      <form id="routeForm">
+        <label for="prompt">Prompt</label>
+        <textarea id="prompt" name="prompt" maxlength="100000" required placeholder="Describe what you need the AI system to do…">Compare two approaches for deploying a secure internal API and recommend one.</textarea>
+        <div class="prompt-meta"><span id="characterCount">0 characters</span><button class="text-button" id="clearPrompt" type="button">Clear</button></div>
+
+        <div class="primary-controls">
+          <label class="switch-row" for="execute">
+            <span><strong>Execute selected route</strong><small>Off returns a decision without calling a model or tool.</small></span>
+            <input id="execute" name="execute" type="checkbox" role="switch">
+          </label>
+          <button class="primary-button" id="routeButton" type="submit"><span>Evaluate route</span><span aria-hidden="true">→</span></button>
+        </div>
+
+        <details>
+          <summary>Routing controls <span>Strategy, budgets, models, and council policy</span></summary>
+          <div class="details-body form-grid">
+            <label for="executionStrategy">Execution strategy
+              <select id="executionStrategy"><option value="auto">Auto</option><option value="single">Single model</option><option value="cascade">Verified cascade</option><option value="self_consistency">Self-consistency</option><option value="council">LLM council</option></select>
+            </label>
+            <label for="optimization">Optimization
+              <select id="optimization"><option value="balanced">Balanced</option><option value="cost">Lowest cost</option><option value="latency">Lowest latency</option><option value="quality">Highest quality</option></select>
+            </label>
+            <label for="councilMode">Council mode
+              <select id="councilMode"><option value="auto">Auto</option><option value="never">Never</option><option value="always">Always</option></select>
+            </label>
+            <label for="maxCost">Maximum estimated cost (USD)
+              <input id="maxCost" type="number" min="0" step="0.000001" placeholder="No limit">
+            </label>
+            <label for="maxLatency">Maximum latency (ms)
+              <input id="maxLatency" type="number" min="0" step="1" placeholder="No limit">
+            </label>
+            <label for="minQuality">Minimum quality (0–1)
+              <input id="minQuality" type="number" min="0" max="1" step="0.01" placeholder="No minimum">
+            </label>
+            <label for="councilSize">Council size
+              <input id="councilSize" type="number" min="2" max="8" value="3">
+            </label>
+            <label for="strategyModelLimit">Cascade model limit
+              <input id="strategyModelLimit" type="number" min="1" max="8" value="3">
+            </label>
+            <label for="selfConsistencySamples">Self-consistency samples
+              <input id="selfConsistencySamples" type="number" min="2" max="8" value="3">
+            </label>
+            <label for="verifierThreshold">Verifier threshold (0–1)
+              <input id="verifierThreshold" type="number" min="0" max="1" step="0.05" value="0.65">
+            </label>
+            <label class="wide" for="allowedRoutes">Allowed routes
+              <input id="allowedRoutes" placeholder="Comma-separated; blank allows configured routes">
+            </label>
+            <label class="wide" for="allowedModels">Allowed models
+              <input id="allowedModels" placeholder="Comma-separated; blank allows catalog models">
+            </label>
+          </div>
+        </details>
+
+        <details id="providerDetails">
+          <summary>Provider connection <span id="providerSummary">Server configuration</span></summary>
+          <div class="details-body">
+            <div id="providerNotice" class="notice"></div>
+            <label class="switch-row compact" for="useRuntimeProvider">
+              <span><strong>Use an ephemeral provider for this request</strong><small>The key stays in this page's memory and is never saved to history.</small></span>
+              <input id="useRuntimeProvider" type="checkbox" role="switch">
+            </label>
+            <div id="providerFields" class="form-grid hidden">
+              <label class="wide" for="apiKey">API key
+                <input id="apiKey" type="password" autocomplete="off" spellcheck="false" placeholder="Required only for execution">
+              </label>
+              <label class="wide" for="baseUrl">OpenAI-compatible base URL
+                <input id="baseUrl" type="url" value="https://api.openai.com/v1" spellcheck="false">
+              </label>
+              <label for="fastModel">Fast model<input id="fastModel" value="gpt-4.1-mini" spellcheck="false"></label>
+              <label for="reasoningModel">Reasoning model<input id="reasoningModel" value="o4-mini" spellcheck="false"></label>
+              <label for="codeModel">Code model<input id="codeModel" value="gpt-4.1" spellcheck="false"></label>
+              <label for="timeout">Timeout (seconds)<input id="timeout" type="number" min="1" max="300" value="120"></label>
+              <label class="check-row wide" for="allowLoopback"><input id="allowLoopback" type="checkbox"><span>Allow plain HTTP only for a literal loopback URL such as Ollama.</span></label>
+            </div>
+          </div>
+        </details>
+      </form>
+    </section>
+
+    <aside class="panel results" aria-labelledby="resultTitle">
+      <div class="result-header"><div><p class="eyebrow">Decision</p><h2 id="resultTitle">Routing result</h2></div><span id="resultStatus" class="status-dot">Ready</span></div>
+      <div id="emptyResult" class="empty-state"><div class="route-icon">↗</div><h3>No decision yet</h3><p>Submit a prompt to see the selected route, model candidates, estimated constraints, reasons, and execution output.</p></div>
+      <div id="resultContent" class="hidden">
+        <div class="decision-hero"><div><span class="label">Selected route</span><strong id="selectedRoute">—</strong></div><span id="confidence" class="score">—</span></div>
+        <dl class="metric-grid"><div><dt>Model</dt><dd id="selectedModel">—</dd></div><div><dt>Task</dt><dd id="taskType">—</dd></div><div><dt>Complexity</dt><dd id="complexity">—</dd></div><div><dt>Provider</dt><dd id="provider">—</dd></div></dl>
+        <section class="result-section"><h3>Why this route</h3><ul id="reasons"></ul></section>
+        <section id="riskSection" class="result-section hidden"><h3>Risk flags</h3><div id="riskFlags" class="tag-list"></div></section>
+        <section id="candidateSection" class="result-section hidden"><h3>Ranked model candidates</h3><div id="candidates" class="candidate-list"></div></section>
+        <section id="councilSection" class="result-section hidden"><h3>Council plan</h3><pre id="councilPlan"></pre></section>
+        <section id="strategySection" class="result-section hidden"><h3>Execution plan</h3><pre id="strategyPlan"></pre></section>
+        <section id="outputSection" class="result-section hidden"><h3>Execution output</h3><pre id="output"></pre></section>
+        <div class="result-actions"><button id="copyResult" type="button">Copy JSON</button><button id="downloadResult" type="button">Download</button></div>
+        <p id="requestMeta" class="request-meta"></p>
+      </div>
+      <div id="errorPanel" class="error-panel hidden" role="alert"></div>
+    </aside>
+  </main>
+
+  <section class="history-section" aria-labelledby="telemetryTitle">
+    <div class="history-heading"><div><p class="eyebrow">Adaptive control plane</p><h2 id="telemetryTitle">Prompt-free gateway telemetry</h2></div><button id="refreshTelemetry" class="text-button" type="button">Refresh telemetry</button></div>
+    <p class="muted">Runtime outcomes tune ranking only after sufficient evidence. Policy changes remain proposals until replay, approval, and canary validation.</p>
+    <pre id="telemetrySummary">Loading telemetry…</pre>
+  </section>
+
+  <section class="history-section" aria-labelledby="historyTitle">
+    <div class="history-heading"><div><p class="eyebrow">Local history</p><h2 id="historyTitle">Recent decisions</h2></div><button id="clearHistory" class="text-button" type="button">Clear history</button></div>
+    <div id="historyList" class="history-list"><p class="muted">No saved decisions.</p></div>
+  </section>
+
+  <footer><p>Offline-first by default · Secrets are never written to browser history · Production controls remain the deployer's responsibility.</p><nav><a href="/docs">OpenAPI</a><a href="https://github.com/manufaujdar/ai-routing-gateway/blob/main/VALIDATION_PROTOCOL.md">Validation</a><a href="https://github.com/manufaujdar/ai-routing-gateway/blob/main/DEPLOYMENT_BOUNDARIES.md">Deployment boundaries</a></nav></footer>
+  <script src="/assets/app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+AI Routing Gateway
+
+Copyright 2026 AI Routing Gateway contributors.
+
+This repository contains an independent, deterministic routing framework. It
+does not bundle provider credentials, private prompts, production traces,
+third-party model weights, or external datasets. Compatible provider and tool
+names identify optional integration targets and do not imply endorsement.
+
+See THIRD_PARTY_NOTICES.md for project inspirations and provenance boundaries.

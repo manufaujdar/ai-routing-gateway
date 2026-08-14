@@ -1,5 +1,10 @@
 # AI Routing Gateway
 
+[![CI](https://github.com/manufaujdar/ai-routing-gateway/actions/workflows/ci.yml/badge.svg)](https://github.com/manufaujdar/ai-routing-gateway/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+An offline-first Python tool for explainable AI model and tool routing.
+
 AI Routing Gateway is an embeddable Python library for explainable model/tool routing and gated
 specialist-agent workflows. It is designed to integrate into another application; no website or
 hosted service is required.
@@ -15,12 +20,34 @@ and agent frameworks are optional adapters owned by the integrating project.
 
 - Explainable prompt classification and routing to LLM or tool capabilities.
 - Model ranking across cost, quality, and latency constraints.
+- Bounded `single`, verified `cascade`, parallel `self_consistency`, and multi-model `council`
+  execution strategies, with an `auto` policy that chooses among them.
+- Prompt-free deployment telemetry and a deterministic adaptive routing advisor that proposes
+  versioned policy changes without applying them automatically.
 - Conservative LLM council activation with `auto`, `always`, and `never` modes.
 - A reusable 12-role project team: Lead, Planner, R&D, Designer, Engineer, Builder, Reviewer, QA,
   Safety, Documentation, Marketer, and Release.
 - Deterministic team planning, application-owned handlers, independent gates, and explicit external
   action authorization.
 - Python APIs plus `ai-gateway` and `ai-gateway-team` command-line tools.
+
+## Quickstart
+
+Create a clean environment, install the package, and make a decision without a
+provider key or network call:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate       # Windows: .venv\Scripts\activate
+python -m pip install -e .
+ai-gateway --version
+ai-gateway --decision-only "Summarize the trade-offs between two deployment plans"
+```
+
+The command prints JSON containing the selected route, model, confidence,
+candidate models, and the reasons behind the decision. The default core package
+is dependency-free; optional transports and provider adapters are installed only
+when you need them.
 
 ## Installation
 
@@ -40,7 +67,7 @@ For development:
 python -m pip install -e '.[dev]'
 ```
 
-After the first PyPI release, the base package will be installable with:
+After a PyPI release, the base package will be installable with:
 
 ```bash
 python -m pip install ai-routing-gateway
@@ -87,14 +114,28 @@ GatewayRequest
   -> Evaluator
   -> ModelSelector
   -> CouncilPlanner
+  -> ExecutionPlanner
   -> Router
-  -> registered Handler or CouncilHandler
+  -> registered Handler, AdaptiveLLMHandler, or CouncilHandler
   -> GatewayResponse
 ```
 
 Included capability routes are `llm.fast`, `llm.reasoning`, `llm.code`, `tool.web_search`,
-`tool.vision`, and `blocked`. Route, model, tools, confidence, candidates, council plan, and reasons
-remain observable in the response.
+`tool.vision`, and `blocked`. Route, model, tools, confidence, candidates, council plan, execution
+plan, and reasons remain observable in the response.
+
+### Adaptive execution and routing advisor
+
+Set `execution_strategy` to `auto`, `single`, `cascade`, `self_consistency`, or `council`.
+Cascade starts with the lowest-cost feasible model and escalates when the configured verifier
+rejects the response. Self-consistency runs bounded independent samples and uses majority agreement
+or one aggregation call. Estimates are planning controls, not atomic provider spend guarantees.
+
+Configured direct-model calls record prompt-free outcome data such as deployment, task, strategy,
+success, latency, token counts, estimated or provider-reported cost, and verifier score. Prompts and
+responses are not stored in this telemetry. `AdaptiveRoutingAgent` waits for a minimum sample count
+before influencing ranking and only emits policy proposals; promotion still requires replay,
+explicit approval, and a canary rollout.
 
 ### Council behavior
 
@@ -216,7 +257,49 @@ uvicorn ai_gateway.api:app --reload
 ```
 
 Open `http://127.0.0.1:8000/` for a small local routing console. It sends
-decision-only requests by default and needs no model key.
+decision-only requests by default and needs no model key. The console exposes routing budgets,
+model allow-lists, optimization, execution strategy, verifier controls, council policy, optional
+execution, ranked candidates, execution plans, prompt-free telemetry, route reasons, local decision
+history, copy, and JSON download. Browser history never stores provider keys.
+
+### Run with a real OpenAI-compatible provider
+
+The preferred path keeps credentials in the server environment:
+
+```bash
+python -m pip install -e '.[api,openai]'
+cp .env.example .env
+# Edit .env and set AI_GATEWAY_API_KEY, endpoint, and model identifiers.
+set -a && source .env && set +a
+uvicorn ai_gateway.api:app --host 127.0.0.1 --port 8000
+```
+
+The server accepts `AI_GATEWAY_API_KEY` (or `OPENAI_API_KEY` as a fallback),
+`AI_GATEWAY_BASE_URL`, `DEFAULT_LLM_MODEL`, `REASONING_LLM_MODEL`, `CODE_LLM_MODEL`, and
+`AI_GATEWAY_TIMEOUT_SECONDS`. The key is never returned by `/v1/config` or
+`/v1/capabilities`.
+
+For a trusted single-user local session, set `AI_GATEWAY_ALLOW_RUNTIME_CREDENTIALS=true` to expose
+the frontend's ephemeral provider form. That form sends a key for one request, keeps it only in page
+memory, and excludes it from local history. Never enable this mode on a shared or public server.
+
+Direct `llm.*` routes execute through the configured provider. Specialized `tool.web_search` and
+`tool.vision` routes deliberately fail closed until the host application registers reviewed tool
+handlers. Inject them with `build_container(route_handlers={...})`, then pass the container to
+`create_app(container)`.
+
+### Container run
+
+The included Compose configuration binds only to local loopback:
+
+```bash
+cp .env.example .env
+# Add a provider key to .env only if real execution is required.
+docker compose up --build
+```
+
+Do not use the example container as an internet-facing production deployment without the controls
+listed in `DEPLOYMENT_BOUNDARIES.md`.
 
 For optional no-key local generation, Ollama exposes an OpenAI-compatible API on
 loopback. Install `.[openai]`, pull a model with Ollama, and construct
@@ -234,8 +317,11 @@ python examples/ollama_local.py
 
 Set `OLLAMA_MODEL` only when choosing a different locally downloaded model.
 
-Send `POST /v1/route` with the same prompt, execution, optimization, budget, latency, quality, and
-council fields represented by `GatewayRequest`.
+Send `POST /v1/route` with the same prompt, execution, strategy, optimization, budget, latency,
+quality, verifier, and council fields represented by `GatewayRequest`. Operational endpoints are
+`GET /health`, `GET /ready`, `GET /v1/config`, `GET /v1/capabilities`, `GET /v1/telemetry`,
+`GET /v1/policy/proposal`, and `POST /v1/feedback`; interactive OpenAPI documentation is available
+at `/docs`.
 
 Client discovery is available at `GET /v1/capabilities`. It returns configured
 routes and non-secret model metadata, including task types, quality estimates,
@@ -243,7 +329,8 @@ latency estimates, and capabilities.
 
 ## Repository map
 
-- `src/ai_gateway/`: routing, model selection, council, team SDK, CLI, and optional adapters.
+- `src/ai_gateway/`: routing, model selection, adaptive execution, telemetry, council, team SDK,
+  CLI, and optional adapters.
 - `tests/`: offline unit, integration, packaging, scaffold, and example verification.
 - `examples/`: runnable routing and specialist-team examples.
 - `docs/ROUTING_STRATEGY.md`: gateway comparison, product strategy, and roadmap.
@@ -251,6 +338,11 @@ latency estimates, and capabilities.
 - `docs/TEAM_SDK.md`: complete portable-team integration contract.
 - `docs/RELEASING.md`: GitHub and PyPI release procedure.
 - `.ai/TEAM.md` and `.agents/skills/`: repository-local project team contracts.
+- `VALIDATION_PROTOCOL.md`: evaluation plan for routing, budgets, providers, tools, and councils.
+- `DEPLOYMENT_BOUNDARIES.md`: controls present today and responsibilities before production use.
+- `MODEL_CARD_TEMPLATE.md`, `PROVIDER_CARD_TEMPLATE.md`, and `DATASET_CARD_TEMPLATE.md`: provenance
+  records for future integrations and evaluation assets.
+- `tools/readiness_agent.py`: deterministic, local-only public-readiness audit.
 
 ## Development
 
@@ -258,6 +350,7 @@ latency estimates, and capabilities.
 pytest
 ruff check .
 python scripts/validate_agent_team.py
+python tools/readiness_agent.py audit
 python scripts/check_release.py --tag v0.1.0
 python -m build
 python -m twine check dist/*
@@ -275,4 +368,7 @@ schemas, execution sandboxing, and a defined data-retention policy.
 
 ## License and provenance
 
-Released under the MIT License. See `LICENSE` and `THIRD_PARTY_NOTICES.md`.
+Released under the MIT License. See `LICENSE`, `NOTICE`, `CITATION.cff`, and
+`THIRD_PARTY_NOTICES.md`. Project decision authority and contribution boundaries are documented in
+`GOVERNANCE.md`; optional integration categories are reviewed in
+`docs/OPEN_SOURCE_EXTENSIONS.md`.
