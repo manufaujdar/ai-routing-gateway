@@ -59,7 +59,9 @@ function routePayload() {
 
 async function fetchJson(url, options) {
   const response = await fetch(url, options);
-  const body = await response.json();
+  let body;
+  try { body = await response.json(); }
+  catch (_) { throw new Error(`The gateway returned an unexpected response (${response.status}). Check that the API server is running.`); }
   if (!response.ok) {
     const detail = body.detail;
     throw new Error(typeof detail === "string" ? detail : detail?.message || JSON.stringify(body));
