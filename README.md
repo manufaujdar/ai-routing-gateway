@@ -3,14 +3,9 @@
 [![CI](https://github.com/manufaujdar/ai-routing-gateway/actions/workflows/ci.yml/badge.svg)](https://github.com/manufaujdar/ai-routing-gateway/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-An offline-first Python tool for explainable AI model and tool routing.
+Different models and specialist workflows are useful for different questions, but choosing among them can make a system unpredictable. AI Routing Gateway is an offline-first Python library that sends each request to a suitable model or specialist workflow while keeping the routing decision explainable and testable across multiple LLMs.
 
-AI Routing Gateway is an embeddable Python library for explainable model/tool routing and gated
-specialist-agent workflows. It is designed to integrate into another application; no website or
-hosted service is required.
-
-The core is dependency-free, deterministic, and offline-testable. Provider calls, web tools, APIs,
-and agent frameworks are optional adapters owned by the integrating project.
+It is designed to be embedded in another application; no website or hosted service is required. The core is dependency-free, deterministic, and offline-testable. Provider calls, web tools, APIs, and agent frameworks remain optional adapters owned by the integrating project.
 
 > **Project status: alpha.** The included catalog values and handlers are stable test fixtures, not
 > live provider guarantees. Runtime usage accounting, tenant controls, provider reliability policy,
