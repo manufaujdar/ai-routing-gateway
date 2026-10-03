@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import sys
@@ -8,6 +9,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS_DIR = ROOT / ".agents" / "skills"
 REGISTRY = ROOT / ".ai" / "team.json"
+SPECKIT_SKILLS = {"speckit-" + name for name in (
+    "constitution", "specify", "clarify", "plan", "checklist", "tasks", "analyze",
+    "implement", "converge", "taskstoissues", "bug-assess", "bug-fix", "bug-test",
+    "assess-intake", "assess-research", "assess-define", "assess-shape", "assess-decide",
+)}
+SPECKIT_SKILL_DIGEST = "bde80c7b87c95385cacbac5c18c5d204d368d2753ffab1dad528290b11652e74"
 REQUIRED_ROLES = {
     "team-lead",
     "planner",
@@ -87,6 +94,30 @@ def validate() -> list[str]:
                 errors.append(f"role {role.get('id')} has unknown handoff target {target}")
 
     discovered = {path.name for path in SKILLS_DIR.iterdir() if path.is_dir()}
+    adoption = ROOT / ".specify" / "adoption.json"
+    if adoption.exists():
+        try:
+            record = json.loads(adoption.read_text())
+            if (record["version"] != "1.1.0"
+                    or record["revision"] != "f1d3a4f8337ebbd3ae22760a9c12e3352b93a175"
+                    or set(record["commands"]) != SPECKIT_SKILLS):
+                raise ValueError("unreviewed Spec Kit version or command set")
+            reviewed_hashes = {}
+            for name in sorted(SPECKIT_SKILLS):
+                relative = f".agents/skills/{name}/SKILL.md"
+                skill = ROOT / relative
+                content = skill.read_bytes()
+                if skill.is_symlink() or hashlib.sha256(content).hexdigest() != record["files"][relative]:
+                    raise ValueError(f"changed vendor skill: {name}")
+                if b"## Local integration guardrails (2026-10-03)" not in content:
+                    raise ValueError(f"vendor guardrails missing: {name}")
+                reviewed_hashes[name] = hashlib.sha256(content).hexdigest()
+            fingerprint = hashlib.sha256(json.dumps(reviewed_hashes, sort_keys=True).encode()).hexdigest()
+            if fingerprint != SPECKIT_SKILL_DIGEST:
+                raise ValueError("vendor commands differ from the reviewed guarded release")
+            discovered -= SPECKIT_SKILLS
+        except (KeyError, ValueError, OSError) as error:
+            errors.append(f"Spec Kit adoption invalid: {error}")
     if discovered != set(skills):
         errors.append("skill folders and .ai/team.json entries are not one-to-one")
 

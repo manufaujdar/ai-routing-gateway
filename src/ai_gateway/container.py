@@ -1,13 +1,16 @@
 from __future__ import annotations
 
 import os
-from collections.abc import Mapping
+import time
+from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 
+from .controls import CircuitBreaker, ControlledExecutionHandler, ExecutionPolicy
 from .council import CouncilPlanner
 from .council_handler import CouncilHandler, MockModelCaller, ModelCaller
 from .evaluator import RoutingConfig, RuleBasedEvaluator
-from .execution import AdaptiveLLMHandler, ResponseVerifier
+from .evidence import EvidencePolicy
+from .execution import ResponseVerifier
 from .handlers import BlockedHandler, Handler, MockHandler, ModelHandler, UnavailableHandler
 from .optimization import AdaptiveRoutingAgent
 from .registry import HandlerRegistry
@@ -46,6 +49,7 @@ class GatewayContainer:
                 }
                 for profile in self.catalog.profiles
             ],
+            "selection_modes": ["weighted", "evidence"],
             "execution_strategies": [
                 "auto",
                 "single",
@@ -65,7 +69,16 @@ def build_container(
     telemetry: InMemoryTelemetryStore | None = None,
     verifier: ResponseVerifier | None = None,
     model_catalog: ModelCatalog | None = None,
+    evidence_policy: EvidencePolicy | None = None,
+    enable_adaptive_ranking: bool = False,
+    execution_policy: ExecutionPolicy | None = None,
+    circuit_breaker: CircuitBreaker | None = None,
+    execution_clock: Callable[[], float] = time.monotonic,
 ) -> GatewayContainer:
+    if model_caller is None and (
+        execution_policy is not None or circuit_breaker is not None
+    ):
+        raise ValueError("server execution controls require an explicit model_caller")
     config = routing_config or RoutingConfig(
         fast_model=os.getenv("DEFAULT_LLM_MODEL", "gpt-4.1-mini"),
         reasoning_model=os.getenv("REASONING_LLM_MODEL", "o4-mini"),
@@ -97,10 +110,13 @@ def build_container(
     selector = ModelSelector(
         model_catalog
         or default_model_catalog(config.fast_model, config.reasoning_model, config.code_model),
-        optimizer=optimizer,
+        optimizer=optimizer if enable_adaptive_ranking else None,
+        evidence_policy=evidence_policy,
     )
     strategy_handler = (
-        AdaptiveLLMHandler(model_caller, telemetry_store, verifier=verifier)
+        ControlledExecutionHandler(model_caller, telemetry_store, verifier=verifier,
+                                   policy=execution_policy, breaker=circuit_breaker,
+                                   clock=execution_clock)
         if model_caller is not None
         else None
     )
@@ -110,7 +126,7 @@ def build_container(
             registry,
             selector,
             CouncilPlanner(),
-            CouncilHandler(model_caller or MockModelCaller()),
+            strategy_handler or CouncilHandler(MockModelCaller()),
             ExecutionPlanner(),
             strategy_handler,
         ),

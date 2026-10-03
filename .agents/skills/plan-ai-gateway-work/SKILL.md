@@ -41,3 +41,9 @@ an implementation assumption.
 
 Send an approved product brief to `engineer` and `designer` as applicable. Record exact acceptance
 criteria and open decisions in `.ai/HANDOFF.md`; do not store transient planning detail in memory.
+
+## Company design and operations
+
+For the EquiRoute model-routing company effort, read
+[the company role contract](references/company.md). This specializes the existing
+role; it does not expand its execution, spending, delegation or release authority.

@@ -1,0 +1,1275 @@
+{
+  "schema_version": 1,
+  "repository": "/Users/manufaujdar/Documents/Manu/AI gateway",
+  "boundary": "Git tracked plus nonignored untracked paths; inspect ignored paths separately. No file contents stored.",
+  "files": {
+    ".agents/skills/build-ai-gateway-feature/SKILL.md": {
+      "sha256": "e1c533a7cc912fedfd1677705ff0f323c54bf7807cd15961e7c2956bb7bf236a",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/build-ai-gateway-feature/agents/openai.yaml": {
+      "sha256": "13797f797b9a4f709f1a47a18bce1be624bf795730b60af76ee8d412497bbc68",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/build-ai-gateway-feature/references/company.md": {
+      "sha256": "8fcd6975b5556163c119180b1ad81fb64ee9f019f6d61012a66eda7be8edd7e9",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/coordinate-ai-gateway-team/SKILL.md": {
+      "sha256": "9f5fefaf9c1652418c19d15640886a43cf55267dc42f3b39ffe818667e6ebbea",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/coordinate-ai-gateway-team/agents/openai.yaml": {
+      "sha256": "abc901bcc0a5662e4acb3625bb399b1eb6d59179a1ccfb83bd35496346d4a523",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/coordinate-ai-gateway-team/references/company.md": {
+      "sha256": "9a8abef2a6d605f45b6b7cf8b13ed2d767aa842c0d121338211d5204ab644a55",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/design-ai-gateway-experience/SKILL.md": {
+      "sha256": "0b8fc615eb4d84f0de950e3c5c149ef172103b695152863ebb5fabbeb213ce75",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/design-ai-gateway-experience/agents/openai.yaml": {
+      "sha256": "4767ea3ece0d8616552407f19846643e17ee13803f1e6ce5fd5d8cf3028ac5c2",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/design-ai-gateway-experience/references/company.md": {
+      "sha256": "4972097857004cb24238e94b36852327f5e271556064e663b0a9ae9a39bd5aaf",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/document-ai-gateway/SKILL.md": {
+      "sha256": "1ae05caf3899a1861ecf55be1d03479bd4fdc0951ff66cda9d0230cfb1956bf7",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/document-ai-gateway/agents/openai.yaml": {
+      "sha256": "b22fd5ffe254a0c37ed8fd2a50a7480fa16f4968ec43e911d8a82b26d0626ba7",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/document-ai-gateway/references/company.md": {
+      "sha256": "84b0650cd22ec43bcfe2c6179fd51f63ce96124248ac752398197b2e42752056",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/engineer-ai-gateway-systems/SKILL.md": {
+      "sha256": "db9a0b55ce04fecaf4db503804dcd865e88f44e15e4748e81cb5977f84566154",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/engineer-ai-gateway-systems/agents/openai.yaml": {
+      "sha256": "56f3aa411a3b530746522e3cc5b94eafcce4118913ca5ef3b2b2e6383885a4a1",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/engineer-ai-gateway-systems/references/company.md": {
+      "sha256": "88fa9fad38d741198e18427b3d837cec17059b41c54f0ad013375d723d284f71",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/evaluate-ai-gateway-safety/SKILL.md": {
+      "sha256": "68fb744106059066b8eb5297da31cea45bf8a183342bad3b9aded49ec8354c87",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/evaluate-ai-gateway-safety/agents/openai.yaml": {
+      "sha256": "1b7625e47babe5cc73d7119b2bdb1eb45341e7a044379e2b8ad5f4b1a18a1d0b",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/evaluate-ai-gateway-safety/references/company.md": {
+      "sha256": "839db8d59de99eb442005f97aaa6c62d2944d2087521d63a771e90b8abe4530b",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/market-ai-gateway/SKILL.md": {
+      "sha256": "dd5e6eb9460737964034ac9f6a3056234abc142d2b0cc8f16d9748b456636613",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/market-ai-gateway/agents/openai.yaml": {
+      "sha256": "2fd1219d3b8a1fd04555d18d5e8b9bc27b4b0ad84e8bf9d828e6aa79456a490b",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/market-ai-gateway/references/company.md": {
+      "sha256": "419851f225f9c85611badbb720bac5cdf028b7212907b8fb09ea35cd777429a9",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/plan-ai-gateway-work/SKILL.md": {
+      "sha256": "f297173591680a63e22be6b359c1ba30eba394efe48aad3d41f778bb3ab632af",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/plan-ai-gateway-work/agents/openai.yaml": {
+      "sha256": "efeb54105ffae592bf67bb82941e9f4e5dd219b9ea5ae388171f9305e73a8f70",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/plan-ai-gateway-work/references/company.md": {
+      "sha256": "ce39083c913c07c5231d3b40550555d802e30095576abcc9da264d2aca019e7c",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/release-ai-gateway/SKILL.md": {
+      "sha256": "ed04ca1b3e51f55694b0f3b3619489e1bccb685587dc6480402e30c980fa4cdb",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/release-ai-gateway/agents/openai.yaml": {
+      "sha256": "bea2095b24f40f649f6338fe59856d6ee81b219831dcee9ec4e8eacbb52a6b71",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/release-ai-gateway/references/company.md": {
+      "sha256": "a6837518ccfbb559ee4dbcd758aac7b78fd8d27f329d944cd6d171700648e380",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/research-ai-routing/SKILL.md": {
+      "sha256": "7b1b3d494bc5c3343370ad5a2f6020865f1cf5ef380d7f664f0a8f9fec28f145",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/research-ai-routing/agents/openai.yaml": {
+      "sha256": "da7252a9166c10f0535a3f9c77477f1157de2d271caa627432030e4e7fd75256",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/research-ai-routing/references/company.md": {
+      "sha256": "fa6687e4b644714a39b3f614a71eafba3230491a90e29f8b7f78a95294a8f515",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/review-ai-gateway-changes/SKILL.md": {
+      "sha256": "9fe3e32e8a11397751a45d0674f5980761b4e9317a104e7b3c3ebcf7bf0d288d",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/review-ai-gateway-changes/agents/openai.yaml": {
+      "sha256": "32d6e374a38323480561ed965887457cc80b2e2581d9bd4828994806e9a3194f",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/review-ai-gateway-changes/references/company.md": {
+      "sha256": "f08bc602231f7f7b852e199e9fb15cf7b77323552612b3c502d92f3aaabf583a",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/speckit-analyze/SKILL.md": {
+      "sha256": "58e73efe2c1a7f1b37edbc0a2a873a1bc2e84341f0940eb748f1b6a312963e11",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/speckit-assess-decide/SKILL.md": {
+      "sha256": "151788976468b86898497831663951eced3bd0adccf04e8d5d7a3915181a7bbc",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/speckit-assess-define/SKILL.md": {
+      "sha256": "e302e73f923d0e37f6a38e231b930e690dae476e0e71d05a01275d8b4f274f76",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/speckit-assess-intake/SKILL.md": {
+      "sha256": "288108bd7178e5d8870d230b1d9938445b5f17110f56cbe73dc6f76200a06b0c",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/speckit-assess-research/SKILL.md": {
+      "sha256": "516fff8c222039e14563620f92238e38eb1de412b8fa8103e22e06744f445fdf",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/speckit-assess-shape/SKILL.md": {
+      "sha256": "0e7abfccbf747f22b075f9e255fd004e51fae644bea55a003ad199e84d201bec",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/speckit-bug-assess/SKILL.md": {
+      "sha256": "1e92dc48e920fb663aeac23dd1edfde05d8d94790a17132d76041cadb9bc0814",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/speckit-bug-fix/SKILL.md": {
+      "sha256": "144fbbcddb34ee480e6fc17feb1c622fa391d9b91bb8e4156e2bd1e29d02a88a",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/speckit-bug-test/SKILL.md": {
+      "sha256": "6a46344f3e5929f75192cd8f26c161ac1c7910700b2fa21b41d849cf769b58db",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/speckit-checklist/SKILL.md": {
+      "sha256": "f24c8419b9e114b34b42f74c6b4407c720e134fed29405822884dff405027295",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/speckit-clarify/SKILL.md": {
+      "sha256": "cf901c07377e17e013e6e9fff90063d5d35089b10ceaad29bf6896bb5dbe06fa",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/speckit-constitution/SKILL.md": {
+      "sha256": "129f2d9a4d360d42d18123341702adfefce60fd37d557c90d051352935ab89f3",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/speckit-converge/SKILL.md": {
+      "sha256": "9c5e78e3dbde601324bec24b28d8ce8fc7b33f4495bb1e995f582ad551f2a49b",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/speckit-implement/SKILL.md": {
+      "sha256": "572fa7b2019952fc8a6542cd0123693a22bc9ed850e2bb5fe3c354d101ffdb2d",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/speckit-plan/SKILL.md": {
+      "sha256": "1e2cb40e6eb14174fd5e7a4ba24bf68a8dccdc0d05cf5f974c147477a400b73a",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/speckit-specify/SKILL.md": {
+      "sha256": "c4005d5242ffec461951bb1cb5bfc9bf45f5a7cd523fc94e1461e18156288a01",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/speckit-tasks/SKILL.md": {
+      "sha256": "309934230dd19254a762f5d3efdc5f253de0e05d2ab01ccc1f3d3034b8c453df",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/speckit-taskstoissues/SKILL.md": {
+      "sha256": "a4181b825c9e67258a0871b069c743a597fa1aac7e0ad950d3c2e0e2b3233515",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/test-ai-gateway-quality/SKILL.md": {
+      "sha256": "0b7565fed88255f4f1eed594f411eef0e770404a40b9b9738c7ca4a2da307387",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/test-ai-gateway-quality/agents/openai.yaml": {
+      "sha256": "c6219a37d4c4f832bd552770fd72baa37e091a0465f971f8cbcef62fa85653e2",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".agents/skills/test-ai-gateway-quality/references/company.md": {
+      "sha256": "6bd8536604a1e89aeca172e091702cd813cd15d9a65ac02e7243981eca5a961c",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".ai/CONTEXT.md": {
+      "sha256": "94a915b6dad941be8805c44c89b0ae3bc6a514a32545c4a23e14988db93e731f",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".ai/HANDOFF.md": {
+      "sha256": "72d6fd03112222beb98a0bd314c4019f64eb7d2c02731a5f5e12d00173a70c69",
+      "status": "reviewed",
+      "reason": "Builder self-review of runtime admission, execution/tenant boundaries, tests, packaging or corresponding documentation; not independent release certification.",
+      "evidence": "2026-10-03: inspected source/diff with local OCR Python rules; focused tests, full 226-test Python 3.11/3.14 suites, Ruff, package and documentation checks; details in docs/RUNTIME_CONTROLS.md.",
+      "previous_evidence": ""
+    },
+    ".ai/MEMORY.md": {
+      "sha256": "6bd051d7c6512524446621fa85a0f09f0d315bad283be2a72ae6c1733213f737",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".ai/TEAM.md": {
+      "sha256": "76cbd73d7898eac7ffefb633c733cc89f89b4cb8b5ac90907df1e4c4c3ba31f0",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".ai/team.json": {
+      "sha256": "49ffc6cae4a3066ddb20efc30fb1814393f13bd3e590fb82f603a5a30ff478ee",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".dockerignore": {
+      "sha256": "864b0d48caddd28c8fb3b278686480f3c3624cb593176a41425d53dc857691df",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".env.example": {
+      "sha256": null,
+      "status": "excluded",
+      "reason": "potential credential file: contents not read",
+      "evidence": ""
+    },
+    ".gitattributes": {
+      "sha256": "489fb811f97deb0befb181e8eda6330bd155b6e1a3d7cc4b717391c31cf870f0",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".github/ISSUE_TEMPLATE/bug_report.yml": {
+      "sha256": "4c4dbeb1888b91f8434db3cdf151b17485b81fce24d1b7a4614987f67a843cb8",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".github/ISSUE_TEMPLATE/config.yml": {
+      "sha256": "1f103c6a9dd07cd13a9a6f17ace6b813f47747eb9cb7e00488cb2073caaf91bb",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".github/ISSUE_TEMPLATE/feature_request.yml": {
+      "sha256": "c044f69b0f958364e5577849f7253fd517095aee249501b85f6ce93067a52b18",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".github/dependabot.yml": {
+      "sha256": "376f23137a9abc9e29cedf182c81b24f6f070c4ca051a0b586d4ad5e29c9f673",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".github/pull_request_template.md": {
+      "sha256": "02a6fbdbe61872d8fd312af083beb48092be47b36ad5553a5c1de7b19aa11e69",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".github/workflows/ci.yml": {
+      "sha256": "61a9f30be3615103b28c61e839d0e9696fb0041b51b11175c88b721cc9678494",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".github/workflows/publish.yml": {
+      "sha256": "33dcb740d6c4cfefcdaa5c836ceaee9fb9e3dd79186bd8a28ebc34af3c5717c8",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".gitignore": {
+      "sha256": "c6abf56319c7a5b237c8432a78c4c0546bee68834950d464f13f198c6f05577f",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/.gitignore": {
+      "sha256": "8c908410d177a1ef3d0dee16d7ad55f2ac3333df3104c4d4adee1c9b82f1dbc1",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/INTEGRATION.md": {
+      "sha256": "ce124d22524730c67a0fc54f3240ad83edcebdb008d1e9eb054ee282949eee85",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/UPSTREAM_LICENSE.txt": {
+      "sha256": "2510b446bc1f0cf9702453075d20cd88631e20e5642658edb7325d9c1eb534f7",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/adoption.json": {
+      "sha256": "585725f2ebac6aeec1ad49e03053c9ec8b40a454ea1f9c8c64f20bbadd712ce7",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/extensions.yml": {
+      "sha256": "cecd6711e332f7fc5df3cf8482b04d7d9c81e324ecce9ba914b692c26b7eb181",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/extensions/.registry": {
+      "sha256": "d9918af181c97e8dfc7d935cdbc0b8d9619471940d8901863bf2513c6ca71e19",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/extensions/assess/README.md": {
+      "sha256": "3eea79b902052a0ec76d5fd157c0e6eb71d4b7581703171b25289669eea70b29",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/extensions/assess/commands/speckit.assess.decide.md": {
+      "sha256": "3e427c50c90646bcd9ca590f889633ba7d16cb4880ffe9c6ca1df59c461638d4",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/extensions/assess/commands/speckit.assess.define.md": {
+      "sha256": "cd75d8a4839efb189f1209bbb0d33a52ff0977742d1de8d6f8daf3e8bb4b043b",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/extensions/assess/commands/speckit.assess.intake.md": {
+      "sha256": "e3d76bef113c041f28232f6d3ba37403d409e4a04671d0838fae74c6dedfe759",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/extensions/assess/commands/speckit.assess.research.md": {
+      "sha256": "200dd254abfdb7cc93bed47a6fac9ca9ae0f01bb3f247fe3d73c3fd581245bdd",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/extensions/assess/commands/speckit.assess.shape.md": {
+      "sha256": "6c2fd8c1687ac5b1e02891bcaf5c83f5ac408bd391b6dd7cfe09ad82272179ab",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/extensions/assess/extension.yml": {
+      "sha256": "a1c87d9ce8088e7865f1d352137777a693b0595ccc310957c7c051a604ca1db2",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/extensions/bug/README.md": {
+      "sha256": "5e5f966ddd45714ce547b526e94c45a69ee2946f3d873916ba0148418de106ba",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/extensions/bug/commands/speckit.bug.assess.md": {
+      "sha256": "6786963d1f89d129e63ac60e570ad28702d59813455fc95284d2facc1eb6b52f",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/extensions/bug/commands/speckit.bug.fix.md": {
+      "sha256": "df8b28b3687617fa883998d060e5402a2baabd34023bef3d1fbcde9e014c5bf6",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/extensions/bug/commands/speckit.bug.test.md": {
+      "sha256": "ac2ab5542b0a9b098af75baad0b23b49e3763b8893eda8497bf234fb5a0df2ff",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/extensions/bug/extension.yml": {
+      "sha256": "1d0da5458f3c18ff08cf1602d88cecc33fad07068208951fb7128090cfa90c90",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/init-options.json": {
+      "sha256": "065ad1fcc4e5835de3484e93b9acb31c411a74ab6fa1a0c88a863d1796e5e657",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/integration.json": {
+      "sha256": "b115b649201879fdb964461177233040da6badfa2a3c3181c4edc058264827ae",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/integrations/codex.manifest.json": {
+      "sha256": "5c6434c02dc8ce529e613995f320a93611f6e5fdc60c8998fb7c6881e724ae7d",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/integrations/speckit.manifest.json": {
+      "sha256": "3f25330c2ebacf9e7d5d94b13b54b9452cd7d84c2bf80376518cde4789409acc",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/memory/.constitution-template.json": {
+      "sha256": "8fc4b39294bae0c10d59547ad7d415b6f0e890d656cbf7171dd567f4e9054711",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/memory/constitution.md": {
+      "sha256": "ae396cdef9d7775b26e6260296d525cee4e484db1a4192ac389d19501d6e94c3",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/scripts/bash/check-prerequisites.sh": {
+      "sha256": "13be175548848bd84e96a90cf9be87665c2e68603b2eaa3e19187e7ca8b4fcb0",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/scripts/bash/common.sh": {
+      "sha256": "cb13a406a0e43e22b58821b9be954def04f311b53f7fde2001b1d0da1f4f074e",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/scripts/bash/create-new-feature.sh": {
+      "sha256": "52052c364c77d4c66b6248bdfa0f06828b1595ed3a5a6dfe841197c713cc030b",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/scripts/bash/resolve-template.sh": {
+      "sha256": "829e227096abc8bf0889889ec9f792f503ca5d395b7836a8a7eb739ee75214e7",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/scripts/bash/setup-plan.sh": {
+      "sha256": "d0bd298c026446f3c63167130d65e49e4aa4485de6bef18bcdfd57b19aa0de96",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/scripts/bash/setup-tasks.sh": {
+      "sha256": "0350b2def158c4dc333cd888fc5a3b10785b3d5c2cf936f93e910242ea9d507d",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/templates/checklist-template.md": {
+      "sha256": "70bbc48e884fab372ffb09e83e78ff983e28b69caebf8cd9964a02b6836683ac",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/templates/constitution-template.md": {
+      "sha256": "ce7549540fa45543cca797a150201d868e64495fdff39dc38246fb17bd4024b3",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/templates/plan-template.md": {
+      "sha256": "a828ad6206526574ab3fc99be6d0154588cb1c9774c5919d71b81ab5b2dbffa0",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/templates/spec-template.md": {
+      "sha256": "3945437fc35cd30a5b2bf7beea680337c3516826d3efa5a6b92c4a7eca1ba28e",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/templates/tasks-template.md": {
+      "sha256": "b0f527d41e546af0c31903e04f9b20965b6b497b573792198f663a64ce128863",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/workflows/speckit/workflow.yml": {
+      "sha256": "177761c5e7df28126beea043b5cb45aeaf7958090c022dc11ac71399422fcfbc",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    ".specify/workflows/workflow-registry.json": {
+      "sha256": "ac8aad9d8734e74bdb46ed5c68cc94f8845e6dd6fa169f516f6bbfe4a2365cc3",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "AGENTS.md": {
+      "sha256": "89c2dde49aa6855c53cb011ea2249c68998d36640daa8613b5ca47f53f69a66d",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "CHANGELOG.md": {
+      "sha256": "dfc8813cac564ca47219ebdace25e296b9f3263efb17446ef4f1ad77e289c7dd",
+      "status": "reviewed",
+      "reason": "Builder self-review of runtime admission, execution/tenant boundaries, tests, packaging or corresponding documentation; not independent release certification.",
+      "evidence": "2026-10-03: inspected source/diff with local OCR Python rules; focused tests, full 226-test Python 3.11/3.14 suites, Ruff, package and documentation checks; details in docs/RUNTIME_CONTROLS.md.",
+      "previous_evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "CITATION.cff": {
+      "sha256": "b67a9818246033ae1baf8978b7996a8d0d09d09f94384bfc2810b71b6f83fb94",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "CODE_OF_CONDUCT.md": {
+      "sha256": "9523ada71828eff44df16050f3869ab2fbb15d3c932de5de1968d179ebb914f9",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "CONTRIBUTING.md": {
+      "sha256": "82e5f06711dd757d644ae581f144c7e3d017362842584ca3f1fbe082052856c6",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "DATASET_CARD_TEMPLATE.md": {
+      "sha256": "68e913c0b307f8b49c36e6190ffd59bd4f318f2cbf8b560d1ba310c26448a560",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "DEPLOYMENT_BOUNDARIES.md": {
+      "sha256": "8b2b93de468ee6fcd968fdf37832984e67a546f32200ecd19fb3c1808133cfd4",
+      "status": "reviewed",
+      "reason": "Builder self-review of runtime admission, execution/tenant boundaries, tests, packaging or corresponding documentation; not independent release certification.",
+      "evidence": "2026-10-03: inspected source/diff with local OCR Python rules; focused tests, full 226-test Python 3.11/3.14 suites, Ruff, package and documentation checks; details in docs/RUNTIME_CONTROLS.md.",
+      "previous_evidence": ""
+    },
+    "Dockerfile": {
+      "sha256": "6a96b0d1a018d0b033809acde71121b9e2f78216d24d8293731f4d13602b4b06",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "GOVERNANCE.md": {
+      "sha256": "d5f923e9fd0881002ce910fd0f473d25e515952317c6ad396db8bb4d66e132d6",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "LICENSE": {
+      "sha256": "32db7282d56bdb95ccbd545e1e76345aaa96f89b66c8fec04b7a52f1731bea68",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "MODEL_CARD_TEMPLATE.md": {
+      "sha256": "3733c7fa86fef3c8585eeb3f1eb00835316632c6c62927202cd91ef508a42507",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "NOTICE": {
+      "sha256": "3626b148f9950637883d2ed627639fa3b5bb8437e91ecbcb60008f0f05b764b8",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "PRIVACY_AND_DATA_BOUNDARY.md": {
+      "sha256": "1f8d291f763a4e6a779feb098da5d83cf6f91a273eb007f6a780270621548651",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "PROVIDER_CARD_TEMPLATE.md": {
+      "sha256": "ddc7ff63dcf6e20a2aa39e824b33bfd7a67fd857a316cd32741ccd87a5249195",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "README.md": {
+      "sha256": "fa222e9c94c0c93457b60d8b568add015c58aa00646733138672281d7930ba4d",
+      "status": "reviewed",
+      "reason": "Builder self-review of runtime admission, execution/tenant boundaries, tests, packaging or corresponding documentation; not independent release certification.",
+      "evidence": "2026-10-03: inspected source/diff with local OCR Python rules; focused tests, full 226-test Python 3.11/3.14 suites, Ruff, package and documentation checks; details in docs/RUNTIME_CONTROLS.md.",
+      "previous_evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "SECURITY.md": {
+      "sha256": "9323156962a3f2c0c9968326be9f88a69c6897d32d6ad58e4c4e6cb4daa75231",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "START_HERE.txt": {
+      "sha256": "14864dba53ce70409777b90ba6c893c941b28b7daada3d612940b1720ef7f07f",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "SUPPORT.md": {
+      "sha256": "b1f32364dab4284d52fe5b8580ab650f92be075f138486cb0eefca84e17d3bce",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "THIRD_PARTY_NOTICES.md": {
+      "sha256": "c0497115738718c29c9453334b9fe03bf03bff618eeb850d126118581bdf0ae7",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "VALIDATION_PROTOCOL.md": {
+      "sha256": "4fae6dcb8776d9d5472b6f8e6408be0d71b283ae2b6598456b8a1c91e6c132fd",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "compose.yaml": {
+      "sha256": "f57703fde2b2f3fa42b436ea6ac873b5d2358b8b21479a05fc793aa3124a67ae",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "docs/LLM_COUNCIL_REVIEW.md": {
+      "sha256": "03a80e38963e201879d867455326e56fd43bc10a126c51744077d08a07d2f519",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "docs/OPEN_SOURCE_EXTENSIONS.md": {
+      "sha256": "445eb6cb34e12ef4b7f39e50f8b8f2768e33a30940a20720f1b7fd47107a3c0f",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "docs/RELEASING.md": {
+      "sha256": "4cc5ebcf9eff16c63f64a97fe37e50e94855ce5182b4167a2f09b52026dec58e",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "docs/ROUTER_REDESIGN.md": {
+      "sha256": "f2edd7c34f08309b3ec4559e8a1f493ca73440ea5c6dbe8f1c6408f855ba0633",
+      "status": "reviewed",
+      "reason": "Builder self-review of runtime admission, execution/tenant boundaries, tests, packaging or corresponding documentation; not independent release certification.",
+      "evidence": "2026-10-03: inspected source/diff with local OCR Python rules; focused tests, full 226-test Python 3.11/3.14 suites, Ruff, package and documentation checks; details in docs/RUNTIME_CONTROLS.md.",
+      "previous_evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "docs/ROUTING_STRATEGY.md": {
+      "sha256": "c94f480f9e946b2ac54dc68a1ce51c0526c78657648a52584df8446f73bd10ac",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "docs/RUNTIME_CONTROLS.md": {
+      "sha256": "cc2e92951f25f2066750c044ddd602f7dda3afc83c6181113dd962647acf4d6e",
+      "status": "reviewed",
+      "reason": "Builder self-review of runtime admission, execution/tenant boundaries, tests, packaging or corresponding documentation; not independent release certification.",
+      "evidence": "2026-10-03: inspected source/diff with local OCR Python rules; focused tests, full 226-test Python 3.11/3.14 suites, Ruff, package and documentation checks; details in docs/RUNTIME_CONTROLS.md.",
+      "previous_evidence": ""
+    },
+    "docs/TEAM_SDK.md": {
+      "sha256": "bafcdb4e203e86974d561c9160569f16b32f8954b5bf70941c47ff7ed9426fef",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "docs/company/AGENT_OPERATING_MODEL.md": {
+      "sha256": "100eea079878fd8bf899211fa9105f6581718780750e372d6d00d8a65c2b8f50",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "docs/company/ARCHITECTURE.md": {
+      "sha256": "cb2211f4f85d13a6745352bf8641408dddeccd2144cd9cf824392eaaa5b54eb5",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "docs/company/EVALUATION_AND_ROADMAP.md": {
+      "sha256": "4c41f473695bdf202ccd5a58c04fd0267de4a97a457bcf4bdcd5d571cf989204",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "docs/company/EVIDENCE.md": {
+      "sha256": "b2b982e212f04ba613eee9d07b62ca10cf61f45b7f7a2bec0ab5697ead3b3e66",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "docs/company/README.md": {
+      "sha256": "410a4af1a8e9f5b8a51a97bf2d6f6d3333ba2b508b9c0c601b7a7673123d4395",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": "",
+      "previous_evidence": ""
+    },
+    "docs/company/REPOSITORY_REVIEW.md": {
+      "sha256": "060ebd3c7832c6d0bba54170555bce6e4289604023d89da1c33e9fe214bbbe05",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "docs/company/VALIDATION.md": {
+      "sha256": "221ebaa802e0226bfcba64edba823fd79328088a1a8eff62a2035793b6a50280",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "docs/company/experiments/tradeoffs.py": {
+      "sha256": "1532ae4c1ce76288c9fae92fcf2129062b03f19016dd312493b089e055ef3771",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "docs/company/policy.example.json": {
+      "sha256": "90d2c8e953aa924688c50a1ded73473570a32d480ae865d4ef902a96a97276bc",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "examples/basic_routing.py": {
+      "sha256": "9b1922ca5419427259616db3f1a245f13d7fe8366adc125e0628c1b598454585",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "examples/evidence_routing.py": {
+      "sha256": "59067fd94025547e92e761eb293887f8804100c18a11bf5664faf9063a3f4fe5",
+      "status": "reviewed",
+      "reason": "",
+      "evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "examples/ollama_local.py": {
+      "sha256": "13a02fed8980b4be86a7605cdd8ddd61d85d6a91b4a44f2d238c3f85e88012e6",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "examples/runtime_controls.py": {
+      "sha256": "d5931b015dd35ffc1766415e269d29639191c7df356da641391f81b5116a27a3",
+      "status": "reviewed",
+      "reason": "Builder self-review of runtime admission, execution/tenant boundaries, tests, packaging or corresponding documentation; not independent release certification.",
+      "evidence": "2026-10-03: inspected source/diff with local OCR Python rules; focused tests, full 226-test Python 3.11/3.14 suites, Ruff, package and documentation checks; details in docs/RUNTIME_CONTROLS.md."
+    },
+    "examples/team_workflow.py": {
+      "sha256": "55055f313777f936751663b12b9d1875a58f116bdb5c1f156456c4f6b3a77479",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "pyproject.toml": {
+      "sha256": "c03964785ecf06eeeffc29d36fc4de8faab3e24434016116844ff19dfd44b023",
+      "status": "reviewed",
+      "reason": "Builder self-review of runtime admission, execution/tenant boundaries, tests, packaging or corresponding documentation; not independent release certification.",
+      "evidence": "2026-10-03: inspected source/diff with local OCR Python rules; focused tests, full 226-test Python 3.11/3.14 suites, Ruff, package and documentation checks; details in docs/RUNTIME_CONTROLS.md.",
+      "previous_evidence": ""
+    },
+    "requirements/release.in": {
+      "sha256": "a0bbc8f470266a8ab58b8fb34a1d6ec6efd0e324fdcbafbe3540ab1161deb232",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "requirements/release.txt": {
+      "sha256": "8621b5504925e324b80da9fe5d842bce58e22efeacfc01254be0096a4b3d4ed6",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "scripts/check_release.py": {
+      "sha256": "2892e81a0c6b694b5f5522e460a84d69c47a313af5986554e1e32073e3ed8ffa",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "scripts/validate_agent_team.py": {
+      "sha256": "55bc942cca2dd9dc29185aa1ae3604029e1ed30090624c73cbc632ce17c66c1e",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "src/ai_gateway/__init__.py": {
+      "sha256": "3f30b4567a2a6af18d7ea1a7f58537a3826b0c5d917236bbe227d9b9c463dc58",
+      "status": "reviewed",
+      "reason": "Builder self-review of runtime admission, execution/tenant boundaries, tests, packaging or corresponding documentation; not independent release certification.",
+      "evidence": "2026-10-03: inspected source/diff with local OCR Python rules; focused tests, full 226-test Python 3.11/3.14 suites, Ruff, package and documentation checks; details in docs/RUNTIME_CONTROLS.md.",
+      "previous_evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "src/ai_gateway/_version.py": {
+      "sha256": "91447944015cec709e8aa7655f7e9d64e1e4508e7023a57fe3746911c0fc6fed",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "src/ai_gateway/adapters.py": {
+      "sha256": "733b56957dba9ba7ae05fae3d60dbc2236af2fa32e8c9c75bda9d5b662474f50",
+      "status": "reviewed",
+      "reason": "Builder self-review of runtime admission, execution/tenant boundaries, tests, packaging or corresponding documentation; not independent release certification.",
+      "evidence": "2026-10-03: inspected source/diff with local OCR Python rules; focused tests, full 226-test Python 3.11/3.14 suites, Ruff, package and documentation checks; details in docs/RUNTIME_CONTROLS.md.",
+      "previous_evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "src/ai_gateway/api.py": {
+      "sha256": "657b65e164b63b3b5b0d00f32acafa3501ad7580a36e0a97de132838147ca714",
+      "status": "reviewed",
+      "reason": "Builder self-review of runtime admission, execution/tenant boundaries, tests, packaging or corresponding documentation; not independent release certification.",
+      "evidence": "2026-10-03: inspected source/diff with local OCR Python rules; focused tests, full 226-test Python 3.11/3.14 suites, Ruff, package and documentation checks; details in docs/RUNTIME_CONTROLS.md.",
+      "previous_evidence": ""
+    },
+    "src/ai_gateway/budget.py": {
+      "sha256": "48bf065e077f6c2a7a9083200d72b9defc11b2143445eadb32bb31566620e3f3",
+      "status": "reviewed",
+      "reason": "Builder self-review of runtime admission, execution/tenant boundaries, tests, packaging or corresponding documentation; not independent release certification.",
+      "evidence": "2026-10-03: inspected source/diff with local OCR Python rules; focused tests, full 226-test Python 3.11/3.14 suites, Ruff, package and documentation checks; details in docs/RUNTIME_CONTROLS.md."
+    },
+    "src/ai_gateway/cli.py": {
+      "sha256": "cb88fbc8e174b569d3d0bb1ea9871538b05ee0470aa0346ac3c10c16e2766b37",
+      "status": "reviewed",
+      "reason": "",
+      "evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "src/ai_gateway/container.py": {
+      "sha256": "b3ff56ba62345051500bfcf74278f30b1471c204451433f860743e89c33e2051",
+      "status": "reviewed",
+      "reason": "Builder self-review of runtime admission, execution/tenant boundaries, tests, packaging or corresponding documentation; not independent release certification.",
+      "evidence": "2026-10-03: inspected source/diff with local OCR Python rules; focused tests, full 226-test Python 3.11/3.14 suites, Ruff, package and documentation checks; details in docs/RUNTIME_CONTROLS.md.",
+      "previous_evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "src/ai_gateway/controls.py": {
+      "sha256": "bbea5a7061caaff9e5e4b1920f6c5219b24fee614e9545f5d63d1f473c745089",
+      "status": "reviewed",
+      "reason": "Builder self-review of runtime admission, execution/tenant boundaries, tests, packaging or corresponding documentation; not independent release certification.",
+      "evidence": "2026-10-03: inspected source/diff with local OCR Python rules; focused tests, full 226-test Python 3.11/3.14 suites, Ruff, package and documentation checks; details in docs/RUNTIME_CONTROLS.md."
+    },
+    "src/ai_gateway/council.py": {
+      "sha256": "840f29302bf8d6911d07f16164e12e3552d60c2dc55b9a497199003cbc1e9fc3",
+      "status": "reviewed",
+      "reason": "",
+      "evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "src/ai_gateway/council_handler.py": {
+      "sha256": "e4818a070c98341069a973bd73361d139ec106d3e87abcae48309fc87b90084a",
+      "status": "reviewed",
+      "reason": "",
+      "evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification.",
+      "previous_evidence": ""
+    },
+    "src/ai_gateway/evaluator.py": {
+      "sha256": "1edab4e8cd1f84516ae19a76d1c98139fd28f3e4bc0d8e939ac34f1a95738337",
+      "status": "reviewed",
+      "reason": "",
+      "evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "src/ai_gateway/evidence.py": {
+      "sha256": "14466071ea63a31ae3e12fd50eb0ecf808a95e9aa16b304fd74945b9bc068b48",
+      "status": "reviewed",
+      "reason": "",
+      "evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "src/ai_gateway/execution.py": {
+      "sha256": "6aeeeb04051df5f528ab1b7244360f486656fb684f3b06864dfac019a15fd58f",
+      "status": "reviewed",
+      "reason": "",
+      "evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification.",
+      "previous_evidence": ""
+    },
+    "src/ai_gateway/handlers.py": {
+      "sha256": "fa936c50da670fddd59049e6aa5697e64e3f622727afab86d953233d854b4a5a",
+      "status": "reviewed",
+      "reason": "",
+      "evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "src/ai_gateway/invocation.py": {
+      "sha256": "2b65402037863c9d6b6d4e4478787ee618fad90b3e95a997935ca0ea1b4107ee",
+      "status": "reviewed",
+      "reason": "Builder self-review of runtime admission, execution/tenant boundaries, tests, packaging or corresponding documentation; not independent release certification.",
+      "evidence": "2026-10-03: inspected source/diff with local OCR Python rules; focused tests, full 226-test Python 3.11/3.14 suites, Ruff, package and documentation checks; details in docs/RUNTIME_CONTROLS.md.",
+      "previous_evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "src/ai_gateway/models.py": {
+      "sha256": "6761fd59f63530783f61b7f8db82c562d78cc64dccbcce39fa6432e291786e15",
+      "status": "reviewed",
+      "reason": "Builder self-review of runtime admission, execution/tenant boundaries, tests, packaging or corresponding documentation; not independent release certification.",
+      "evidence": "2026-10-03: inspected source/diff with local OCR Python rules; focused tests, full 226-test Python 3.11/3.14 suites, Ruff, package and documentation checks; details in docs/RUNTIME_CONTROLS.md.",
+      "previous_evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "src/ai_gateway/optimization.py": {
+      "sha256": "0624c0efcfe91962a083e3e629d37d2d1a9047474f5d6c87b6f0f835414e2d2d",
+      "status": "reviewed",
+      "reason": "",
+      "evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification.",
+      "previous_evidence": ""
+    },
+    "src/ai_gateway/py.typed": {
+      "sha256": "d5ebd50f7f9ee401de96c181c57a51f82e6953d33de1cb9ea044a58cc3dba1ed",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "src/ai_gateway/registry.py": {
+      "sha256": "2866443ff5c04ac093585a7e237ba97480283cf3f501aa94ecde1e500d7905f7",
+      "status": "reviewed",
+      "reason": "",
+      "evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "src/ai_gateway/replay.py": {
+      "sha256": "57b0bde0a8cbb978ad9d8927e788c00f335bb1ffd5cf4fcce395cdd978c045f2",
+      "status": "reviewed",
+      "reason": "",
+      "evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "src/ai_gateway/router.py": {
+      "sha256": "477e72224b6ddbe1e405de75800040106b6fe393841a69688f8e19bd6675a12b",
+      "status": "reviewed",
+      "reason": "Builder self-review of runtime admission, execution/tenant boundaries, tests, packaging or corresponding documentation; not independent release certification.",
+      "evidence": "2026-10-03: inspected source/diff with local OCR Python rules; focused tests, full 226-test Python 3.11/3.14 suites, Ruff, package and documentation checks; details in docs/RUNTIME_CONTROLS.md.",
+      "previous_evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "src/ai_gateway/runtime.py": {
+      "sha256": "49dcf8de1143998e59958721951c1ea17e8fe60f96054778e3b2e058219da912",
+      "status": "reviewed",
+      "reason": "",
+      "evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification.",
+      "previous_evidence": ""
+    },
+    "src/ai_gateway/selector.py": {
+      "sha256": "d56d140c36ace4852c9d8394a23d87a57d813988abbe3ec4b3d681e0f4775bb4",
+      "status": "reviewed",
+      "reason": "",
+      "evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification.",
+      "previous_evidence": ""
+    },
+    "src/ai_gateway/static/app.js": {
+      "sha256": "29680130f6e2fe42a0c549e6bf1898c7a9e7c7cd4be8978da9d9129f22a2d73e",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "src/ai_gateway/static/index.html": {
+      "sha256": "98868489b99d679fd87663d83b3b7d939ea51683e31205f74440a3c62f774398",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "src/ai_gateway/static/styles.css": {
+      "sha256": "fe97e516ab9439d29ffbd76c9c8cea001d47f077b568cfba554231df1c7e0b3f",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "src/ai_gateway/strategy.py": {
+      "sha256": "5426ba7c1a6f4990b04f090dbfb64fe336ef8b30f672da5ef0c46a2395241608",
+      "status": "reviewed",
+      "reason": "",
+      "evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "src/ai_gateway/team.py": {
+      "sha256": "21e4ead7c8bc49b3f07976f004c61c7252e773530526ea47e3e01588a3ecb719",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "src/ai_gateway/team_cli.py": {
+      "sha256": "81e05c82c5249a26de625053078a325ee132fdf0340a1e232fcab30e395c6fbd",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "src/ai_gateway/team_scaffold.py": {
+      "sha256": "9fbf340af6e8c551158a4e6515a92452882287242b0e8a712cc593df2013f5c3",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "src/ai_gateway/telemetry.py": {
+      "sha256": "388bdfc9017d3a7bab6f79f6f9d04ecd8094cab619cbe9fc86aea420c7132877",
+      "status": "reviewed",
+      "reason": "",
+      "evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification.",
+      "previous_evidence": ""
+    },
+    "tests/test_adapters.py": {
+      "sha256": "76065c7e21da87b5f79eb3bbb312f2b66987d2d62a9899dcf84d4dda9a6ea1e4",
+      "status": "reviewed",
+      "reason": "Builder self-review of runtime admission, execution/tenant boundaries, tests, packaging or corresponding documentation; not independent release certification.",
+      "evidence": "2026-10-03: inspected source/diff with local OCR Python rules; focused tests, full 226-test Python 3.11/3.14 suites, Ruff, package and documentation checks; details in docs/RUNTIME_CONTROLS.md.",
+      "previous_evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "tests/test_adaptive_gateway.py": {
+      "sha256": "b0c597a3c8e748f37cdb205fdde82eba805f4a3512e4fa118ce18b9682609468",
+      "status": "reviewed",
+      "reason": "",
+      "evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification.",
+      "previous_evidence": ""
+    },
+    "tests/test_agent_team.py": {
+      "sha256": "b74b50b2f67f9cd34ab2cd9871f7468ad9aa2898a0c104da114c5043a6c44635",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "tests/test_budget.py": {
+      "sha256": "82384380d3bcc4a4a86d144529a83fe810771ddb7e6c315703957aad46867e37",
+      "status": "reviewed",
+      "reason": "Builder self-review of runtime admission, execution/tenant boundaries, tests, packaging or corresponding documentation; not independent release certification.",
+      "evidence": "2026-10-03: inspected source/diff with local OCR Python rules; focused tests, full 226-test Python 3.11/3.14 suites, Ruff, package and documentation checks; details in docs/RUNTIME_CONTROLS.md."
+    },
+    "tests/test_cli.py": {
+      "sha256": "2aecd4e3e0752e173d4cc31aec16031388614f8cb97d8be01abdbf5187bc7491",
+      "status": "reviewed",
+      "reason": "",
+      "evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "tests/test_company_tradeoffs.py": {
+      "sha256": "d3660ce5e2e03b9e5755dddf72196cf4b7f7e04ad6d16cd0e2c5e1054c1d56ac",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "tests/test_council.py": {
+      "sha256": "059e55f6e2e1e5e15b2fab89ed727192122a96d43beb1384709570568aec1f48",
+      "status": "reviewed",
+      "reason": "",
+      "evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "tests/test_evidence_routing.py": {
+      "sha256": "ea3cf37202ea413faf2c1b753f23edf5b07c8084c2f6167eb1cf67792abbfdd7",
+      "status": "reviewed",
+      "reason": "",
+      "evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "tests/test_examples.py": {
+      "sha256": "a1643a168008643c4e73ee016e02e763245b54bc71e724ef53f5076381655b0a",
+      "status": "reviewed",
+      "reason": "Builder self-review of runtime admission, execution/tenant boundaries, tests, packaging or corresponding documentation; not independent release certification.",
+      "evidence": "2026-10-03: inspected source/diff with local OCR Python rules; focused tests, full 226-test Python 3.11/3.14 suites, Ruff, package and documentation checks; details in docs/RUNTIME_CONTROLS.md.",
+      "previous_evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "tests/test_execution_controls.py": {
+      "sha256": "4a85dc6b00b5ff5e87e6150db4efe62347c47e775d1160fae3a5a19953c27907",
+      "status": "reviewed",
+      "reason": "Builder self-review of runtime admission, execution/tenant boundaries, tests, packaging or corresponding documentation; not independent release certification.",
+      "evidence": "2026-10-03: inspected source/diff with local OCR Python rules; focused tests, full 226-test Python 3.11/3.14 suites, Ruff, package and documentation checks; details in docs/RUNTIME_CONTROLS.md."
+    },
+    "tests/test_gateway_api.py": {
+      "sha256": "d3482b31602cc386a9772d8753c02de19b83ec82eeccaf8e0cb1b53e5a6b7b65",
+      "status": "reviewed",
+      "reason": "",
+      "evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "tests/test_readiness_agent.py": {
+      "sha256": "9fa291f8962bceb1972caf68fd5256a37220f37508190d13dc9a4d87af42518b",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "tests/test_release.py": {
+      "sha256": "c04171ddbfc0958d0528732f59e057ea7de1766a58101e84d8ffbc57185b7935",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "tests/test_replay.py": {
+      "sha256": "a9cdeb5eb707882505919d676854b21ed17e18a2f1770bc10b468027a51755cb",
+      "status": "reviewed",
+      "reason": "",
+      "evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "tests/test_router.py": {
+      "sha256": "3a629dff33eb49749c518de08efcb4b0ad718fe7c2c6b68f86c1f86978d49097",
+      "status": "reviewed",
+      "reason": "",
+      "evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "tests/test_routing_regressions.py": {
+      "sha256": "1a15a3c9a1f5aadb4478fb829eedef3221463ac976b8bb7b6f4d57770b7adb52",
+      "status": "reviewed",
+      "reason": "",
+      "evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "tests/test_runtime.py": {
+      "sha256": "31f8f69e31721ba077263b5787231db2109db01855240ebae886d5df18ecf600",
+      "status": "reviewed",
+      "reason": "",
+      "evidence": "Read source and traced routing/constraint/accounting behavior during 2026-10-03 builder self-review; see docs/ROUTER_REDESIGN.md for findings, repairs and 198-test validation. Not independent certification."
+    },
+    "tests/test_team.py": {
+      "sha256": "4f83dbc6e6666a779302b41f7d658ed874ee22e31e194d4c11e2f46f052537ef",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "tests/test_team_cli.py": {
+      "sha256": "026c1f04be0c1419acda4a09be4edda25cd7e0fb1d19ada20535ca2f3284e977",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "tests/test_team_scaffold.py": {
+      "sha256": "198a8ec5aa579caa5eaba0ce4f2862c877f50974009ad534f6336185c92d4f6a",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    },
+    "tests/test_tenant_api.py": {
+      "sha256": "112cf771f2284412af7c0931ca845b72659a00a00a17d0944d2cff3c4a23ca0e",
+      "status": "reviewed",
+      "reason": "Builder self-review of runtime admission, execution/tenant boundaries, tests, packaging or corresponding documentation; not independent release certification.",
+      "evidence": "2026-10-03: inspected source/diff with local OCR Python rules; focused tests, full 226-test Python 3.11/3.14 suites, Ruff, package and documentation checks; details in docs/RUNTIME_CONTROLS.md.",
+      "previous_evidence": ""
+    },
+    "tools/readiness_agent.py": {
+      "sha256": "15f80a1e085d70e461ddd5ce8bee92bb4663789d838835d986b76c153abb0f46",
+      "status": "excluded",
+      "reason": "Outside this scoped routing-runtime review: unchanged team SDK, UI visuals, operating tooling, historical/company research or unrelated support artifact. Existing changes preserved; complete test suite still run.",
+      "evidence": ""
+    }
+  },
+  "removed_since_last_sync": []
+}

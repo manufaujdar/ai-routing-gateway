@@ -66,6 +66,7 @@ include = [
   "/THIRD_PARTY_NOTICES.md",
   "/VALIDATION_PROTOCOL.md",
   "/docs",
+  "/examples",
   "/compose.yaml",
   "/pyproject.toml",
   "/scripts",

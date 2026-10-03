@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import math
 from dataclasses import asdict, dataclass
 from typing import Any
 
@@ -22,10 +21,10 @@ class RoutingPolicyProposal:
 
 
 class AdaptiveRoutingAgent:
-    """Prompt-free contextual-bandit advisor over observed deployment outcomes.
+    """Heuristic advisor using explicit quality labels; not a trained bandit.
 
-    The agent influences ranking only after a minimum sample count. It proposes
-    policy changes but never mutates configuration, publishes, or calls a model.
+    Form checks and HTTP success are not quality labels. Recommendations require
+    complete cost observations and enough quality evidence in each cohort.
     """
 
     def __init__(
@@ -45,19 +44,14 @@ class AdaptiveRoutingAgent:
 
     def adjustment(self, profile: ModelProfile, task_type: TaskType) -> float:
         aggregates = self._matching(profile, task_type)
-        calls = sum(aggregate.calls for aggregate in aggregates)
-        if calls < self.minimum_samples:
+        samples = sum(item.quality_samples for item in aggregates)
+        if samples < self.minimum_samples:
             return 0.0
+        observed_quality = sum(
+            (item.average_quality_score or 0) * item.quality_samples for item in aggregates
+        ) / samples
         success = _weighted(aggregates, "success_rate")
-        verifier = _optional_weighted(aggregates, "average_verifier_score")
-        feedback = _optional_weighted(aggregates, "average_feedback_score")
-        observed_quality = feedback if feedback is not None else verifier
-        if observed_quality is None:
-            observed_quality = success
-        exploitation = 0.65 * observed_quality + 0.35 * success
-        total_calls = max(1, len(self.telemetry.observations))
-        exploration = min(1.0, math.sqrt(2 * math.log(total_calls + 1) / calls))
-        centered = (exploitation - 0.5) * 0.16 + exploration * 0.02
+        centered = (0.65 * observed_quality + 0.35 * success - 0.5) * 0.16
         return round(
             max(-self.maximum_adjustment, min(self.maximum_adjustment, centered)),
             6,
@@ -70,6 +64,8 @@ class AdaptiveRoutingAgent:
         for task_type in TaskType:
             task_aggregates = [
                 aggregate for aggregate in aggregates if aggregate.task_type is task_type
+                and aggregate.quality_samples >= self.minimum_samples
+                and aggregate.unpriced_calls == 0
             ]
             if not task_aggregates:
                 continue
@@ -94,7 +90,7 @@ class AdaptiveRoutingAgent:
                     ),
                 }
             )
-        status = "ready_for_offline_evaluation" if sample_count >= self.minimum_samples else (
+        status = "ready_for_offline_evaluation" if recommendations else (
             "insufficient_evidence"
         )
         content = json.dumps(recommendations, sort_keys=True, separators=(",", ":"))
@@ -129,26 +125,12 @@ def _weighted(aggregates: tuple[DeploymentAggregate, ...], field: str) -> float:
     return sum(getattr(aggregate, field) * aggregate.calls for aggregate in aggregates) / total
 
 
-def _optional_weighted(
-    aggregates: tuple[DeploymentAggregate, ...], field: str
-) -> float | None:
-    available = [
-        aggregate for aggregate in aggregates if getattr(aggregate, field) is not None
-    ]
-    if not available:
-        return None
-    return _weighted(tuple(available), field)
-
 
 def _aggregate_utility(aggregate: DeploymentAggregate) -> float:
-    quality = (
-        aggregate.average_feedback_score
-        if aggregate.average_feedback_score is not None
-        else aggregate.average_verifier_score
-        if aggregate.average_verifier_score is not None
-        else aggregate.success_rate
-    )
-    latency_penalty = min(0.25, aggregate.average_latency_ms / 100_000)
+    quality = aggregate.average_quality_score
+    if quality is None or aggregate.total_cost_usd is None:
+        raise ValueError("utility requires labeled quality and complete costs")
+    latency_penalty = min(0.25, aggregate.p95_latency_ms / 100_000)
     cost_per_call = aggregate.total_cost_usd / max(1, aggregate.calls)
     cost_penalty = min(0.25, cost_per_call * 10)
     return quality * 0.7 + aggregate.success_rate * 0.3 - latency_penalty - cost_penalty

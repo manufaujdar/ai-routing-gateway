@@ -1,9 +1,12 @@
 """AI routing gateway."""
 
 from ._version import __version__
+from .budget import BudgetDenied, SQLiteBudgetLedger
 from .container import GatewayContainer, build_container
+from .controls import CircuitBreaker, ExecutionPolicy
 from .council import CouncilPlanner, CouncilPolicy
 from .council_handler import CouncilHandler, ModelCaller
+from .evidence import EvidencePolicy, QualityEvidence
 from .execution import AdaptiveLLMHandler, HeuristicResponseVerifier, VerificationResult
 from .models import (
     CouncilMode,
@@ -41,14 +44,18 @@ __all__ = [
     "ROLE_DEFINITIONS",
     "AdaptiveLLMHandler",
     "AdaptiveRoutingAgent",
+    "BudgetDenied",
     "CallObservation",
+    "CircuitBreaker",
     "CouncilHandler",
     "CouncilMode",
     "CouncilPlanner",
     "CouncilPolicy",
     "CouncilRequirementError",
+    "EvidencePolicy",
     "ExecutionPlan",
     "ExecutionPlanner",
+    "ExecutionPolicy",
     "ExecutionStrategy",
     "GatewayContainer",
     "GatewayRequest",
@@ -63,10 +70,12 @@ __all__ = [
     "OptimizationGoal",
     "ProjectTask",
     "ProjectTaskKind",
+    "QualityEvidence",
     "RoleResult",
     "RoleStatus",
     "RouteDecision",
     "RoutingPolicyProposal",
+    "SQLiteBudgetLedger",
     "StrategyRequirementError",
     "TeamExecutor",
     "TeamPlan",

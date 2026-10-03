@@ -1,17 +1,19 @@
 from __future__ import annotations
 
+import hashlib
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field, replace
 
 from .adapters import OpenAICompatibleModelCaller
 from .container import GatewayContainer, build_container
 from .evaluator import RoutingConfig
+from .selector import ModelCatalog, default_model_catalog
 from .telemetry import InMemoryTelemetryStore
 
 
 @dataclass(frozen=True, slots=True)
 class ProviderSettings:
-    api_key: str
+    api_key: str = field(repr=False)
     base_url: str = "https://api.openai.com/v1"
     fast_model: str = "gpt-4.1-mini"
     reasoning_model: str = "o4-mini"
@@ -38,8 +40,15 @@ class ProviderSettings:
             timeout=self.timeout_seconds,
             allow_insecure_loopback=self.allow_insecure_loopback,
         )
+        endpoint_id = hashlib.sha256(self.base_url.rstrip("/").encode()).hexdigest()[:16]
+        catalog = default_model_catalog(self.fast_model, self.reasoning_model, self.code_model)
+        catalog = ModelCatalog(tuple(
+            replace(profile, deployment_id=f"{endpoint_id}:{profile.model}")
+            for profile in catalog.profiles
+        ))
         return build_container(
             caller,
+            model_catalog=catalog,
             routing_config=RoutingConfig(
                 fast_model=self.fast_model,
                 reasoning_model=self.reasoning_model,

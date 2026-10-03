@@ -42,6 +42,12 @@ report-only and cannot approve their own implementation. Release never fixes cod
 The machine-readable registry is `.ai/team.json`. Run `python scripts/validate_agent_team.py` after
 editing any team skill or registry entry.
 
+For company formation and product-design work, use
+[`docs/company/AGENT_OPERATING_MODEL.md`](../docs/company/AGENT_OPERATING_MODEL.md).
+All 12 skills link to company-specific `references/company.md` responsibilities.
+The existing registry remains authoritative; these contracts do not create
+always-running agents or authorize spending, outreach, deployment or delegation.
+
 ## Handoff contract
 
 Use `.ai/HANDOFF.md` only while work is active. Record:

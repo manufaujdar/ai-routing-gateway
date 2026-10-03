@@ -43,3 +43,9 @@ budget bypass, private-data leakage, or an evaluation too weak to support the cl
 
 Send actionable failures to `builder` and require independent re-evaluation. Send verified policy and
 metric facts to `documentation`; send the final gate verdict to `release` and Team Lead.
+
+## Company design and operations
+
+For the EquiRoute model-routing company effort, read
+[the company role contract](references/company.md). This specializes the existing
+role; it does not expand its execution, spending, delegation or release authority.

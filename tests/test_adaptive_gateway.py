@@ -130,7 +130,8 @@ def test_decision_only_api_exposes_bounded_execution_plan() -> None:
     plan = response.json()["decision"]["execution_plan"]
     assert plan["strategy"] == "cascade"
     assert len(plan["model_sequence"]) >= 2
-    assert plan["hard_budget_respected"] is True
+    assert plan["hard_budget_respected"] is False
+    assert "planning estimates" in plan["budget_semantics"]
 
 
 def test_adaptive_agent_waits_for_evidence_then_emits_reviewable_proposal() -> None:
@@ -155,6 +156,8 @@ def test_adaptive_agent_waits_for_evidence_then_emits_reviewable_proposal() -> N
                 success=True,
                 latency_ms=50,
                 verifier_score=0.95,
+                quality_score=0.95,
+                cost_usd=0.001,
             )
         )
 

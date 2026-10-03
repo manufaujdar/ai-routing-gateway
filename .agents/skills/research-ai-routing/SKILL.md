@@ -42,3 +42,9 @@ vendor claim that cannot be independently checked. Request authority or label th
 
 Send the evidence brief to `planner` for scope decisions or `engineer` for technical design. Include
 source links, version/date, raw measurement location, and unresolved uncertainty.
+
+## Company design and operations
+
+For the EquiRoute model-routing company effort, read
+[the company role contract](references/company.md). This specializes the existing
+role; it does not expand its execution, spending, delegation or release authority.

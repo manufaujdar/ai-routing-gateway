@@ -45,3 +45,9 @@ disjoint. Ask the user rather than inventing authority.
 
 Update `.ai/HANDOFF.md` with the current gate, completed artifacts, evidence, unresolved risks, and
 exact next owner. Handoff only to role IDs registered in `.ai/team.json`.
+
+## Company design and operations
+
+For the EquiRoute model-routing company effort, read
+[the company role contract](references/company.md). This specializes the existing
+role; it does not expand its execution, spending, delegation or release authority.

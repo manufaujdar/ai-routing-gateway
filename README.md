@@ -12,18 +12,27 @@ hosted service is required.
 The core is dependency-free, deterministic, and offline-testable. Provider calls, web tools, APIs,
 and agent frameworks are optional adapters owned by the integrating project.
 
+The [EquiRoute company design](docs/company/README.md) explores a business around this
+project, with a current research review, decision-layer architecture, company agent
+contracts and an evaluation roadmap. The [implemented router redesign](docs/ROUTER_REDESIGN.md)
+adds an optional evidence gate and repairs execution accounting; the broader company remains a proposal.
+
 > **Project status: alpha.** The included catalog values and handlers are stable test fixtures, not
-> live provider guarantees. Runtime usage accounting, tenant controls, provider reliability policy,
-> and unrestricted tool execution are not included. Public interfaces may evolve before 1.0.
+> live provider guarantees. Optional durable admission budgets, execution limits and tenant API
+> credentials are available; provider billing guarantees, a hosted service and latency SLOs are
+> not established. Public interfaces may evolve before 1.0.
 
 ## What it provides
 
 - Explainable prompt classification and routing to LLM or tool capabilities.
-- Model ranking across cost, quality, and latency constraints.
+- Model ranking across cost, quality, and latency constraints; optional versioned quality evidence,
+  capability filters, conservative bounds and explicit abstention.
 - Bounded `single`, verified `cascade`, parallel `self_consistency`, and multi-model `council`
   execution strategies, with an `auto` policy that chooses among them.
 - Prompt-free deployment telemetry and a deterministic adaptive routing advisor that proposes
   versioned policy changes without applying them automatically.
+- Optional SQLite charge reservations/reconciliation, shared execution deadlines, output caps,
+  provider circuit breakers and server-owned tenant API containers.
 - Conservative LLM council activation with `auto`, `always`, and `never` modes.
 - A reusable 12-role project team: Lead, Planner, R&D, Designer, Engineer, Builder, Reviewer, QA,
   Safety, Documentation, Marketer, and Release.
@@ -131,11 +140,28 @@ Cascade starts with the lowest-cost feasible model and escalates when the config
 rejects the response. Self-consistency runs bounded independent samples and uses majority agreement
 or one aggregation call. Estimates are planning controls, not atomic provider spend guarantees.
 
-Configured direct-model calls record prompt-free outcome data such as deployment, task, strategy,
-success, latency, token counts, estimated or provider-reported cost, and verifier score. Prompts and
-responses are not stored in this telemetry. `AdaptiveRoutingAgent` waits for a minimum sample count
-before influencing ranking and only emits policy proposals; promotion still requires replay,
-explicit approval, and a canary rollout.
+Configured direct-model and council calls record prompt-free deployment, task, strategy,
+success, latency and usage data. Provider-reported cost and catalog estimates are separate; an
+incomplete cost total is `null`, with a known subtotal and unpriced-call count. Form-verifier
+scores are not accuracy labels. Feedback updates the returned stage only.
+
+Adaptive ranking is off by default; the advisor proposes changes from sufficient explicit
+quality labels and complete cost data. An operator may enable its heuristic adjustment with
+`build_container(enable_adaptive_ranking=True)` after evaluation. It is not a trained bandit.
+`max_model_calls` rejects oversized plans before execution, and the bundled provider adapter
+disables hidden retries. Catalog cost and latency limits remain planning estimates.
+
+For runtime enforcement, inject `ExecutionPolicy` and optionally `CircuitBreaker` into
+`build_container`. An optional `SQLiteBudgetLedger` reserves operator-declared charge ceilings
+before provider contact and retains unknown charges across restart. Shared execution timeouts
+and token caps require a compatible adapter. See [configuration and limitations](docs/RUNTIME_CONTROLS.md)
+and the offline [runtime example](examples/runtime_controls.py).
+
+For quality-constrained selection, pass server-owned `EvidencePolicy` records and set
+`selection_mode="evidence"` with an explicit `min_quality`. Missing, stale or incompatible
+records produce an abstention without execution. Evidence mode currently supports single-model
+execution only. See [configuration, research, assumptions and migration notes](docs/ROUTER_REDESIGN.md)
+and the offline [example](examples/evidence_routing.py).
 
 ### Council behavior
 
@@ -251,6 +277,10 @@ secret-management systems; never commit them or include private prompts in trace
 
 The FastAPI application is an optional transport, not the primary product:
 
+`create_app(tenants={bearer_token: container, ...})` enables optional server-owned tenant
+access with isolated telemetry and feedback. All paths except `/health` then require a bearer
+token. Default `create_app()` remains trusted-local. See the [tenant setup](docs/RUNTIME_CONTROLS.md#optional-tenant-api-mode).
+
 ```bash
 python -m pip install '.[api]'
 uvicorn ai_gateway.api:app --reload
@@ -362,9 +392,10 @@ release history is in `CHANGELOG.md`.
 
 ## Production responsibilities
 
-Before production use, integrators should add authentication, tenant isolation, rate limits,
-runtime budgets, retries, circuit breakers, telemetry, prompt-injection defenses, strict tool
-schemas, execution sandboxing, and a defined data-retention policy.
+Before production use, integrators must configure and validate runtime and tenant controls,
+then complete identity lifecycle, rate/concurrency limits, billing reconciliation, durable
+telemetry, prompt-injection defenses, strict tool schemas, execution sandboxing and retention.
+See [deployment boundaries](DEPLOYMENT_BOUNDARIES.md).
 
 ## License and provenance
 

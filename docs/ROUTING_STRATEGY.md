@@ -2,6 +2,13 @@
 
 Research date: 2026-07-19
 
+Historical strategy snapshot. For the 3 October 2026 company proposal and refreshed
+competitive evidence, read [the company design](company/README.md) and
+[evidence review](company/EVIDENCE.md). In particular, current LiteLLM and vLLM
+Semantic Router documentation describes adaptive/semantic decision features that
+overlap with this strategy; the comparison below must not be used as a current
+claim that those competitors only provide transport or configured routing.
+
 ## Executive recommendation
 
 Do not begin by recreating the provider-aggregation layer already offered by Vercel AI

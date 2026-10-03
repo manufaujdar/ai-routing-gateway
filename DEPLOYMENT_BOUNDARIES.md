@@ -2,8 +2,8 @@
 
 AI Routing Gateway is an integration framework, not a managed gateway service.
 The default core evaluates requests locally and uses mock handlers. Installing
-the package does not create authentication, isolation, billing enforcement,
-network egress controls, or safe tool execution.
+the package does not configure authentication, tenant isolation, billing policy,
+network egress controls, or safe tool execution for a deployment.
 
 ## Implemented boundaries
 
@@ -18,6 +18,16 @@ network egress controls, or safe tool execution.
 - External release actions in team workflows require an exact boolean approval.
 - Non-HTTPS provider endpoints are rejected except for explicitly enabled
   literal loopback development endpoints.
+- Optional server-owned SQLite reservations persist unknown billing across restart;
+  declared charge-ceiling breaches freeze future admission without hiding actual costs.
+- Optional shared execution deadlines, prompt/output caps and process-local circuit
+  breakers cover configured direct model strategies; synchronous calls cannot be force-killed.
+- Optional tenant API credentials bind distinct server containers, telemetry stores
+  and budget accounts. All tenant-mode paths except `/health` require authentication.
+
+See [runtime setup and exact limitations](docs/RUNTIME_CONTROLS.md). These controls
+are opt-in; the default local server remains unauthenticated. The cost ledger is
+single-host and depends on operator-verified exposure ceilings and reconciliation.
 
 These are framework controls, not a comprehensive security or safety system.
 Keyword rules are bypassable, catalog prices are estimates, and mock handlers
@@ -39,8 +49,9 @@ do not prove that a production tool is safe.
    cannot be established for a hard constraint.
 6. Persist telemetry in a tenant-isolated store only after defining retention and deletion; audit
    feedback integrity and require replay, approval, canary, rollback, and drift gates for changes.
-7. Add timeouts, bounded retries, circuit breakers, idempotency, concurrency
-   limits, abuse monitoring, and tested rollback behavior.
+7. Configure and contract-test execution deadlines, token caps and circuit breakers;
+   add hard cancellation where supported, request idempotency, concurrency limits,
+   abuse monitoring and tested rollback behavior. Keep retries within admitted exposure.
 8. Evaluate prompt injection, data exfiltration, unsafe tool use, cross-tenant
    leakage, model fallback, and partial provider failure before launch.
 

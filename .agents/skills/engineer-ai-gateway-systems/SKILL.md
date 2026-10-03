@@ -44,3 +44,9 @@ or a design whose risk cannot be bounded with tests and rollback.
 
 Send the approved technical plan to `builder`, with file/module ownership, acceptance checks, explicit
 non-goals, and decisions that must not be silently changed.
+
+## Company design and operations
+
+For the EquiRoute model-routing company effort, read
+[the company role contract](references/company.md). This specializes the existing
+role; it does not expand its execution, spending, delegation or release authority.

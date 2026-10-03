@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
 from enum import Enum
+from math import isfinite
 from typing import Any
 
 
@@ -66,8 +67,40 @@ class GatewayRequest:
     strategy_model_limit: int = 3
     self_consistency_samples: int = 3
     verifier_threshold: float = 0.65
+    max_model_calls: int = 17
+    required_capabilities: tuple[str, ...] = ()
+    selection_mode: str = "weighted"
+    execution_timeout_ms: int | None = None
+    max_output_tokens: int | None = None
 
     def __post_init__(self) -> None:
+        for name in ("execution_timeout_ms", "max_output_tokens"):
+            value = getattr(self, name)
+            if value is not None and (type(value) is not int or value <= 0):
+                raise ValueError(f"{name} must be a positive integer")
+        if self.execution_timeout_ms is not None and self.execution_timeout_ms > 300_000:
+            raise ValueError("execution_timeout_ms must not exceed 300000")
+        if self.max_output_tokens is not None and self.max_output_tokens > 1_000_000:
+            raise ValueError("max_output_tokens must not exceed 1000000")
+        for name in ("max_cost_usd", "min_quality", "verifier_threshold"):
+            value = getattr(self, name)
+            if value is not None and (type(value) not in (int, float) or not isfinite(value)):
+                raise ValueError(f"{name} must be a finite number")
+        for name in ("max_latency_ms", "council_size", "strategy_model_limit",
+                     "self_consistency_samples", "max_model_calls"):
+            value = getattr(self, name)
+            if not (name == "max_latency_ms" and value is None) and type(value) is not int:
+                raise ValueError(f"{name} must be an integer")
+        if not 1 <= self.max_model_calls <= 17:
+            raise ValueError("max_model_calls must be between 1 and 17")
+        if self.selection_mode not in ("weighted", "evidence"):
+            raise ValueError("selection_mode must be weighted or evidence")
+        if self.selection_mode == "evidence" and self.min_quality is None:
+            raise ValueError("evidence selection requires an explicit min_quality")
+        if not isinstance(self.required_capabilities, tuple) or any(
+            not isinstance(item, str) or not item for item in self.required_capabilities
+        ):
+            raise ValueError("required_capabilities must be a tuple of nonempty strings")
         if type(self.execute) is not bool:
             raise ValueError("execute must be a boolean")
         if self.max_cost_usd is not None and self.max_cost_usd < 0:
@@ -134,7 +167,8 @@ class ExecutionPlan:
     estimated_latency_ms: int = 0
     verifier_threshold: float = 0.65
     sample_count: int = 1
-    hard_budget_respected: bool = True
+    hard_budget_respected: bool = False
+    budget_semantics: str = "cost and latency are planning estimates, not spending guarantees"
 
 
 @dataclass(frozen=True, slots=True)
@@ -163,6 +197,7 @@ class RouteDecision:
     model_candidates: tuple[ModelCandidate, ...] = ()
     council_plan: CouncilPlan | None = None
     execution_plan: ExecutionPlan | None = None
+    selection_receipt: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

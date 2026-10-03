@@ -1,7 +1,11 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, replace
-from typing import ClassVar, Protocol
+from math import isfinite
+from typing import TYPE_CHECKING, ClassVar, Protocol
+
+if TYPE_CHECKING:
+    from .evidence import EvidencePolicy
 
 from .models import (
     Complexity,
@@ -35,8 +39,14 @@ class ModelProfile:
     p95_latency_ms: int = 0
     success_probability: float = 1.0
     quality_by_task: tuple[tuple[TaskType, float], ...] = ()
+    model_version: str = ""
 
     def __post_init__(self) -> None:
+        for name in ("quality", "input_cost_per_million", "output_cost_per_million",
+                     "latency_ms", "ttft_ms", "p95_latency_ms", "success_probability"):
+            value = getattr(self, name)
+            if type(value) not in (int, float) or not isfinite(value):
+                raise ValueError(f"{name} must be a finite number")
         if not 0 <= self.quality <= 1:
             raise ValueError("model quality must be between 0 and 1")
         if self.input_cost_per_million < 0 or self.output_cost_per_million < 0:
@@ -47,7 +57,8 @@ class ModelProfile:
             raise ValueError("model latency percentiles must not be negative")
         if not 0 <= self.success_probability <= 1:
             raise ValueError("model success_probability must be between 0 and 1")
-        if any(not 0 <= quality <= 1 for _, quality in self.quality_by_task):
+        if any(type(quality) not in (int, float) or not 0 <= quality <= 1
+               for _, quality in self.quality_by_task):
             raise ValueError("task-specific quality must be between 0 and 1")
 
     @property
@@ -107,13 +118,21 @@ class ModelSelector:
         self,
         catalog: ModelCatalog,
         optimizer: SelectionOptimizer | None = None,
+        evidence_policy: EvidencePolicy | None = None,
     ) -> None:
         self.catalog = catalog
         self.optimizer = optimizer
+        self.evidence_policy = evidence_policy
 
     def select(self, request: GatewayRequest, decision: RouteDecision) -> RouteDecision:
         if decision.route == "blocked":
             return decision
+
+        if request.selection_mode == "evidence":
+            from .evidence import EvidencePolicy
+
+            policy = self.evidence_policy or EvidencePolicy((), dataset_version="unconfigured")
+            return policy.select(self.catalog, request, decision)
 
         input_tokens, output_tokens = self._estimated_tokens(request, decision)
         feasible: list[tuple[ModelProfile, float]] = []
@@ -178,6 +197,8 @@ class ModelSelector:
             model=selected.model,
             reasons=(*decision.reasons, selection_reason),
             model_candidates=tuple(ranked),
+            selection_receipt={"status": "selected", "method": "weighted_catalog",
+                               "quality_source": "catalog estimate", "rejections": rejected},
         )
 
     @classmethod
@@ -186,9 +207,9 @@ class ModelSelector:
     ) -> tuple[int, int]:
         input_tokens = request.context.get("estimated_input_tokens")
         output_tokens = request.context.get("estimated_output_tokens")
-        if not isinstance(input_tokens, int) or input_tokens <= 0:
+        if type(input_tokens) is not int or input_tokens <= 0:
             input_tokens = max(1, (len(request.prompt) + 3) // 4)
-        if not isinstance(output_tokens, int) or output_tokens <= 0:
+        if type(output_tokens) is not int or output_tokens <= 0:
             output_tokens = cls.OUTPUT_TOKENS[decision.complexity]
         return input_tokens, output_tokens
 
@@ -208,6 +229,8 @@ class ModelSelector:
     ) -> str | None:
         if request.allowed_models is not None and profile.model not in request.allowed_models:
             return "not in allowed_models"
+        if not set(request.required_capabilities).issubset(profile.capabilities):
+            return "missing required capabilities"
         if request.max_cost_usd is not None and estimated_cost > request.max_cost_usd:
             return f"estimated cost ${estimated_cost:.6f} exceeds budget"
         if request.max_latency_ms is not None and profile.latency_ms > request.max_latency_ms:

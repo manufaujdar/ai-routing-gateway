@@ -39,3 +39,9 @@ require product approval. Do not disguise subjective taste as a verified require
 
 Send accepted interface specifications to `engineer` for technical integration or `builder` when the
 technical plan already covers them. Send verified public narrative needs to `marketer`.
+
+## Company design and operations
+
+For the EquiRoute model-routing company effort, read
+[the company role contract](references/company.md). This specializes the existing
+role; it does not expand its execution, spending, delegation or release authority.

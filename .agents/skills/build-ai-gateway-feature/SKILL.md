@@ -41,3 +41,9 @@ external side effects, an interface break not in the plan, or repeated failure w
 
 Send the completed diff and evidence to `reviewer`, `qa`, and `safety-evaluation` as relevant. Accepted
 findings return to Builder; require the original independent role to re-verify.
+
+## Company design and operations
+
+For the EquiRoute model-routing company effort, read
+[the company role contract](references/company.md). This specializes the existing
+role; it does not expand its execution, spending, delegation or release authority.

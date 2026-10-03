@@ -43,3 +43,9 @@ tests that cannot establish the intended behavior. Do not waive a finding becaus
 
 Send the deduplicated finding list to `builder`. After fixes, re-read the new diff and independently
 verify resolution before handing to `documentation` or `release`.
+
+## Company design and operations
+
+For the EquiRoute model-routing company effort, read
+[the company role contract](references/company.md). This specializes the existing
+role; it does not expand its execution, spending, delegation or release authority.

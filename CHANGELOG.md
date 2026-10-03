@@ -8,6 +8,16 @@ All notable changes are documented here. This project follows
 
 ### Added
 
+- Added optional durable SQLite charge admission/reconciliation, shared execution deadlines,
+  prompt/output caps and a process-local provider circuit breaker. Unknown charges remain held.
+- Added optional bearer-to-container tenant API access with isolated telemetry/feedback and
+  server-owned provider configuration; trusted-local defaults are unchanged.
+- Added an offline runtime-control example and included examples in source distributions.
+- Added opt-in versioned evidence routing with conservative fixed-cohort quality bounds,
+  capability/p95 gates, candidate receipts and explicit abstention.
+- Added paired offline selection replay with calibration/test ID separation and coverage metrics.
+- Added call-count preflight and shared usage accounting for configured council calls.
+
 - Added `PRIVACY_AND_DATA_BOUNDARY.md` and included it in source distributions to distinguish the MIT source license from deployment-specific privacy and service terms.
 - Added a responsive local routing workspace with execution controls, provider setup, ranked
   candidates, route explanations, local history, copy, and JSON export.
@@ -20,7 +30,8 @@ All notable changes are documented here. This project follows
   accessibility, supply-chain, and decision-only execution signals.
 - Added a dependency-free decision-only browser console to the optional FastAPI
   transport and documented the loopback-only Ollama adapter path.
-- Added an authenticated `/v1/capabilities` endpoint with non-secret routes and model metadata.
+- Added `/v1/capabilities` with non-secret routes and model metadata; authentication applies
+  when optional tenant mode is configured.
 - Added `--version` to both command-line tools and a PEP 561 `py.typed` marker for type-aware
   consumers.
 - Added bounded single-model, verified-cascade, self-consistency, and council execution planning.
@@ -30,6 +41,14 @@ All notable changes are documented here. This project follows
   routing workspace.
 
 ### Changed
+
+- Unknown cost and token totals now serialize as `null`; known subtotals and unpriced call counts
+  remain visible. `hard_budget_respected` is now false: catalog budgets are planning estimates.
+- Adaptive ranking is opt-in. Form scores and transport success no longer count as quality labels.
+- Cascades recover provider failures; sample majorities include failed samples in the denominator.
+  Request identity, final-feedback attribution, endpoint namespaces and wall-time accounting are fixed.
+- The bundled OpenAI-compatible adapter disables SDK retries; API numeric validation is stricter
+  and validation errors omit submitted values.
 
 - `GatewayRequest` and `ProjectTask` now reject non-boolean control flags instead of accepting
   truthy strings, integers, or `None`.

@@ -12,6 +12,8 @@ READ FIRST
 3. .ai/TEAM.md               Specialist agent roles, gates, and handoffs
 4. CONTRIBUTING.md           Development and pull-request requirements
 5. docs/RELEASING.md         GitHub and Python package release procedure
+6. docs/company/README.md    EquiRoute company proposal, research, architecture,
+                            agent contracts and evaluation roadmap (design stage)
 
 HUMAN WORK
 ----------
@@ -36,3 +38,10 @@ STARTUP TEAM
 
 For idea-to-release work, ask the agent to use the roster and explicit gears in
 .ai/TEAM.md. Routing semantics, safety, validation, and approval gates still apply.
+
+
+Spec Kit v1.1.0 — local development/planning workflow
+---------------------------------------------------
+Read .specify/INTEGRATION.md for the installed Codex feature, bug and idea
+commands. Existing project/company trackers and approvals remain authoritative.
+Run commands from this folder; new project chats discover .agents/skills/speckit-*.

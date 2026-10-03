@@ -10,7 +10,9 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 
 
-@pytest.mark.parametrize("example", ["basic_routing.py", "team_workflow.py"])
+@pytest.mark.parametrize("example", [
+    "basic_routing.py", "team_workflow.py", "evidence_routing.py", "runtime_controls.py",
+])
 def test_example_runs(example: str) -> None:
     environment = os.environ.copy()
     existing_pythonpath = environment.get("PYTHONPATH")

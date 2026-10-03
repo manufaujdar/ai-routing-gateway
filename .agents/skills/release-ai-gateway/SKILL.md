@@ -42,3 +42,9 @@ rollback, missing credentials managed by the user, or any external action not ex
 
 Return failures to `builder`, `qa`, `safety-evaluation`, or `documentation`. After a successful
 authorized release, hand facts to Team Lead for closure and future evaluation.
+
+## Company design and operations
+
+For the EquiRoute model-routing company effort, read
+[the company role contract](references/company.md). This specializes the existing
+role; it does not expand its execution, spending, delegation or release authority.

@@ -41,3 +41,9 @@ credentials, or a failed critical scenario. Do not silently reduce scope and rep
 
 Send reproducible failures to `builder`; send AI-policy failures to `safety-evaluation`. After clean
 re-verification, send evidence to `documentation` and `release`.
+
+## Company design and operations
+
+For the EquiRoute model-routing company effort, read
+[the company role contract](references/company.md). This specializes the existing
+role; it does not expand its execution, spending, delegation or release authority.

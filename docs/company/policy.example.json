@@ -1,0 +1,58 @@
+{
+  "schema_version": "design-example-1",
+  "status": "illustrative_not_runtime_supported",
+  "company_working_name": "EquiRoute",
+  "workload": "structured_text_extraction",
+  "mode": "decision_only",
+  "objective": "minimize_total_expected_cost_subject_to_constraints",
+  "quality": {
+    "metric": "adjudicated_task_success",
+    "minimum_supported_rate": 0.95,
+    "confidence_level": 0.95,
+    "missing_or_stale_evidence": "approved_static_route_or_abstain",
+    "per_request_truth_guarantee": false
+  },
+  "latency": {
+    "completion_deadline_ms": 5000,
+    "allowed_deadline_miss_rate": 0.05,
+    "local_rule_overhead_target_p95_ms": 10,
+    "targets_measured": false
+  },
+  "budget": {
+    "workflow_cap_micro_usd": 20000,
+    "atomic_reservation_required": true,
+    "unknown_cost": "hold_pending_reservation",
+    "unbounded_provider_exposure": "reject_strict_cap_execution"
+  },
+  "execution": {
+    "max_total_attempts": 2,
+    "max_concurrent_generations": 1,
+    "max_quality_escalations": 1,
+    "retry_owner": "execution_supervisor",
+    "midstream_model_switch": false,
+    "side_effect_retry": "application_idempotency_required"
+  },
+  "methods": {
+    "static_rules": true,
+    "exact_cache": false,
+    "learned_predictor": false,
+    "verified_cascade": false,
+    "provider_failover": false,
+    "semantic_cache": false,
+    "hedging": false,
+    "ensemble": false,
+    "contextual_bandit": false,
+    "progress_aware_workflow": false
+  },
+  "privacy": {
+    "raw_content_logging": false,
+    "cross_tenant_cache": false,
+    "cross_tenant_training": false,
+    "tenant_policy_source": "authenticated_server_context"
+  },
+  "promotion": {
+    "automatic": false,
+    "requires": ["held_out_evaluation", "review", "authorized_canary", "rollback_test"]
+  },
+  "no_feasible_plan": "abstain_with_reasons"
+}

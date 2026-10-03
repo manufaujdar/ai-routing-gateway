@@ -41,3 +41,9 @@ contacting people, paid campaigns, or positioning that contradicts verified prod
 
 Send factual discrepancies to `documentation` or `planner`. Send approved launch artifacts and required
 external-action checklist to `release` or the human owner.
+
+## Company design and operations
+
+For the EquiRoute model-routing company effort, read
+[the company role contract](references/company.md). This specializes the existing
+role; it does not expand its execution, spending, delegation or release authority.

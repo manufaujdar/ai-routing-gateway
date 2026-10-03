@@ -38,7 +38,7 @@ def test_https_base_urls_are_accepted_without_network(
     OpenAICompatibleModelCaller("test-key", base_url)
 
     assert created_clients == [
-        {"api_key": "test-key", "base_url": base_url, "timeout": 120.0}
+        {"api_key": "test-key", "base_url": base_url, "timeout": 120.0, "max_retries": 0}
     ]
 
 
@@ -143,3 +143,29 @@ def test_insecure_loopback_option_requires_a_boolean(
         )
 
     assert created_clients == []
+
+
+def test_execution_limits_are_forwarded_without_hidden_retries(monkeypatch):
+    from types import SimpleNamespace
+
+    received = {}
+    module = ModuleType("openai")
+
+    class FakeOpenAI:
+        def __init__(self, **kwargs):
+            assert kwargs["max_retries"] == 0
+
+            def complete(**options):
+                received.update(options)
+                return SimpleNamespace(choices=[SimpleNamespace(
+                    message=SimpleNamespace(content="answer"), finish_reason="stop",
+                )])
+
+            self.chat = SimpleNamespace(completions=SimpleNamespace(create=complete))
+
+    module.OpenAI = FakeOpenAI
+    monkeypatch.setitem(sys.modules, "openai", module)
+    caller = OpenAICompatibleModelCaller("placeholder", "https://example.com/v1")
+    caller.complete_with_limits("model", "question", timeout_seconds=.2, max_output_tokens=50)
+    assert received["timeout"] == .2
+    assert received["max_completion_tokens"] == 50

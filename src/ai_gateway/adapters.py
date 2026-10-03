@@ -102,21 +102,32 @@ class OpenAICompatibleModelCaller:
             from openai import OpenAI
         except ImportError as error:
             raise RuntimeError("install the 'openai' optional dependency to use this adapter") from error
-        self._client = OpenAI(api_key=api_key, base_url=base_url, timeout=timeout)
+        self._client = OpenAI(api_key=api_key, base_url=base_url, timeout=timeout, max_retries=0)
 
     def complete(self, model: str, prompt: str) -> str:
-        return self.complete_with_metrics(model, prompt).text
+        result = self.complete_with_metrics(model, prompt)
+        if not result.text.strip():
+            raise ValueError(f"model '{model}' returned an empty response")
+        return result.text
 
     def complete_with_metrics(self, model: str, prompt: str) -> ModelCallResult:
+        return self.complete_with_limits(model, prompt, timeout_seconds=None, max_output_tokens=None)
+
+    def complete_with_limits(self, model: str, prompt: str, *, timeout_seconds: float | None,
+                             max_output_tokens: int | None) -> ModelCallResult:
+        options = {}
+        if timeout_seconds is not None:
+            options["timeout"] = timeout_seconds
+        if max_output_tokens is not None:
+            options["max_completion_tokens"] = max_output_tokens
         started = time.perf_counter()
         response = self._client.chat.completions.create(
             model=model,
             messages=[{"role": "user", "content": prompt}],
+            **options,
         )
         latency_ms = round((time.perf_counter() - started) * 1_000, 3)
         content = response.choices[0].message.content
-        if not content:
-            raise ValueError(f"model '{model}' returned an empty response")
         usage = getattr(response, "usage", None)
         prompt_tokens = getattr(usage, "prompt_tokens", None)
         completion_tokens = getattr(usage, "completion_tokens", None)
@@ -124,7 +135,7 @@ class OpenAICompatibleModelCaller:
         cached_tokens = getattr(prompt_details, "cached_tokens", None)
         finish_reason = getattr(response.choices[0], "finish_reason", None)
         return ModelCallResult(
-            text=content,
+            text=content or "",
             provider="openai-compatible",
             deployment_id=model,
             input_tokens=prompt_tokens,

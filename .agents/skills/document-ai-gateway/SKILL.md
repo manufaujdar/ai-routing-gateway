@@ -39,3 +39,9 @@ large unsupported rewrites, or contradictions between code and approved interfac
 
 Send technically verified docs to `release`. Send launch-facing factual inputs to `marketer`; Marketer
 must not redefine canonical technical behavior.
+
+## Company design and operations
+
+For the EquiRoute model-routing company effort, read
+[the company role contract](references/company.md). This specializes the existing
+role; it does not expand its execution, spending, delegation or release authority.
