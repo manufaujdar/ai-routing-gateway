@@ -2,12 +2,25 @@ const byId = id => document.getElementById(id);
 const state = { config: null, capabilities: null, telemetry: null, result: null, history: loadHistory() };
 
 function loadHistory() {
-  try { return JSON.parse(localStorage.getItem("ai-gateway-history") || "[]"); }
+  try {
+    const saved = JSON.parse(localStorage.getItem("ai-gateway-history") || "[]");
+    return Array.isArray(saved) ? saved.filter(validHistoryEntry).slice(0, 12) : [];
+  }
   catch { return []; }
 }
 
+function validHistoryEntry(item) {
+  const decision = item?.result?.decision;
+  const strings = values => Array.isArray(values) && values.every(value => typeof value === "string");
+  return typeof item?.prompt === "string" && typeof item.saved_at === "string" && decision
+    && typeof decision.route === "string" && Array.isArray(decision.model_candidates)
+    && decision.model_candidates.every(candidate => candidate && typeof candidate.model === "string")
+    && strings(decision.reasons) && strings(decision.risk_flags);
+}
+
 function storeHistory() {
-  localStorage.setItem("ai-gateway-history", JSON.stringify(state.history.slice(0, 12)));
+  try { localStorage.setItem("ai-gateway-history", JSON.stringify(state.history.slice(0, 12))); }
+  catch { byId("historyNotice").textContent = "Browser storage is unavailable or full. This session's decisions remain visible but cannot be saved."; }
 }
 
 function optionalNumber(id) {
@@ -93,6 +106,9 @@ async function initialize() {
 
 async function submitRoute(event) {
   event.preventDefault();
+  state.result = null;
+  byId("resultContent").classList.add("hidden");
+  byId("emptyResult").classList.remove("hidden");
   setWorking(true); hideError();
   try {
     const payload = routePayload();
@@ -112,7 +128,8 @@ async function submitRoute(event) {
 function setWorking(working) {
   byId("routeButton").disabled = working;
   byId("routeButton").querySelector("span").textContent = working ? "Routing…" : "Evaluate route";
-  byId("resultStatus").textContent = working ? "Working" : state.result ? "Complete" : "Ready";
+  const failed = !byId("errorPanel").classList.contains("hidden");
+  byId("resultStatus").textContent = working ? "Working" : failed ? "Failed" : state.result ? "Complete" : "Ready";
   byId("resultStatus").className = `status-dot ${working ? "working" : state.result ? "success" : ""}`;
 }
 
@@ -137,6 +154,11 @@ function renderResult(result) {
   });
   setJsonSection("councilSection", "councilPlan", decision.council_plan);
   setJsonSection("strategySection", "strategyPlan", decision.execution_plan);
+  const metadata = result.metadata || {};
+  const execution = {};
+  for (const key of ["mock", "abstained", "verification", "quality_status", "usage", "execution_controls", "accepted_model", "returned_model", "consensus_reached"])
+    if (key in metadata) execution[key] = metadata[key];
+  setJsonSection("executionDetailsSection", "executionDetails", Object.keys(execution).length ? execution : null);
   byId("outputSection").classList.toggle("hidden", result.output == null);
   byId("output").textContent = result.output || "";
   byId("requestMeta").textContent = result.request ? `Request ${result.request.id} · ${result.request.elapsed_ms} ms` : "Saved result";
@@ -168,7 +190,7 @@ function renderHistory() {
   replaceChildren(list, state.history, (item, index) => {
     const button = element("button", "", "history-card"); button.type = "button";
     button.append(element("strong", item.prompt.slice(0, 80)), element("span", `${item.result.decision.route} · ${new Date(item.saved_at).toLocaleString()}`));
-    button.addEventListener("click", () => { state.result = item.result; byId("prompt").value = item.prompt; updateCharacterCount(); renderResult(item.result); window.scrollTo({top: 0, behavior: "smooth"}); });
+    button.addEventListener("click", () => { state.result = item.result; hideError(); setWorking(false); byId("prompt").value = item.prompt; updateCharacterCount(); renderResult(item.result); window.scrollTo({top: 0, behavior: "smooth"}); });
     button.setAttribute("aria-label", `Open saved decision ${index + 1}: ${item.prompt.slice(0, 60)}`);
     return button;
   });
@@ -177,7 +199,14 @@ function renderHistory() {
 function showError(message) { byId("errorPanel").textContent = message; byId("errorPanel").classList.remove("hidden"); }
 function hideError() { byId("errorPanel").classList.add("hidden"); byId("errorPanel").textContent = ""; }
 function updateCharacterCount() { byId("characterCount").textContent = `${byId("prompt").value.length.toLocaleString()} characters`; }
-async function copyResult() { if (!state.result) return; await navigator.clipboard.writeText(JSON.stringify(state.result, null, 2)); byId("copyResult").textContent = "Copied"; setTimeout(() => { byId("copyResult").textContent = "Copy JSON"; }, 1200); }
+async function copyResult() {
+  if (!state.result) return;
+  try {
+    await navigator.clipboard.writeText(JSON.stringify(state.result, null, 2));
+    byId("copyResult").textContent = "Copied";
+    setTimeout(() => { byId("copyResult").textContent = "Copy JSON"; }, 1200);
+  } catch { showError("Clipboard unavailable. Use Download to keep the routing result."); }
+}
 function downloadResult() { if (!state.result) return; const blob = new Blob([JSON.stringify(state.result, null, 2)], {type:"application/json"}); const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = `ai-gateway-${state.result.request?.id || "decision"}.json`; link.click(); URL.revokeObjectURL(link.href); }
 
 byId("routeForm").addEventListener("submit", submitRoute);

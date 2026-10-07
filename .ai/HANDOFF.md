@@ -1,5 +1,49 @@
 # Current handoff
 
+## Production boundary review — completed locally 3 October 2026
+
+Active role: Documentation handoff after Builder implementation and self-review.
+Base: 1bb8ba7, clean starting tree. Reviewed first-party runtime, library/API/CLI,
+team SDK, browser console, deployment/CI contracts and associated tests. Full
+findings, invocation guidance, route matrix and remaining production requirements:
+[production assessment](../docs/PRODUCTION_READINESS.md). File evidence remains
+in docs/company/review-coverage.json: 77/77 eligible reviewed, 133 excluded, zero
+pending/blocked/invalid/stale. Exclusions cover historical/governance and installed
+workflow artifacts plus the helper-excluded environment template. This is not
+independent certification.
+
+Repaired strict API fields/modes, token-estimate overflow, model availability and
+nonfinite cost validation; added optional shared per-container provider concurrency
+admission. Repaired corrupt/full browser history handling, stale results and hidden
+verification/usage. Static readiness now explicitly excludes production readiness.
+SQLite state is excluded from Git/build contexts. Added deterministic routing timing
+and regression/limitation cases, including four-process budget admission.
+
+Validation: 242 tests pass on Python 3.11.16 and 3.14.7; Ruff, whitespace, 12-role
+validation, static audit and release metadata checks pass. Source/wheel build,
+Twine and isolated installed-wheel core/CLI smoke pass. Playwright desktop/mobile
+covers route, mock execution, failure, history and verification/usage states without
+post-fix JavaScript errors. Full command scopes and observed failures are in the
+assessment. Local test server was stopped at handoff; no ongoing background job.
+
+Usage: consuming agents must be integrated once; routing is automatic per submitted
+request. No periodic agent, catalog/calibration scheduler or global interception
+exists. No other project integration was changed.
+
+Remaining: real workload calibration/task verification; semantic safety coverage;
+server-enforced tenant policy and hosted identity/ingress; hard cancellation,
+distributed quotas, idempotency and retry semantics; audited provider billing,
+recovery and sustained load/chaos evidence. Passing limitation tests explicitly
+show wrong answers passing form checks, obfuscated keyword bypass and late caller
+return; they do not certify those behaviors as safe. Verdict: controlled internal
+pilots only, no unrestricted public-production or accuracy/spend/latency guarantee.
+
+Next owner: maintainer / independent Reviewer and QA, then consuming application,
+evaluation and operations owners. No approval needed to inspect local artifacts.
+Authorized datasets, paid evaluation, external publication and deployment retain
+their existing explicit authorization boundaries. No provider calls, scheduler,
+push, deployment or cross-project changes were performed.
+
 ## Runtime controls — implemented locally 3 October 2026
 
 Active role: Documentation handoff after Builder implementation and self-review.
@@ -148,3 +192,14 @@ links, JSON, Bash and local-root checks pass; disposable feature/plan/tasks and
 external/traversal/symlink negative checks pass. No application/runtime or hosted
 change. Active role: local tooling release/handoff. Next owner: selected project
 product/engineering owner for an authorized task. Existing approval gates apply.
+
+
+## Oil UI local pass — 2026-10-07
+
+- Objective: implement minimal UI/UX corrections under the authorized portfolio request; existing trackers and unrelated work preserved.
+- Files: src/ai_gateway/static/app.js; styles.css.
+- Result: Denied clipboard recovery, shared focus/targets/wrapping and mobile header links.
+- Verification: Six existing gateway API tests, JS syntax and synthetic denied-copy/reflow pass.
+- Coverage/limits: Complete offline run/confirm/replay/large reports and real-provider behavior remain outside this slice.
+- Evidence and upstream provenance: [portfolio report](../../UI_UX_REVIEW_2026-10-07.md), [Oil UI method/helper](../../resources/code-review/OIL_UI_REVIEW.md). This is an affected UI slice, not a renewed whole-repository audit.
+- Active gear: release review. Next owner: Gateway UI owner. No new approval pending for these local edits; existing release/governance gates remain. No commit, push, deployment, provider call or publication.

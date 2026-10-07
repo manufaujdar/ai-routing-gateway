@@ -59,10 +59,10 @@
             <label for="maxCost">Maximum estimated cost (USD)
               <input id="maxCost" type="number" min="0" step="0.000001" placeholder="No limit">
             </label>
-            <label for="maxLatency">Maximum latency (ms)
+            <label for="maxLatency">Maximum estimated latency (ms)
               <input id="maxLatency" type="number" min="0" step="1" placeholder="No limit">
             </label>
-            <label for="minQuality">Minimum quality (0–1)
+            <label for="minQuality">Minimum catalog quality estimate (0–1)
               <input id="minQuality" type="number" min="0" max="1" step="0.01" placeholder="No minimum">
             </label>
             <label for="councilSize">Council size
@@ -123,6 +123,7 @@
         <section id="candidateSection" class="result-section hidden"><h3>Ranked model candidates</h3><div id="candidates" class="candidate-list"></div></section>
         <section id="councilSection" class="result-section hidden"><h3>Council plan</h3><pre id="councilPlan"></pre></section>
         <section id="strategySection" class="result-section hidden"><h3>Execution plan</h3><pre id="strategyPlan"></pre></section>
+        <section id="executionDetailsSection" class="result-section hidden"><h3>Execution checks and usage</h3><p class="muted">Form verification and model agreement do not establish correctness. Unknown cost is not zero.</p><pre id="executionDetails"></pre></section>
         <section id="outputSection" class="result-section hidden"><h3>Execution output</h3><pre id="output"></pre></section>
         <div class="result-actions"><button id="copyResult" type="button">Copy JSON</button><button id="downloadResult" type="button">Download</button></div>
         <p id="requestMeta" class="request-meta"></p>
@@ -133,16 +134,17 @@
 
   <section class="history-section" aria-labelledby="telemetryTitle">
     <div class="history-heading"><div><p class="eyebrow">Adaptive control plane</p><h2 id="telemetryTitle">Prompt-free gateway telemetry</h2></div><button id="refreshTelemetry" class="text-button" type="button">Refresh telemetry</button></div>
-    <p class="muted">Runtime outcomes tune ranking only after sufficient evidence. Policy changes remain proposals until replay, approval, and canary validation.</p>
+    <p class="muted">Adaptive ranking is off by default. Enabling it requires operator configuration; policy proposals need evaluation and approval.</p>
     <pre id="telemetrySummary">Loading telemetry…</pre>
   </section>
 
   <section class="history-section" aria-labelledby="historyTitle">
     <div class="history-heading"><div><p class="eyebrow">Local history</p><h2 id="historyTitle">Recent decisions</h2></div><button id="clearHistory" class="text-button" type="button">Clear history</button></div>
+    <p id="historyNotice" class="muted" role="status">History saves prompts and outputs in this browser. Avoid sensitive data and clear history when finished.</p>
     <div id="historyList" class="history-list"><p class="muted">No saved decisions.</p></div>
   </section>
 
-  <footer><p>Offline-first by default · Secrets are never written to browser history · Production controls remain the deployer's responsibility.</p><nav><a href="/docs">OpenAPI</a><a href="https://github.com/manufaujdar/ai-routing-gateway/blob/main/VALIDATION_PROTOCOL.md">Validation</a><a href="https://github.com/manufaujdar/ai-routing-gateway/blob/main/DEPLOYMENT_BOUNDARIES.md">Deployment boundaries</a></nav></footer>
+  <footer><p>Offline-first by default · Provider keys are not saved to history · Production controls remain the deployer's responsibility.</p><nav><a href="/docs">OpenAPI</a><a href="https://github.com/manufaujdar/ai-routing-gateway/blob/main/VALIDATION_PROTOCOL.md">Validation</a><a href="https://github.com/manufaujdar/ai-routing-gateway/blob/main/DEPLOYMENT_BOUNDARIES.md">Deployment boundaries</a></nav></footer>
   <script src="/assets/app.js" defer></script>
 </body>
 </html>
