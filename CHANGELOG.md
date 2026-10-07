@@ -8,6 +8,9 @@ All notable changes are documented here. This project follows
 
 ### Added
 
+- Added optional per-container provider concurrency admission and a reproducible decision-only
+  overhead measurement script; expanded adversarial and multi-process budget tests.
+- Added an agent-integration and production-boundary assessment with route and failure matrices.
 - Added optional durable SQLite charge admission/reconciliation, shared execution deadlines,
   prompt/output caps and a process-local provider circuit breaker. Unknown charges remain held.
 - Added optional bearer-to-container tenant API access with isolated telemetry/feedback and
@@ -42,6 +45,11 @@ All notable changes are documented here. This project follows
 
 ### Changed
 
+- HTTP input models reject unknown fields and invalid selection modes before provider setup.
+  Oversized token estimates, non-finite computed prices and non-boolean availability are rejected.
+- The local console tolerates malformed/full history storage, hides stale failed results and
+  displays verification/usage. Local history's prompt/output persistence is explicit.
+- Static readiness output now explicitly distinguishes artifact checks from production readiness.
 - Unknown cost and token totals now serialize as `null`; known subtotals and unpriced call counts
   remain visible. `hard_budget_respected` is now false: catalog budgets are planning estimates.
 - Adaptive ranking is opt-in. Form scores and transport success no longer count as quality labels.

@@ -18,6 +18,7 @@ def test_repository_passes_deterministic_readiness_audit() -> None:
     assert result["external_model_calls"] is False
     assert result["findings"] == []
     assert result["ready"] is True
+    assert result["production_readiness"] == "not_assessed"
 
 
 def test_missing_public_artifacts_fail_closed(tmp_path: Path) -> None:

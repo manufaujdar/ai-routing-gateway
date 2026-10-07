@@ -32,6 +32,7 @@ policy = ExecutionPolicy(
     max_output_tokens=1_000,
     timeout_ms=10_000,
     max_model_calls=3,
+    max_concurrent_calls=8,  # shared provider-call slots in this container/process
 )
 container = build_container(
     model_caller=caller, model_catalog=catalog,
@@ -94,6 +95,13 @@ planned call count is checked before execution, and concurrent admissions count
 against that bound. Expanded prompts, including council context, must fit the
 byte cap. With controls active, custom tool execution is rejected because these
 limits do not cover arbitrary tool effects.
+
+`max_concurrent_calls` optionally caps simultaneous provider calls across all
+requests/strategies on the container. Saturation rejects immediately before budget
+reservation; slots are released after success or failure. It is not a queue,
+requests-per-minute quota, distributed limiter or cap on HTTP parsing/worker memory.
+Separate containers/processes have separate capacity. Configure an ingress limit
+and coordinate provider-wide capacity across workers before exposing the service.
 
 Request fields `execution_timeout_ms` and `max_output_tokens` are also available
 through the API. `max_latency_ms` remains a catalog planning filter; it is not the

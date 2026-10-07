@@ -6,13 +6,13 @@ import uuid
 from collections.abc import Mapping
 from dataclasses import asdict
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel, Field, SecretStr, StrictBool, field_validator
+from pydantic import BaseModel, ConfigDict, Field, SecretStr, StrictBool, field_validator
 
 from ._version import __version__
 from .container import GatewayContainer, build_container
@@ -24,6 +24,7 @@ STATIC_DIR = Path(__file__).with_name("static")
 
 
 class RuntimeProviderRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     api_key: SecretStr = Field(min_length=1)
     base_url: str = "https://api.openai.com/v1"
     fast_model: str = "gpt-4.1-mini"
@@ -52,6 +53,7 @@ class RuntimeProviderRequest(BaseModel):
 
 
 class RouteRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     prompt: str = Field(min_length=1, max_length=100_000)
     execute: StrictBool = True
     context: dict[str, Any] = Field(default_factory=dict)
@@ -70,12 +72,13 @@ class RouteRequest(BaseModel):
     max_model_calls: int = Field(default=17, ge=1, le=17, strict=True)
     execution_timeout_ms: int | None = Field(default=None, gt=0, le=300_000, strict=True)
     max_output_tokens: int | None = Field(default=None, gt=0, le=1_000_000, strict=True)
-    selection_mode: str = "weighted"
+    selection_mode: Literal["weighted", "evidence"] = "weighted"
     required_capabilities: list[str] = Field(default_factory=list)
     provider: RuntimeProviderRequest | None = None
 
 
 class FeedbackRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     request_id: str = Field(min_length=1, max_length=128)
     score: float = Field(ge=0, le=1, strict=True, allow_inf_nan=False)
 

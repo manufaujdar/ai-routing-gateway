@@ -9,9 +9,13 @@ def test_tenant_access_protects_routes_telemetry_feedback_and_documentation():
     first, second = build_container(), build_container()
     client = TestClient(create_app(tenants={"first-secret": first, "second-secret": second}))
     assert client.get("/health").status_code == 200
-    for path in ("/", "/ready", "/docs", "/openapi.json", "/v1/telemetry", "/v1/capabilities"):
+    for path in ("/", "/ready", "/docs", "/redoc", "/docs/oauth2-redirect", "/openapi.json",
+                 "/assets/app.js", "/assets/styles.css", "/v1/telemetry", "/v1/capabilities",
+                 "/v1/config", "/v1/policy/proposal"):
         assert client.get(path).status_code == 401
+        assert client.get(path, headers={"Authorization": "Bearer first-secret"}).status_code == 200
     assert client.post("/v1/route", json={"prompt": "Hello"}).status_code == 401
+    assert client.post("/v1/feedback", json={"request_id": "unknown", "score": 1}).status_code == 401
     headers = {"Authorization": "Bearer first-secret"}
     assert client.get("/openapi.json", headers=headers).status_code == 200
     assert client.get("/ready", headers={"Authorization": "Bearer wrong"}).status_code == 401

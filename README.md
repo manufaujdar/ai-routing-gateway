@@ -42,6 +42,13 @@ adds an optional evidence gate and repairs execution accounting; the broader com
 
 ## Quickstart
 
+**Agent usage needs a one-time integration.** Install the library in the agent's
+runtime and call `container.router.route(...)`, or run a configured API and have
+the agent call `/v1/route`. Routing then runs automatically for each submitted
+request. The repository does not intercept Codex/ChatGPT calls or start periodic
+jobs. The 12 role skills are task instructions; the team SDK needs application-owned
+handlers. See [manual setup, test results and production limits](docs/PRODUCTION_READINESS.md).
+
 Create a clean environment, install the package, and make a decision without a
 provider key or network call:
 

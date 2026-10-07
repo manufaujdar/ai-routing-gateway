@@ -121,6 +121,8 @@ def audit(root: Path = DEFAULT_ROOT) -> dict[str, object]:
     return {
         "tool": "ai-gateway-readiness-agent",
         "mode": "local_deterministic_audit",
+        "assessment_scope": "repository artifact checks only",
+        "production_readiness": "not_assessed",
         "root": str(root),
         "files_required": list(REQUIRED_PUBLIC_FILES),
         "files_present": sorted(present),
@@ -167,6 +169,7 @@ def main(argv: Iterable[str] | None = None) -> int:
             print(f"[{finding['severity']}] {finding['title']}: {finding['next_action']}")
         if result["ready"]:
             print("No deterministic readiness findings.")
+        print("Repository artifact checks only; production readiness is not assessed.")
     return 0 if result["ready"] else 1
 
 

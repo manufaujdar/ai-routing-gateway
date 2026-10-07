@@ -1,4 +1,5 @@
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
+from multiprocessing import get_context
 
 import pytest
 
@@ -64,3 +65,22 @@ def test_overcharge_is_recorded_and_freezes_new_admission(tmp_path):
 def test_budget_amounts_are_exact_nonnegative_integers(tmp_path, amount):
     with pytest.raises(ValueError):
         SQLiteBudgetLedger(tmp_path / "budget.sqlite").configure_account("a", amount)
+
+
+def _reserve_in_process(arguments):
+    path, index = arguments
+    try:
+        SQLiteBudgetLedger(path).reserve("a", str(index), str(index), 10)
+        return True
+    except BudgetDenied:
+        return False
+
+
+def test_separate_processes_share_atomic_budget(tmp_path):
+    path = str(tmp_path / "shared.sqlite")
+    ledger = SQLiteBudgetLedger(path)
+    ledger.configure_account("a", 100)
+    with ProcessPoolExecutor(max_workers=4, mp_context=get_context("spawn")) as pool:
+        admitted = sum(pool.map(_reserve_in_process, [(path, i) for i in range(40)]))
+    assert admitted == 10
+    assert ledger.snapshot("a")["reserved_microusd"] == 100

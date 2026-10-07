@@ -89,12 +89,14 @@ class ExecutionPolicy:
     max_output_tokens: int | None = None
     max_prompt_bytes: int | None = None
     max_model_calls: int = 17
+    max_concurrent_calls: int | None = None
     ledger: SQLiteBudgetLedger | None = field(default=None, repr=False)
     account: str | None = None
     charge_limits: Mapping[str, int] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
-        for name in ("timeout_ms", "max_output_tokens", "max_prompt_bytes", "max_model_calls"):
+        for name in ("timeout_ms", "max_output_tokens", "max_prompt_bytes", "max_model_calls",
+                     "max_concurrent_calls"):
             value = getattr(self, name)
             if value is not None and (type(value) is not int or value < 1):
                 raise ValueError(f"{name} must be a positive integer")
@@ -147,6 +149,8 @@ class ControlledExecutionHandler:
         self.caller, self.telemetry, self.verifier = caller, telemetry, verifier
         self.policy, self.breaker, self.clock = policy or ExecutionPolicy(), breaker, clock
         self.enforce_controls = self.policy != ExecutionPolicy() or breaker is not None
+        self.capacity = (threading.BoundedSemaphore(self.policy.max_concurrent_calls)
+                         if self.policy.max_concurrent_calls is not None else None)
 
     def handle(self, request: GatewayRequest, decision: RouteDecision) -> GatewayResponse:
         from .council_handler import CouncilHandler
@@ -155,7 +159,8 @@ class ControlledExecutionHandler:
         # Fresh attempt IDs prevent caller-supplied request IDs from replaying a charge.
         request = replace(request, context={**request.context,
             "request_id": str(request.context.get("request_id") or uuid.uuid4().hex)})
-        session = _GuardedCaller(self.caller, request, decision, self.policy, self.breaker, self.clock)
+        session = _GuardedCaller(self.caller, request, decision, self.policy, self.breaker, self.clock,
+                                 self.capacity)
         if decision.execution_plan.strategy is ExecutionStrategy.COUNCIL:
             handler = CouncilHandler(session, self.telemetry)
         else:
@@ -166,6 +171,7 @@ class ControlledExecutionHandler:
             "admission_id": session.admission_id, "provider_calls": session.calls,
             "reservations": session.reservations,
             "max_output_tokens": session.output_limit,
+            "max_concurrent_calls": self.policy.max_concurrent_calls,
             "deadline_semantics": "shared execution deadline; synchronous calls cannot be force-killed",
             "budget_semantics": "reserved operator-declared charge ceilings" if self.policy.ledger
                                 else "planning estimates only",
@@ -174,9 +180,10 @@ class ControlledExecutionHandler:
 
 
 class _GuardedCaller:
-    def __init__(self, caller, request, decision, policy, breaker, clock):
+    def __init__(self, caller, request, decision, policy, breaker, clock, capacity):
         self.caller, self.request, self.policy = caller, request, policy
         self.breaker, self.clock = breaker, clock
+        self.capacity = capacity
         self.admission_id = uuid.uuid4().hex
         self.calls = 0
         self.admissions = 0
@@ -212,6 +219,16 @@ class _GuardedCaller:
         return self.complete_with_metrics(model, prompt).text
 
     def complete_with_metrics(self, model: str, prompt: str) -> ModelCallResult:
+        # Shared across all executions on this handler; reject instead of queuing.
+        if self.capacity is not None and not self.capacity.acquire(blocking=False):
+            raise ExecutionLimitExceeded("server provider concurrency exhausted")
+        try:
+            return self._complete_admitted(model, prompt)
+        finally:
+            if self.capacity is not None:
+                self.capacity.release()
+
+    def _complete_admitted(self, model: str, prompt: str) -> ModelCallResult:
         remaining = self.remaining_seconds()
         if self.policy.max_prompt_bytes is not None and len(prompt.encode()) > self.policy.max_prompt_bytes:
             raise ExecutionLimitExceeded("expanded prompt exceeds server byte cap")

@@ -42,6 +42,8 @@ class ModelProfile:
     model_version: str = ""
 
     def __post_init__(self) -> None:
+        if type(self.available) is not bool:
+            raise ValueError("model available must be a boolean")
         for name in ("quality", "input_cost_per_million", "output_cost_per_million",
                      "latency_ms", "ttft_ms", "p95_latency_ms", "success_probability"):
             value = getattr(self, name)
@@ -207,6 +209,8 @@ class ModelSelector:
     ) -> tuple[int, int]:
         input_tokens = request.context.get("estimated_input_tokens")
         output_tokens = request.context.get("estimated_output_tokens")
+        if any(type(value) is int and value > 1_000_000 for value in (input_tokens, output_tokens)):
+            raise ValueError("token estimation hints must not exceed 1000000")
         if type(input_tokens) is not int or input_tokens <= 0:
             input_tokens = max(1, (len(request.prompt) + 3) // 4)
         if type(output_tokens) is not int or output_tokens <= 0:
@@ -215,10 +219,13 @@ class ModelSelector:
 
     @staticmethod
     def _estimated_cost(profile: ModelProfile, input_tokens: int, output_tokens: int) -> float:
-        return (
+        cost = (
             input_tokens * profile.input_cost_per_million
             + output_tokens * profile.output_cost_per_million
         ) / 1_000_000
+        if not isfinite(cost):
+            raise ValueError("computed catalog cost must be finite")
+        return cost
 
     @staticmethod
     def _rejection_reason(
