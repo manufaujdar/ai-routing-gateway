@@ -203,3 +203,14 @@ product/engineering owner for an authorized task. Existing approval gates apply.
 - Coverage/limits: Complete offline run/confirm/replay/large reports and real-provider behavior remain outside this slice.
 - Evidence and upstream provenance: [portfolio report](../../UI_UX_REVIEW_2026-10-07.md), [Oil UI method/helper](../../resources/code-review/OIL_UI_REVIEW.md). This is an affected UI slice, not a renewed whole-repository audit.
 - Active gear: release review. Next owner: Gateway UI owner. No new approval pending for these local edits; existing release/governance gates remain. No commit, push, deployment, provider call or publication.
+
+
+## Audit implementation — 11 October 2026
+
+- Task: Request settings and native result navigation; user authorized implementation and Git push from the portfolio UX/settings audit.
+- Scope/files: src/ai_gateway/static/{index.html,app.js,styles.css}.
+- Result: Document-owned result scroll with named keyboard-scrollable JSON; contextual strategy fields; page-only future-history checkbox; confirmation/error handling for browser-history clearing. Off-period decisions retain a per-entry exclusion so enabling saves later cannot persist them. Routing, execution switches and provider-key contract unchanged.
+- Verification: 21 API/production-boundary tests; actual-source browser contextual fields, native result owner and reduced motion; Off→request→On→request storage exclusion regression; Ruff and diff check pass.
+- Source state: separate clean checkout from the verified current GitHub branch; original dirty checkout preserved. No dirty baseline incorporated.
+- Active gear: Review/QA to authorized Git publication; one mutating UI owner and independent root review.
+- Limits/next owner: app owner for physical-device, screen-reader and other-browser checks. No provider runs, real data, deployment or model/clinical release. Existing governed release gates remain.
