@@ -83,3 +83,7 @@ scope; no further implementation or CI repair is currently required.
 ## Main integration — 11 October 2026
 
 Task-only UX/settings changes adapted to current main, retaining its backend and existing history. User authorized main publication. Validation and remote receipt are recorded in the portfolio task; no deployment/provider or regulated release is claimed.
+
+## Main-push engineering tooling — 11 October 2026
+
+User authorized suitable tools and main-only publication. Active gear: engineering/build followed by independent Review and QA. Scope: repo-owned quality commands, workflow/docs/secret gates and synthetic browser regressions; no runtime policy, clinical/provider data, model run, deployment or hook replacement. Acceptance: native suites and new gates pass, representative failure paths reject, root review resolves findings, exact main push and hosted CI are verified. Tool pins/source/limitations are in TOOLING.md; transient evidence is in the portfolio tooling receipt. Next owner after publication: maintainer for governed release and physical-device approval.

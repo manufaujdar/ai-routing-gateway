@@ -16,3 +16,6 @@ htmlcov/
 .nox/
 .idea/
 .vscode/
+
+# Local engineering-tool dependencies
+tools/docs-tools/node_modules/
