@@ -7,7 +7,8 @@ function loadHistory() {
 }
 
 function storeHistory() {
-  localStorage.setItem("ai-gateway-history", JSON.stringify(state.history.slice(0, 12)));
+  try { localStorage.setItem("ai-gateway-history", JSON.stringify(state.history.filter(item => item.persist !== false).slice(0, 12))); }
+  catch { byId("historyNotice").textContent = "Browser storage is unavailable or full. This session's decisions remain visible but cannot be saved."; }
 }
 
 function optionalNumber(id) {
@@ -100,9 +101,11 @@ async function submitRoute(event) {
     });
     state.result = result; renderResult(result);
     state.history.unshift({
-      saved_at: new Date().toISOString(), prompt: payload.prompt, result
+      saved_at: new Date().toISOString(), prompt: payload.prompt, result, persist: byId("saveHistory").checked
     });
-    state.history = state.history.slice(0, 12); storeHistory(); renderHistory();
+    state.history = state.history.slice(0, 12);
+    if (byId("saveHistory").checked) storeHistory();
+    renderHistory();
   } catch (error) { showError(error.message); }
   finally { setWorking(false); }
 }
@@ -166,7 +169,7 @@ function renderHistory() {
   replaceChildren(list, state.history, (item, index) => {
     const button = element("button", "", "history-card"); button.type = "button";
     button.append(element("strong", item.prompt.slice(0, 80)), element("span", `${item.result.decision.route} · ${new Date(item.saved_at).toLocaleString()}`));
-    button.addEventListener("click", () => { state.result = item.result; byId("prompt").value = item.prompt; updateCharacterCount(); renderResult(item.result); window.scrollTo({top: 0, behavior: "smooth"}); });
+    button.addEventListener("click", () => { state.result = item.result; byId("prompt").value = item.prompt; updateCharacterCount(); renderResult(item.result); window.scrollTo({top: 0}); });
     button.setAttribute("aria-label", `Open saved decision ${index + 1}: ${item.prompt.slice(0, 60)}`);
     return button;
   });
@@ -178,12 +181,41 @@ function updateCharacterCount() { byId("characterCount").textContent = `${byId("
 async function copyResult() { if (!state.result) return; await navigator.clipboard.writeText(JSON.stringify(state.result, null, 2)); byId("copyResult").textContent = "Copied"; setTimeout(() => { byId("copyResult").textContent = "Copy JSON"; }, 1200); }
 function downloadResult() { if (!state.result) return; const blob = new Blob([JSON.stringify(state.result, null, 2)], {type:"application/json"}); const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = `ai-gateway-${state.result.request?.id || "decision"}.json`; link.click(); URL.revokeObjectURL(link.href); }
 
+function updateStrategyControls() {
+  const strategy = byId("executionStrategy").value;
+  for (const [id, visible] of [
+    ["councilSize", strategy === "auto" || strategy === "council" || byId("councilMode").value === "always"],
+    ["strategyModelLimit", strategy === "auto" || strategy === "cascade"],
+    ["selfConsistencySamples", strategy === "auto" || strategy === "self_consistency"],
+  ]) {
+    byId(id).closest("label").hidden = !visible;
+  }
+}
+byId("executionStrategy").addEventListener("change", updateStrategyControls);
+byId("councilMode").addEventListener("change", updateStrategyControls);
+updateStrategyControls();
+byId("saveHistory").addEventListener("change", () => {
+  byId("historyNotice").textContent = byId("saveHistory").checked
+    ? "Future decisions save prompts and outputs in this browser. Avoid sensitive data."
+    : "Future decisions remain in this tab only and will not be saved if you enable history later. Clear removes saved history. This choice applies to this tab.";
+});
+
 byId("routeForm").addEventListener("submit", submitRoute);
 byId("prompt").addEventListener("input", updateCharacterCount);
 byId("clearPrompt").addEventListener("click", () => { byId("prompt").value = ""; updateCharacterCount(); byId("prompt").focus(); });
 byId("useRuntimeProvider").addEventListener("change", event => byId("providerFields").classList.toggle("hidden", !event.target.checked));
 byId("copyResult").addEventListener("click", copyResult);
 byId("downloadResult").addEventListener("click", downloadResult);
-byId("clearHistory").addEventListener("click", () => { state.history = []; storeHistory(); renderHistory(); });
+byId("clearHistory").addEventListener("click", () => {
+  if (!window.confirm("Clear all prompts and results saved by this browser? This cannot be undone.")) return;
+  try {
+    localStorage.removeItem("ai-gateway-history");
+    state.history = [];
+    renderHistory();
+    byId("historyNotice").textContent = "Browser history cleared. Future saves follow the checkbox above.";
+  } catch {
+    byId("historyNotice").textContent = "Browser history could not be cleared. The decisions remain available; check browser storage permissions and retry.";
+  }
+});
 byId("refreshTelemetry").addEventListener("click", refreshTelemetry);
 initialize();

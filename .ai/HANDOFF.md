@@ -69,3 +69,17 @@ https://github.com/manufaujdar/ai-routing-gateway/pull/8. Remote CI run
 NEXT OWNER: Manu / maintainer.
 NEXT ACTION: Review and merge draft PR #8 when satisfied with the public release
 scope; no further implementation or CI repair is currently required.
+
+## Audit implementation — 11 October 2026
+
+- Task: Request settings and native result navigation; user authorized implementation and Git push from the portfolio UX/settings audit.
+- Scope/files: src/ai_gateway/static/{index.html,app.js,styles.css}.
+- Result: Document-owned result scroll with named keyboard-scrollable JSON; contextual strategy fields; page-only future-history checkbox; confirmation/error handling for browser-history clearing. Off-period decisions retain a per-entry exclusion so enabling saves later cannot persist them. Routing, execution switches and provider-key contract unchanged.
+- Verification: 21 API/production-boundary tests; actual-source browser contextual fields, native result owner and reduced motion; Off→request→On→request storage exclusion regression; Ruff and diff check pass.
+- Source state: separate clean checkout from the verified current GitHub branch; original dirty checkout preserved. No dirty baseline incorporated.
+- Active gear: Review/QA to authorized Git publication; one mutating UI owner and independent root review.
+- Limits/next owner: app owner for physical-device, screen-reader and other-browser checks. No provider runs, real data, deployment or model/clinical release. Existing governed release gates remain.
+
+## Main integration — 11 October 2026
+
+Task-only UX/settings changes adapted to current main, retaining its backend and existing history. User authorized main publication. Validation and remote receipt are recorded in the portfolio task; no deployment/provider or regulated release is claimed.

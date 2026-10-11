@@ -47,6 +47,7 @@
         <details>
           <summary>Routing controls <span>Strategy, budgets, models, and council policy</span></summary>
           <div class="details-body form-grid">
+            <p class="notice wide">Request settings apply to the next evaluation only. Auto may choose any supported strategy; strategy-specific limits appear when relevant. Execution remains controlled by the Execute switch.</p>
             <label for="executionStrategy">Execution strategy
               <select id="executionStrategy"><option value="auto">Auto</option><option value="single">Single model</option><option value="cascade">Verified cascade</option><option value="self_consistency">Self-consistency</option><option value="council">LLM council</option></select>
             </label>
@@ -121,9 +122,9 @@
         <section class="result-section"><h3>Why this route</h3><ul id="reasons"></ul></section>
         <section id="riskSection" class="result-section hidden"><h3>Risk flags</h3><div id="riskFlags" class="tag-list"></div></section>
         <section id="candidateSection" class="result-section hidden"><h3>Ranked model candidates</h3><div id="candidates" class="candidate-list"></div></section>
-        <section id="councilSection" class="result-section hidden"><h3>Council plan</h3><pre id="councilPlan"></pre></section>
-        <section id="strategySection" class="result-section hidden"><h3>Execution plan</h3><pre id="strategyPlan"></pre></section>
-        <section id="outputSection" class="result-section hidden"><h3>Execution output</h3><pre id="output"></pre></section>
+        <section id="councilSection" class="result-section hidden"><h3>Council plan</h3><pre id="councilPlan" tabindex="0" role="region" aria-label="Council plan"></pre></section>
+        <section id="strategySection" class="result-section hidden"><h3>Execution plan</h3><pre id="strategyPlan" tabindex="0" role="region" aria-label="Execution plan"></pre></section>
+        <section id="outputSection" class="result-section hidden"><h3>Execution output</h3><pre id="output" tabindex="0" role="region" aria-label="Execution output"></pre></section>
         <div class="result-actions"><button id="copyResult" type="button">Copy JSON</button><button id="downloadResult" type="button">Download</button></div>
         <p id="requestMeta" class="request-meta"></p>
       </div>
@@ -134,11 +135,13 @@
   <section class="history-section" aria-labelledby="telemetryTitle">
     <div class="history-heading"><div><p class="eyebrow">Adaptive control plane</p><h2 id="telemetryTitle">Prompt-free gateway telemetry</h2></div><button id="refreshTelemetry" class="text-button" type="button">Refresh telemetry</button></div>
     <p class="muted">Runtime outcomes tune ranking only after sufficient evidence. Policy changes remain proposals until replay, approval, and canary validation.</p>
-    <pre id="telemetrySummary">Loading telemetry…</pre>
+    <pre id="telemetrySummary" tabindex="0" role="region" aria-label="Prompt-free gateway telemetry">Loading telemetry…</pre>
   </section>
 
   <section class="history-section" aria-labelledby="historyTitle">
     <div class="history-heading"><div><p class="eyebrow">Local history</p><h2 id="historyTitle">Recent decisions</h2></div><button id="clearHistory" class="text-button" type="button">Clear history</button></div>
+    <label class="check-row"><input id="saveHistory" type="checkbox" checked> Save future prompts and results in this browser (this tab’s choice)</label>
+    <p id="historyNotice" class="muted" role="status">History saves prompts and outputs in this browser. Avoid sensitive data and clear history when finished.</p>
     <div id="historyList" class="history-list"><p class="muted">No saved decisions.</p></div>
   </section>
 
