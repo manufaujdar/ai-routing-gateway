@@ -324,6 +324,7 @@ latency estimates, and capabilities.
 
 ## Repository map
 
+- [Documentation index](docs/DOCUMENTATION_INDEX.md): task-based navigation and file ownership.
 - `src/ai_gateway/`: routing, model selection, adaptive execution, telemetry, council, team SDK,
   CLI, and optional adapters.
 - `tests/`: offline unit, integration, packaging, scaffold, and example verification.
