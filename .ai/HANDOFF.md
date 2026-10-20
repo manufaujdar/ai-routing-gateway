@@ -87,3 +87,12 @@ Task-only UX/settings changes adapted to current main, retaining its backend and
 ## Main-push engineering tooling — 11 October 2026
 
 User authorized suitable tools and main-only publication. Active gear: engineering/build followed by independent Review and QA. Scope: repo-owned quality commands, workflow/docs/secret gates and synthetic browser regressions; no runtime policy, clinical/provider data, model run, deployment or hook replacement. Acceptance: native suites and new gates pass, representative failure paths reject, root review resolves findings, exact main push and hosted CI are verified. Tool pins/source/limitations are in TOOLING.md; transient evidence is in the portfolio tooling receipt. Next owner after publication: maintainer for governed release and physical-device approval.
+
+## Documentation navigation — 20 October 2026
+
+- Objective/owner: portfolio documentation task; Documentation role owns the index and entry links.
+- Base: `a5682929154c4e6bdf5ef9e136f350d428e59533` on current GitHub main.
+- Scope: task-based clickable documentation index, repository ownership map and README/start-page discovery. Existing source paths, routing and provider contracts remain unchanged.
+- Evidence: repository tree, README, architecture, public-interface map and existing verification instructions. Markdownlint and offline links pass for both changed Markdown files (32 checked occurrences, three excluded); diff check, actionlint and offline zizmor pass.
+- Limits: no application code changed, so the native app suites were not rerun for this documentation draft. CodeRabbit review is unavailable in this environment (installer HTTP 403); no manual code review is represented as its result. Existing governed release checks remain separate.
+- Next owner: maintainer/reviewer to assess this bounded documentation PR and its hosted checks. No application merge, deployment, provider call or package publication is part of this task.

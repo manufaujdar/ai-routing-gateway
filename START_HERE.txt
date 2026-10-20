@@ -7,6 +7,8 @@ an explainable routing decision.
 READ FIRST
 ----------
 
+Use docs/DOCUMENTATION_INDEX.md for task-based links and the repository map.
+
 1. README.md                 Overview, architecture, and quick start
 2. pyproject.toml            Package requirements and supported commands
 3. .ai/TEAM.md               Specialist agent roles, gates, and handoffs
